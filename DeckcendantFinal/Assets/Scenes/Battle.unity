@@ -136,7 +136,7 @@ MonoBehaviour:
   temp: []
   Cards: []
   defaultDeck: 0
-  hand: {fileID: 0}
+  hand: {fileID: 1734420405}
 --- !u!1 &25196063
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 25196068}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: BattleManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -228,7 +228,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 136809604}
   - {fileID: 1422011000}
   - {fileID: 1734420404}
   m_Father: {fileID: 0}
@@ -260,7 +259,7 @@ MonoBehaviour:
   enemyCurrentBlockVal: 0
   blockUI: {fileID: 0}
   DrawPile: {fileID: 3965332059593388170}
-  hand: {fileID: 136809602}
+  hand: {fileID: 1734420403}
 --- !u!1 &59747598
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &59747599
 RectTransform:
   m_ObjectHideFlags: 0
@@ -614,7 +613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &135237205
 RectTransform:
   m_ObjectHideFlags: 0
@@ -747,59 +746,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
---- !u!1 &136809602
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 136809604}
-  - component: {fileID: 136809603}
-  m_Layer: 5
-  m_Name: Hand
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &136809603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 136809602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e086fa7908d908b47928dfe426a6d7e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxCrdsInHand: 10
-  HandPile: []
-  DrawPile: {fileID: 3965332059593388170}
-  DiscardPile: {fileID: 3965332058996808468}
-  Battlemanager: {fileID: 25196063}
---- !u!224 &136809604
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 136809602}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 25196067}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.99997586, y: -342}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &288146576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,7 +953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &453543629
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1333,7 +1279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &549248084
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1486,7 +1432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &623693040
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1890,7 +1836,7 @@ MonoBehaviour:
   - {fileID: 8608652767637448464, guid: e1c090e00bfe449409225b65a09f78b2, type: 3}
   Cards: []
   defaultDeck: 0
-  hand: {fileID: 0}
+  hand: {fileID: 1734420405}
 --- !u!1 &1332327114
 GameObject:
   m_ObjectHideFlags: 0
@@ -2095,7 +2041,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 25196067}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2293,13 +2239,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1734420404}
+  - component: {fileID: 1734420405}
   m_Layer: 0
   m_Name: Hand
-  m_TagString: Untagged
+  m_TagString: PlayerHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1734420404
 Transform:
   m_ObjectHideFlags: 0
@@ -2317,8 +2264,25 @@ Transform:
   - {fileID: 453543629}
   - {fileID: 623693040}
   m_Father: {fileID: 25196067}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1734420405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734420403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e086fa7908d908b47928dfe426a6d7e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCrdsInHand: 10
+  HandPile: []
+  DrawPile: {fileID: 3965332059593388170}
+  DiscardPile: {fileID: 3965332058996808468}
+  Battlemanager: {fileID: 25196063}
 --- !u!1 &1754236833
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,7 +2602,7 @@ GameObject:
   - component: {fileID: 1260091642}
   m_Layer: 0
   m_Name: DrawPile
-  m_TagString: Untagged
+  m_TagString: DrawPile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
