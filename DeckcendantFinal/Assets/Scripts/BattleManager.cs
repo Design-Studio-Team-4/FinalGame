@@ -15,26 +15,41 @@ public class BattleManager : MonoBehaviour
     public int enemyCurrentBlockVal;
     public EnemyMove currentEnemyMove;
 
+    
     public GameObject blockUI;
+
     public GameObject DrawPile;
     public GameObject hand;
+
+    public GameObject enemyOne;
+    public GameObject enemyTwo;
+    public GameObject enemyThree;
+
+    public static GameObject[] enemyList;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        enemyList = Resources.LoadAll<GameObject>("EnemyPrefabs");
+
         enemyHealth = 110;
         enemyIsBlocking = false;
         playerHealth = 100;
         playerIsBlocking = false;
 
-        GenerateEnemyMove();
+        Spawn();
+
+        //GenerateEnemyMove();
     }
 
     // Update is called once per frame
     void Update()
     {
        
-        DrawPile.GetComponent<Deck>().Refill();
-        hand.GetComponent<Hand>().Refill();
+        // DrawPile.GetComponent<Deck>().Refill();
+        // hand.GetComponent<Hand>().Refill();
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Player Health: " + playerHealth);
@@ -60,9 +75,6 @@ public class BattleManager : MonoBehaviour
 
     public void PlayerMove(int type)
     {
-        Debug.Log("PlayerMove Started");
-
-
         ToggleUI(2);
 
         if (type == 1)
@@ -161,11 +173,11 @@ public class BattleManager : MonoBehaviour
     {
         if (onOff == 2)
         {
-            blockUI.GetComponent<Image>().color = new Color32(0, 0, 0, 150);
+            
         }
         else
         {
-            blockUI.GetComponent<Image>().color = new Color32(0, 0, 0, 0);
+            
         }
     }
 
@@ -209,6 +221,49 @@ public class BattleManager : MonoBehaviour
         enemyCooldown = currentEnemyMove.cooldown;
     }
 
+    public void Spawn()
+    {
+        int enemyAmount = Random.Range(1, 4);
+        Debug.Log(enemyAmount);
+
+        for (int i = 0; i <= enemyAmount; i++)
+        {
+            int enemy = Random.Range(0, 0);
+            Debug.Log(enemy);
+
+            SpawnEnemy(i, enemy);
+        }
+    }
+
+    public void SpawnEnemy(int spawnPoint, int enemy)
+    {
+        if(spawnPoint == 1)
+        {
+            Debug.Log("Enemy Spawned in Posiiton 1");
+            Instantiate(enemyList[enemy], new Vector3(-1.5f, 1.0f + enemyList[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyOne.transform);
+        }
+
+        else if (spawnPoint == 2)
+        {
+            Instantiate(enemyList[enemy], new Vector3(1.5f, 1.0f + enemyList[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyTwo.transform);
+        }
+
+        else if (spawnPoint == 3)
+        {
+            Instantiate(enemyList[enemy], new Vector3(4.5f, 1.0f + enemyList[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyThree.transform);
+        }
+    }
+
+    public class Enemy
+    {
+        public GameObject prefab;
+
+        public Enemy(GameObject p)
+        {
+            prefab = p;
+        }
+    }
+
     public class EnemyMove
     {
         public int type;
@@ -230,6 +285,7 @@ public class BattleManager : MonoBehaviour
      * 2 = Block
      * 3 = Heal
      */
+
     public EnemyMove[] enemyMoveList = new EnemyMove[]
     {
         new EnemyMove(1, 15, 4, 0.50f), // Slap
