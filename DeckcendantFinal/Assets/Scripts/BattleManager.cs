@@ -32,6 +32,7 @@ public class BattleManager : MonoBehaviour
     {
 
         enemyList = Resources.LoadAll<GameObject>("EnemyPrefabs");
+        Debug.Log(enemyList[0] + " " + enemyList[1]);
 
         enemyHealth = 110;
         enemyIsBlocking = false;
@@ -224,12 +225,10 @@ public class BattleManager : MonoBehaviour
     public void Spawn()
     {
         int enemyAmount = Random.Range(1, 4);
-        Debug.Log(enemyAmount);
 
         for (int i = 0; i <= enemyAmount; i++)
         {
-            int enemy = Random.Range(0, 0);
-            Debug.Log(enemy);
+            int enemy = Random.Range(0, 2);
 
             SpawnEnemy(i, enemy);
         }
@@ -239,7 +238,6 @@ public class BattleManager : MonoBehaviour
     {
         if(spawnPoint == 1)
         {
-            Debug.Log("Enemy Spawned in Posiiton 1");
             Instantiate(enemyList[enemy], new Vector3(-1.5f, 1.0f + enemyList[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyOne.transform);
         }
 
