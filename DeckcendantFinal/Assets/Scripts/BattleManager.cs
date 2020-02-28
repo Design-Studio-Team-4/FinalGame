@@ -25,14 +25,12 @@ public class BattleManager : MonoBehaviour
     public GameObject enemyTwo;
     public GameObject enemyThree;
 
-    public static GameObject[] enemyList;
+    public static GameObject[] enemyPrefabs;
 
-    // Start is called before the first frame update
     void Start()
     {
 
-        enemyList = Resources.LoadAll<GameObject>("EnemyPrefabs");
-        Debug.Log(enemyList[0] + " " + enemyList[1]);
+        enemyPrefabs = Resources.LoadAll<GameObject>("EnemyPrefabs");
 
         enemyHealth = 110;
         enemyIsBlocking = false;
@@ -47,9 +45,6 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        // DrawPile.GetComponent<Deck>().Refill();
-        // hand.GetComponent<Hand>().Refill();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -238,27 +233,17 @@ public class BattleManager : MonoBehaviour
     {
         if(spawnPoint == 1)
         {
-            Instantiate(enemyList[enemy], new Vector3(-1.5f, 1.0f + enemyList[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyOne.transform);
+            Instantiate(enemyPrefabs[enemy], new Vector3(-1.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyOne.transform);
         }
 
         else if (spawnPoint == 2)
         {
-            Instantiate(enemyList[enemy], new Vector3(1.5f, 1.0f + enemyList[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyTwo.transform);
+            Instantiate(enemyPrefabs[enemy], new Vector3(1.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyTwo.transform);
         }
 
         else if (spawnPoint == 3)
         {
-            Instantiate(enemyList[enemy], new Vector3(4.5f, 1.0f + enemyList[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyThree.transform);
-        }
-    }
-
-    public class Enemy
-    {
-        public GameObject prefab;
-
-        public Enemy(GameObject p)
-        {
-            prefab = p;
+            Instantiate(enemyPrefabs[enemy], new Vector3(4.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyThree.transform);
         }
     }
 

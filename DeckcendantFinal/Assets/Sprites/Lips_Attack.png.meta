@@ -1,19 +1,16 @@
 fileFormatVersion: 2
-guid: c6fbcda4d46b44b4a9d6665dcbc85179
+guid: cdabd17323c02be478657c54f3e180a4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4209293236395418733
-    second: Lips_Idle_0
+      213: -8626867857946129725
+    second: Lips_Attack_0
   - first:
-      213: 5964940875865949596
-    second: Lips_Idle_1
+      213: 2993635142460592602
+    second: Lips_Attack_1
   - first:
-      213: -4785092988895382312
-    second: Lips_Idle_2
-  - first:
-      213: 2131038310472055973
-    second: Lips_Idle_3
+      213: 2494945201024666093
+    second: Lips_Attack_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -98,12 +95,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lips_Idle_0
+      name: Lips_Attack_0
       rect:
         serializedVersion: 2
-        x: 90
-        y: 225
-        width: 165
+        x: 20
+        y: 220
+        width: 230
         height: 126
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -112,19 +109,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eda47d4b0e296cd45935b13ea6616b7f
-      internalID: 4209293236395418733
+      spriteID: 595a431d5859dbb4aa1631df1ffa28d2
+      internalID: -8626867857946129725
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lips_Idle_1
+      name: Lips_Attack_1
       rect:
         serializedVersion: 2
-        x: 390
-        y: 225
-        width: 165
+        x: 316
+        y: 220
+        width: 230
         height: 126
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -133,19 +130,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff2dc8ee381fa4949af088b4a2df9311
-      internalID: 5964940875865949596
+      spriteID: cdf87ef12bb751145872b2ab1857fb80
+      internalID: 2993635142460592602
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lips_Idle_2
+      name: Lips_Attack_2
       rect:
         serializedVersion: 2
-        x: 90
+        x: 15
         y: 0
-        width: 165
+        width: 230
         height: 126
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -154,29 +151,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a9e67b2539c8e7a4b8d7f6bd31eaa39e
-      internalID: -4785092988895382312
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lips_Idle_3
-      rect:
-        serializedVersion: 2
-        x: 389
-        y: 0
-        width: 165
-        height: 126
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1ae98e5b55ae31a458dd619832d307ea
-      internalID: 2131038310472055973
+      spriteID: 630e2853f9d8150439068e2b6e3b2125
+      internalID: 2494945201024666093
       vertices: []
       indices: 
       edges: []

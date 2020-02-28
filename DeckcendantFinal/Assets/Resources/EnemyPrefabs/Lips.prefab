@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7469180308530881426}
   - component: {fileID: 7469180308530881425}
   - component: {fileID: 7469180308530881424}
+  - component: {fileID: 8179028998496235087}
   m_Layer: 0
   m_Name: Lips
   m_TagString: Untagged
@@ -101,3 +102,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8179028998496235087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7469180308530881431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efec5bc07af90d142b17d581ba8ab187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
