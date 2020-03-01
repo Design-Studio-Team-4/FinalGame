@@ -2,9 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hover : MonoBehaviour
+public class CardScript : MonoBehaviour
 {
     private int idle;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
     public void OnHover()
     {
@@ -17,5 +29,10 @@ public class Hover : MonoBehaviour
     {
         GetComponent<Canvas>().sortingOrder = idle;
         GetComponent<Animator>().Play("CardHoverExit");
+    }
+
+    public void OnClick()
+    {
+        // 
     }
 }

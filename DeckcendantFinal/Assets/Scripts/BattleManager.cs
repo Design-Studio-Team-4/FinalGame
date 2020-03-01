@@ -15,12 +15,6 @@ public class BattleManager : MonoBehaviour
     public int enemyCurrentBlockVal;
     public EnemyMove currentEnemyMove;
 
-    
-    public GameObject blockUI;
-
-    public GameObject DrawPile;
-    public GameObject hand;
-
     public GameObject enemyOne;
     public GameObject enemyTwo;
     public GameObject enemyThree;
