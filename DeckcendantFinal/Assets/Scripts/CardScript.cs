@@ -4,35 +4,40 @@ using UnityEngine;
 
 public class CardScript : MonoBehaviour
 {
-    private int idle;
+    public GameObject cardManager;
+    private CardManager cardManagerScript;
 
-    // Start is called before the first frame update
+    private int handIndex;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        handIndex = (GetComponent<Canvas>().sortingOrder) - 1;
+        cardManagerScript = cardManager.GetComponent<CardManager>();
     }
 
     public void OnHover()
     {
-        idle = GetComponent<Canvas>().sortingOrder;
-        GetComponent<Canvas>().sortingOrder = 6;
-        GetComponent<Animator>().Play("CardHover");
+        if (cardManagerScript.hand[handIndex].used == false)
+        {
+            GetComponent<Canvas>().sortingOrder = 6;
+            GetComponent<Animator>().Play("CardHover");
+        }
     }
 
     public void OnHoverExit()
     {
-        GetComponent<Canvas>().sortingOrder = idle;
-        GetComponent<Animator>().Play("CardHoverExit");
+        if (cardManagerScript.hand[handIndex].used == false)
+        {
+            GetComponent<Canvas>().sortingOrder = handIndex + 1;
+            GetComponent<Animator>().Play("CardHoverExit");
+        }
     }
 
     public void OnClick()
     {
-        // 
+        if (cardManagerScript.hand[handIndex].used == false)
+        {
+            cardManager.GetComponent<CardManager>().PlayCard(handIndex);
+        }
     }
 }

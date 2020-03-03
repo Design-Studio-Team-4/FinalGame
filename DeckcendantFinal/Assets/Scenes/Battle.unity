@@ -734,6 +734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardManager: {fileID: 3965332058813799250}
 --- !u!114 &793910592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,6 +841,21 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 793910591}
           m_MethodName: OnHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 793910591}
+          m_MethodName: OnClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1007,6 +1023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardManager: {fileID: 3965332058813799250}
 --- !u!114 &1261254663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,6 +1139,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1261254662}
+          m_MethodName: OnClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!223 &1261254668
 Canvas:
   m_ObjectHideFlags: 0
@@ -1197,6 +1229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardManager: {fileID: 3965332058813799250}
 --- !u!114 &1265205358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1303,6 +1336,21 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1265205357}
           m_MethodName: OnHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1265205357}
+          m_MethodName: OnClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1655,6 +1703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardManager: {fileID: 3965332058813799250}
 --- !u!114 &1797465445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1770,6 +1819,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1797465444}
+          m_MethodName: OnClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!223 &1797465450
 Canvas:
   m_ObjectHideFlags: 0
@@ -1800,7 +1864,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1936654761}
-  - component: {fileID: 1936654760}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1808,28 +1871,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1936654760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1936654759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 218ecdad3d4540b4395c6fd685e5bc0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerHealth: 0
-  playerIsBlocking: 0
-  playerCurrentBlockVal: 0
-  enemyHealth: 0
-  enemyCooldown: 0
-  enemyIsBlocking: 0
-  enemyCurrentBlockVal: 0
-  enemyOne: {fileID: 1781769760}
-  enemyTwo: {fileID: 2005178682}
-  enemyThree: {fileID: 1671130013}
 --- !u!4 &1936654761
 Transform:
   m_ObjectHideFlags: 0
@@ -1978,6 +2019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardManager: {fileID: 3965332058813799250}
 --- !u!223 &6038387884598028464
 Canvas:
   m_ObjectHideFlags: 0
@@ -2105,6 +2147,21 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6038387884598028460}
           m_MethodName: OnHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6038387884598028460}
+          m_MethodName: OnClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

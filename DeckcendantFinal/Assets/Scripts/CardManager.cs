@@ -17,8 +17,6 @@ public class CardManager : MonoBehaviour
 
     void Start()
     {
-        handObject.GetComponent<Animator>().Play("HandUp");
-
         for (int i = 0; i < 5; i++)
         {
             hand[i] = new Card(true);
@@ -35,19 +33,38 @@ public class CardManager : MonoBehaviour
         }
 
         Draw();
+        handObject.GetComponent<Animator>().Play("HandUp");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Draw();
+        }
+    }
+
+    public void PlayCard(int slot)
+    {
+        GameObject fCard = handSlots[slot];
+        Card bCard = hand[slot];
+
+        fCard.GetComponent<Image>().sprite = hand[slot].back;
+        fCard.GetComponent<Animator>().Play("CardHoverExit");
+        fCard.GetComponent<Canvas>().sortingOrder = slot + 1;
+
+        bCard.used = true;
+
+        SortHand();
     }
 
     public void Draw()
     {
+        SortHand();
+
         int drawCount = CheckHand();
 
-        for (int i = (5 - drawCount); i < 5; i++)
+        for (int i = 0; i < (drawCount); i++)
         {
             hand[i] = deck[deck.Count - 1];
             discard.Add(hand[i]);
@@ -70,6 +87,28 @@ public class CardManager : MonoBehaviour
         }
 
         return draw;
+    }
+
+    public void SortHand()
+    {
+        for (int j = 0; j <= hand.Length - 2; j++)
+        {
+            for (int i = 0; i <= hand.Length - 2; i++)
+            {
+                if (hand[i].used == false)
+                {
+                    Card tempCard = hand[i + 1];
+                    Sprite tempSprite = handSlots[i + 1].GetComponent<Image>().sprite;
+
+                    hand[i + 1] = hand[i];
+                    handSlots[i + 1].GetComponent<Image>().sprite = handSlots[i].GetComponent<Image>().sprite;
+
+                    hand[i] = tempCard;
+                    handSlots[i].GetComponent<Image>().sprite = tempSprite;
+
+                }
+            }
+        }
     }
 
     public List<Card> Shuffle(List<Card> pile)
