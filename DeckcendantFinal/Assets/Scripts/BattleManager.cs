@@ -213,11 +213,11 @@ public class BattleManager : MonoBehaviour
 
     public void Spawn()
     {
-        int enemyAmount = Random.Range(1, 4);
+        int enemyAmount = Random.Range(3, 4);
 
         for (int i = 0; i <= enemyAmount; i++)
         {
-            int enemy = Random.Range(0, 2);
+            int enemy = Random.Range(0, 3);
 
             SpawnEnemy(i, enemy);
         }

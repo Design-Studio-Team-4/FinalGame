@@ -40,7 +40,10 @@ public class CardManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Draw();
+            TriggerDrawAnimation();
+
+            Debug.Log(deck.Count);
+            Debug.Log(discard.Count);
         }
     }
 
@@ -58,19 +61,51 @@ public class CardManager : MonoBehaviour
         SortHand();
     }
 
+    public void TriggerDrawAnimation()
+    {
+        handObject.GetComponent<Animator>().Play("HandDown");
+    }
+
     public void Draw()
     {
         SortHand();
 
         int drawCount = CheckHand();
 
-        for (int i = 0; i < (drawCount); i++)
+        if (drawCount < deck.Count)
+        {
+            Drawing(drawCount);
+        }
+
+        else if (drawCount >= deck.Count)
+        {
+            if (deck.Count != 0)
+            {
+                Drawing(deck.Count);
+                drawCount -= deck.Count;
+            }
+            
+            for (int i = 0; i < (discard.Count); i++)
+            {
+                deck.Add(discard[i]);
+                deck[i].used = false;
+                discard.RemoveAt(i);
+            }
+
+            deck = Shuffle(deck);
+            Drawing(drawCount);
+        }
+    }
+
+    public void Drawing(int cardsToDraw)
+    {
+        for (int i = 0; i < (cardsToDraw); i++)
         {
             hand[i] = deck[deck.Count - 1];
             discard.Add(hand[i]);
             deck.RemoveAt(deck.Count - 1);
 
-           handSlots[i].GetComponent<Image>().sprite = hand[i].front;
+            handSlots[i].GetComponent<Image>().sprite = hand[i].front;
         }
     }
 
