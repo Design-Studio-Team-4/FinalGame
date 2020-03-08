@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1094,7 +1094,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 210, y: -15}
+  m_AnchoredPosition: {x: 210, y: -20}
   m_SizeDelta: {x: 65, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1418742582923401262
@@ -1191,6 +1191,7 @@ GameObject:
   - component: {fileID: 1418742582923401268}
   - component: {fileID: 1418742582923401267}
   - component: {fileID: 1418742582923401269}
+  - component: {fileID: 1418742582923401270}
   m_Layer: 5
   m_Name: Card 5
   m_TagString: Untagged
@@ -1247,6 +1248,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  block: {fileID: 0}
+--- !u!50 &1418742582923401270
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418742582923401266}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!223 &1418742582997846148
 Canvas:
   m_ObjectHideFlags: 0
@@ -1359,7 +1382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 110, y: -15}
+  m_AnchoredPosition: {x: 110, y: -20}
   m_SizeDelta: {x: 65, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1418742582997846154
@@ -1410,6 +1433,7 @@ GameObject:
   - component: {fileID: 1418742582997846160}
   - component: {fileID: 1418742582997846159}
   - component: {fileID: 1418742582997846161}
+  - component: {fileID: 1418742582997846162}
   m_Layer: 5
   m_Name: Card 3
   m_TagString: Untagged
@@ -1466,6 +1490,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  block: {fileID: 0}
+--- !u!50 &1418742582997846162
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418742582997846158}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!223 &1418742583487494601
 Canvas:
   m_ObjectHideFlags: 0
@@ -1481,7 +1527,7 @@ Canvas:
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
+  m_OverridePixelPerfect: 1
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
@@ -1588,7 +1634,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418742583487494611}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children: []
@@ -1597,7 +1643,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: -15}
+  m_AnchoredPosition: {x: 10, y: -20}
   m_SizeDelta: {x: 65, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1418742583487494611
@@ -1672,6 +1718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  block: {fileID: 0}
 --- !u!1 &1418742583520273090
 GameObject:
   m_ObjectHideFlags: 0
@@ -1907,7 +1954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 60, y: -15}
+  m_AnchoredPosition: {x: 60, y: -20}
   m_SizeDelta: {x: 65, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1418742583680424585
@@ -1927,6 +1974,7 @@ GameObject:
   - component: {fileID: 1418742583680424589}
   - component: {fileID: 1418742583680424588}
   - component: {fileID: 1418742583680424590}
+  - component: {fileID: 1418742583680424591}
   m_Layer: 5
   m_Name: Card 2
   m_TagString: Untagged
@@ -2012,6 +2060,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  block: {fileID: 0}
+--- !u!50 &1418742583680424591
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418742583680424585}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!222 &1418742583894421737
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2199,7 +2269,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160, y: -15}
+  m_AnchoredPosition: {x: 160, y: -20}
   m_SizeDelta: {x: 65, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1418742583898329617
@@ -2219,6 +2289,7 @@ GameObject:
   - component: {fileID: 1418742583898329621}
   - component: {fileID: 1418742583898329620}
   - component: {fileID: 1418742583898329622}
+  - component: {fileID: 1418742583898329623}
   m_Layer: 5
   m_Name: Card 4
   m_TagString: Untagged
@@ -2304,6 +2375,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  block: {fileID: 0}
+--- !u!50 &1418742583898329623
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418742583898329617}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3965332058813799250
 GameObject:
   m_ObjectHideFlags: 0
