@@ -9,26 +9,29 @@ public class BattleManager : MonoBehaviour
     public bool playerIsBlocking;
     public int playerCurrentBlockVal;
 
-    public GameObject enemyOne;
-    public GameObject enemyTwo;
-    public GameObject enemyThree;
+    public float xPosOne = -1.5f;
+    public float xPosTwo = 1.5f;
+    public float xPosThree = 4.5f;
 
-    public GameObject[] enemyPrefabs;
+    public float yPos = 1f;
+    public float zPos = 6f;
 
-    public static Enemy[] enemies;
+    public GameObject lipsPrefab;
+    public GameObject tallShroomPrefab;
+    public GameObject blueBoiPrefab;
+
+    public Enemy[] enemies;
 
     void Start()
     {
-
-        for (int i = 0; i < 2; i++)
+        enemies = new Enemy[]
         {
-            Debug.Log(enemies[i]);
-        }
+            new Enemy(100, 0, 0, false, lipsPrefab, lipsMoves),
+            new Enemy(135, 0, 0, false, tallShroomPrefab, tallShroomMoves),
+            new Enemy(75, 0, 0, false, blueBoiPrefab, blueBoiMoves),
+         };
 
-        enemies[0] = new Enemy(100, 0, 0, false, enemyPrefabs[0], lipsMoves);
-        enemies[1] = new Enemy(135, 0, 0, false, enemyPrefabs[1], tallShroomMoves);
-        enemies[2] = new Enemy(75, 0, 0, false, enemyPrefabs[2], blueBoiMoves);
-
+    Debug.Log(enemies[0].prefab);
 
         playerHealth = 100;
         playerIsBlocking = false;
@@ -207,17 +210,17 @@ public class BattleManager : MonoBehaviour
     {
         if (spawnPoint == 1)
         {
-           // Instantiate(enemyPrefabs[enemy], new Vector3(-1.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyOne.transform);
+           Instantiate(enemies[enemy].prefab, new Vector3(xPosOne, enemies[enemy].prefab.transform.position.y, zPos), Quaternion.identity);
         }
 
         else if (spawnPoint == 2)
         {
-            // Instantiate(enemyPrefabs[enemy], new Vector3(1.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyTwo.transform);
+            Instantiate(enemies[enemy].prefab, new Vector3(xPosTwo, enemies[enemy].prefab.transform.position.y, zPos), Quaternion.identity);
         }
 
         else if (spawnPoint == 3)
         {
-            // Instantiate(enemyPrefabs[enemy], new Vector3(4.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyThree.transform);
+            Instantiate(enemies[enemy].prefab, new Vector3(xPosThree, enemies[enemy].prefab.transform.position.y, zPos), Quaternion.identity);
         }
     }
 
@@ -230,7 +233,7 @@ public class BattleManager : MonoBehaviour
 
         public GameObject prefab;
 
-        public EnemyMove[] enemyMoves;
+        public EnemyMove[] moves;
 
         public Enemy(int h, int cd, int cbv, bool ib, GameObject p, EnemyMove[] em)
         {
@@ -240,7 +243,7 @@ public class BattleManager : MonoBehaviour
             isBlocking = ib;
             prefab = p;
 
-            enemyMoves = em;
+            moves = em;
         }
     }
 
