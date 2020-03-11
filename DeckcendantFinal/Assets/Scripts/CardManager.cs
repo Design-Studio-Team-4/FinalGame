@@ -12,15 +12,23 @@ public class CardManager : MonoBehaviour
     public Card[] hand = new Card[5];
     public GameObject handObject;
     public GameObject[] handSlots = new GameObject[5];
-
+    
     public static Sprite[] cardFronts;
     public static Sprite[] cardBacks;
-
+    //Chris Vars  
+     Vector3 Focuslocation;
+    public Vector3[] OriginalLocations;
+    float waitTime = 2f;
+    public bool[] isMoving = new bool[5];
+    public bool[] isFocus = new bool[5];
     void Start()
     {
+       
         for (int i = 0; i < 5; i++)
         {
             hand[i] = new Card(true);
+            
+
         }
 
         drawPile = Shuffle(drawPile);
@@ -35,6 +43,12 @@ public class CardManager : MonoBehaviour
 
         Draw();
         handObject.GetComponent<Animator>().Play("HandUp");
+        for (int i = 0; i < 5; i++)
+        {
+            OriginalLocations[i] = handSlots[i].transform.position;
+            isMoving[i] = false;
+        }
+        Focuslocation = new Vector3(handSlots[2].transform.position.x, handSlots[2].transform.position.y + 2, handSlots[2].transform.position.z);
     }
 
     void Update()
@@ -49,17 +63,24 @@ public class CardManager : MonoBehaviour
     }
 
     public void PlayCard(int slot)
-    {
-        GameObject fCard = handSlots[slot];
+    {   GameObject fCard = handSlots[slot];
         Card bCard = hand[slot];
+        if (isMoving[slot]==false)
+        {
 
-        fCard.GetComponent<Image>().sprite = hand[slot].back;
+
+        StartCoroutine(MoveCard(slot, OriginalLocations[slot]));
+
+        isFocus[slot] = false;
+        //fCard.GetComponent<Image>().sprite = hand[slot].back;
+       
         //fCard.GetComponent<Animator>().Play("CardHoverExit");
         fCard.GetComponent<Canvas>().sortingOrder = slot + 1;
 
         bCard.used = true;
-
-        SortHand();
+       
+        SortHand(); 
+        }
     }
 
     public void TriggerDrawAnimation()
@@ -172,7 +193,7 @@ public class CardManager : MonoBehaviour
         public int power;
         public int cost;
         public bool used;
-
+        
         public Card(int t, int p, int c, bool u, Sprite f, Sprite b)
         {
             type = t;
@@ -181,11 +202,60 @@ public class CardManager : MonoBehaviour
             used = u;
             front = f;
             back = b;
+            
         }
 
         public Card(bool u)
         {
             used = u;
         }
+    }
+    int findWhichSlot(GameObject CardToLookFor)
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            if(handSlots[i] = CardToLookFor)
+            {
+                return i;
+            }
+        }
+       
+            return -1;
+
+      
+    }
+    public void BringToFocus(GameObject CardToFocusOn)
+    {
+        if (findWhichSlot(CardToFocusOn) != -1)
+        {
+            int slot = findWhichSlot(CardToFocusOn);
+            StartCoroutine(MoveCard(slot, Focuslocation));
+            isFocus[slot] = true;
+        }
+        else
+        {
+            Debug.LogError("BringToFocus failed, findWhichSlot returned -1 ");
+        }
+    }
+    public IEnumerator MoveCard(int SlotToMove,Vector3 TargetLocation)
+    {
+        Debug.Log("MoveCard Started");
+        isMoving[SlotToMove] = true;
+        float elapsedTime = 0f;
+        while (elapsedTime < waitTime)
+        {
+            Debug.Log("Moving to slot");
+            handSlots[SlotToMove].transform.position = Vector3.Lerp(handSlots[SlotToMove].transform.position, TargetLocation, (elapsedTime / waitTime));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        isMoving[SlotToMove] = false;
+        //isFocus = true;
+        yield return null;
+    }
+    public void returnToPosition() 
+    {
+
     }
 }

@@ -6,7 +6,7 @@ public class Hand : MonoBehaviour
 {
     public GameObject cardManager;
     private CardManager cardManagerScript;
-    public GameObject FocusSlot;
+    
     GameObject[] Slots = new GameObject[4];
     void Start()
     {
@@ -17,13 +17,13 @@ public class Hand : MonoBehaviour
     {
         cardManagerScript.Draw();
     }
-    
+    /*  
     public GameObject GetFocus()
     {
         return FocusSlot.GetComponent<CardSlot>().GetCardInSlot();
     }
     
-
+  
     public GameObject FindEmptySlot()
     {
         bool foundEmpty = false;
@@ -39,4 +39,5 @@ public class Hand : MonoBehaviour
         }
         return null;
     }
+    */
 }
