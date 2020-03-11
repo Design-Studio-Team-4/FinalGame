@@ -14,6 +14,9 @@ public class CardScript : MonoBehaviour
     float waitTime = 2f;
     public GameObject hand;
     public GameObject OldSlot;
+
+    public GameObject block;
+
     void Start()
     {
         isFocus = false;

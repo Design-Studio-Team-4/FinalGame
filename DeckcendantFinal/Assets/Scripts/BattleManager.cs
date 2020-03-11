@@ -190,22 +190,22 @@ public class BattleManager : MonoBehaviour
 
         if (movePct <= 0.100f )
         {
-            currentEnemyMove = enemyMoveList[2];
+            // currentEnemyMove = enemyMoveList[2];
         }
 
         else if( movePct >= 0.101f && movePct <= 0.250)
         {
-            currentEnemyMove = enemyMoveList[1];
+            // currentEnemyMove = enemyMoveList[1];
         }
 
         else if (movePct >= 0.251f && movePct <= 0.500)
         {
-            currentEnemyMove = enemyMoveList[3];
+            // currentEnemyMove = enemyMoveList[3];
         }
 
         else
         {
-            currentEnemyMove = enemyMoveList[0];
+            // currentEnemyMove = enemyMoveList[0];
         }
 
         enemyCooldown = currentEnemyMove.cooldown;
@@ -241,6 +241,18 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public class Enemy
+    {
+        public int health;
+        public int cooldown;
+        public int currentBlockVal;
+        public bool isBlocking;
+
+        public GameObject prefab;
+
+        public EnemyMove[] enemyMoves;
+    }
+
     public class EnemyMove
     {
         public int type;
@@ -256,19 +268,9 @@ public class BattleManager : MonoBehaviour
             chance = ch;
         }
     }
-
     /*Type:
      * 1 = Attack
      * 2 = Block
      * 3 = Heal
      */
-
-    public EnemyMove[] enemyMoveList = new EnemyMove[]
-    {
-        new EnemyMove(1, 15, 4, 0.50f), // Slap
-        new EnemyMove(1, 45, 12, 0.15f), // Big Punch
-        new EnemyMove(2, 5, 4, 0.10f), // Block
-        new EnemyMove(3, 10, 6, 0.25f), // Heal
-    };
-
 }
