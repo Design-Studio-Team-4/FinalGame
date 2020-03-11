@@ -13,17 +13,22 @@ public class BattleManager : MonoBehaviour
     public GameObject enemyTwo;
     public GameObject enemyThree;
 
-    public static GameObject[] enemyPrefabs;
+    public GameObject[] enemyPrefabs;
 
-   /* public Enemy[] enemies = new Enemy[]
-    {
-        new Enemy(100, 0, 0, false, enemyPrefabs[0], enemyPrefabs[0].GetComponent<Moves>)
-    }; */
+    public static Enemy[] enemies;
 
     void Start()
     {
 
-        enemyPrefabs = Resources.LoadAll<GameObject>("EnemyPrefabs");
+        for (int i = 0; i < 2; i++)
+        {
+            Debug.Log(enemies[i]);
+        }
+
+        enemies[0] = new Enemy(100, 0, 0, false, enemyPrefabs[0], lipsMoves);
+        enemies[1] = new Enemy(135, 0, 0, false, enemyPrefabs[1], tallShroomMoves);
+        enemies[2] = new Enemy(75, 0, 0, false, enemyPrefabs[2], blueBoiMoves);
+
 
         playerHealth = 100;
         playerIsBlocking = false;
@@ -202,17 +207,17 @@ public class BattleManager : MonoBehaviour
     {
         if (spawnPoint == 1)
         {
-            Instantiate(enemyPrefabs[enemy], new Vector3(-1.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyOne.transform);
+           // Instantiate(enemyPrefabs[enemy], new Vector3(-1.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyOne.transform);
         }
 
         else if (spawnPoint == 2)
         {
-            Instantiate(enemyPrefabs[enemy], new Vector3(1.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyTwo.transform);
+            // Instantiate(enemyPrefabs[enemy], new Vector3(1.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyTwo.transform);
         }
 
         else if (spawnPoint == 3)
         {
-            Instantiate(enemyPrefabs[enemy], new Vector3(4.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyThree.transform);
+            // Instantiate(enemyPrefabs[enemy], new Vector3(4.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyThree.transform);
         }
     }
 
@@ -237,26 +242,54 @@ public class BattleManager : MonoBehaviour
 
             enemyMoves = em;
         }
-
-        public class EnemyMove
-        {
-            public int type;
-            public int power;
-            public int cooldown;
-            public float chance;
-
-            public EnemyMove(int t, int p, int co, float ch)
-            {
-                type = t;
-                power = p;
-                cooldown = co;
-                chance = ch;
-            }
-        }
-        /*Type:
-         * 1 = Attack
-         * 2 = Block
-         * 3 = Heal
-         */
     }
+
+    public class EnemyMove
+    {
+        public int type;
+        public int power;
+        public int cooldown;
+        public float chance;
+
+        public EnemyMove(int t, int p, int co, float ch)
+        {
+            type = t;
+            power = p;
+            cooldown = co;
+            chance = ch;
+        }
+    }
+
+    public static EnemyMove[] lipsMoves = new EnemyMove[]
+    {
+            new EnemyMove(1, 15, 2, 0.50f), // Slap (Attack/15/2/0.50)
+            new EnemyMove(2, 10, 2, 0.10f), // Block (Block/10/2/0.10)
+            new EnemyMove(3, 10, 3, 0.25f), // Heal (Heal/10/3/0.25)
+            new EnemyMove(1, 45, 6, 0.15f), // Big Punch (Attack/45/6/0.15)
+    };
+
+    public static EnemyMove[] tallShroomMoves = new EnemyMove[]
+    {
+            new EnemyMove(1, 10, 4, 0.20f), // Ball Shake (Attack/10/4/0.20)
+            new EnemyMove(2, 15, 2, 0.30f), // Stalk Strengthen (Defend/15/2/0.30)
+            new EnemyMove(2, 35, 4, 0.35f), // Tall Ball Wall (Defend/35/4/0.35)
+            new EnemyMove(3, 60, 8, 0.15f), // Heal Spore (Heal/60/8/0.15)
+    };
+
+    public static EnemyMove[] blueBoiMoves = new EnemyMove[]
+    {
+            new EnemyMove(1, 10, 2, 0.40f), // Singe (Attack/10/2/0.40)
+            new EnemyMove(1, 25, 4, 0.20f), // Hex (Attack/25/4/0.20)
+            new EnemyMove(1, 65, 9, 0.10f), // Fireball (Attack/65/9/0.10)
+            new EnemyMove(3, 40, 3, 0.20f), // Heal (Heal/40/3/0.20)
+            new EnemyMove(3, 70, 7, 0.10f), // Big Heal (Heal/70/7/0.10)
+    };
+
+
+    /*Type:
+     * 1 = Attack
+     * 2 = Block
+     * 3 = Heal
+     */
+
 }

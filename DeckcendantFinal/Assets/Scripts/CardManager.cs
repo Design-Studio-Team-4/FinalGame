@@ -13,8 +13,8 @@ public class CardManager : MonoBehaviour
     public GameObject handObject;
     public GameObject[] handSlots = new GameObject[5];
 
-    public static Sprite[] cardFronts;
-    public static Sprite[] cardBacks;
+    public Sprite[] cardFronts;
+    public Sprite[] cardBacks;
 
     void Start()
     {
@@ -24,9 +24,6 @@ public class CardManager : MonoBehaviour
         }
 
         drawPile = Shuffle(drawPile);
-
-        cardFronts = Resources.LoadAll<Sprite>("CardFronts");
-        cardBacks = Resources.LoadAll<Sprite>("CardBacks");
 
         for (int i = 0; i < 30; i++)
         {

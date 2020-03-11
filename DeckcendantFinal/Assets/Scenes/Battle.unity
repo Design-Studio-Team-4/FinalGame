@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -339,7 +339,7 @@ Transform:
   - {fileID: 509553607}
   - {fileID: 65401057}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &475919402
 PrefabInstance:
@@ -578,7 +578,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -835,13 +835,13 @@ MonoBehaviour:
   playerHealth: 0
   playerIsBlocking: 0
   playerCurrentBlockVal: 0
-  enemyHealth: 0
-  enemyCooldown: 0
-  enemyIsBlocking: 0
-  enemyCurrentBlockVal: 0
   enemyOne: {fileID: 1781769760}
   enemyTwo: {fileID: 2005178682}
   enemyThree: {fileID: 1671130013}
+  enemyPrefabs:
+  - {fileID: 7469180308530881431, guid: 5baabb8dc349d1c4fab38cd4975c15a0, type: 3}
+  - {fileID: 5889710192566116678, guid: 0f6cb3c6a27c4e34cab1d50ed85beb41, type: 3}
+  - {fileID: 5889710192566116678, guid: 377124e6cd948a546909c00546c78e7a, type: 3}
 --- !u!4 &1936654761
 Transform:
   m_ObjectHideFlags: 0
@@ -899,6 +899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  FocusSlot: {fileID: 0}
 --- !u!4 &1418742581811180393
 Transform:
   m_ObjectHideFlags: 0
@@ -1248,6 +1249,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  hand: {fileID: 0}
+  OldSlot: {fileID: 0}
   block: {fileID: 0}
 --- !u!50 &1418742582923401270
 Rigidbody2D:
@@ -1490,6 +1493,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  hand: {fileID: 0}
+  OldSlot: {fileID: 0}
   block: {fileID: 0}
 --- !u!50 &1418742582997846162
 Rigidbody2D:
@@ -1718,6 +1723,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  hand: {fileID: 0}
+  OldSlot: {fileID: 0}
   block: {fileID: 0}
 --- !u!1 &1418742583520273090
 GameObject:
@@ -1812,7 +1819,7 @@ RectTransform:
   - {fileID: 1418742582660333221}
   - {fileID: 1418742581811180393}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2060,6 +2067,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  hand: {fileID: 0}
+  OldSlot: {fileID: 0}
   block: {fileID: 0}
 --- !u!50 &1418742583680424591
 Rigidbody2D:
@@ -2375,6 +2384,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 3965332058813799250}
+  hand: {fileID: 0}
+  OldSlot: {fileID: 0}
   block: {fileID: 0}
 --- !u!50 &1418742583898329623
 Rigidbody2D:
@@ -2426,7 +2437,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3965332058813799252
 MonoBehaviour:
@@ -2447,3 +2458,7 @@ MonoBehaviour:
   - {fileID: 1418742582997846158}
   - {fileID: 1418742583898329617}
   - {fileID: 1418742582923401266}
+  cardFronts:
+  - {fileID: 21300000, guid: 642797bda367dba4da447a84de32c577, type: 3}
+  cardBacks:
+  - {fileID: 21300000, guid: 5a0a4b3cff5eb1843b621edb4fabc6cd, type: 3}

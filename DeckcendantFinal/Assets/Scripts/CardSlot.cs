@@ -23,7 +23,7 @@ public class CardSlot : MonoBehaviour
     {
         if (CardInSlot)
         {
-            CardInSlot.GetComponent<CardScript>().removeCardFromSlot();
+            // CardInSlot.GetComponent<CardScript>().removeCardFromSlot();
             CardInSlot = null;
             isEmpty = true;
         }
