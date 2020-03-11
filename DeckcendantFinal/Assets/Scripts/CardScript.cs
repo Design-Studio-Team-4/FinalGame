@@ -19,6 +19,7 @@ public class CardScript : MonoBehaviour
 
     void Start()
     {
+        hand = GameObject.FindGameObjectWithTag("PlayerHand");
         isFocus = false;
         handIndex = (GetComponent<Canvas>().sortingOrder) - 1;
         cardManagerScript = cardManager.GetComponent<CardManager>();
@@ -31,13 +32,26 @@ public class CardScript : MonoBehaviour
         }
         
     }
-    public IEnumerator MoveToSlot(GameObject SlotToEnter)
+    public void MoveToSlot(GameObject Slot)
     {
-        if (SlotCardIsIn)
+        if(isMoving == false)
         {
-            OldSlot = SlotCardIsIn;
+            StartCoroutine(MoveToSlotEnum(Slot));
         }
         
+    }
+     IEnumerator MoveToSlotEnum(GameObject SlotToEnter)
+    {
+        Debug.Log("MoveToSlot Started");
+       if (SlotCardIsIn)
+       {
+           OldSlot = SlotCardIsIn;
+       }
+       PutCardInSlot(SlotToEnter);
+       if (SlotToEnter.GetComponent<CardSlot>().isFocusSlot())
+        {
+            isFocus = true;
+        } 
         isMoving = true;
         Vector3 targetPos = SlotToEnter.transform.position;
         //Vector3 relativePos = targetPos - gameObject.transform.position;
@@ -48,29 +62,28 @@ public class CardScript : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        
+        
         isMoving = false;
         //isFocus = true;
         yield return null;
     }
     public void PutCardInSlot(GameObject slotToEnter)
     {
-        if (slotToEnter)
-        {
-            if (slotToEnter.GetComponent<CardSlot>().getState())
-            {
-                if(isMoving == false)
-                {
+        
                     slotToEnter.GetComponent<CardSlot>().PutCardInSlot(gameObject);
                     isCardInASlot = true;
-                }
-                Debug.LogError("Card slot you are trying to enter is not empty");
-            }
-        }
+
+              // Debug.LogError("Card slot you are trying to enter is not empty");
+                
+                
+       
+       
     }
     public void removeRemoveFocus()
     {
 
-        isCardInASlot = false;
+        isFocus = false;
     }
     public GameObject GetOldSlot()
     {
@@ -78,40 +91,52 @@ public class CardScript : MonoBehaviour
     }
      public void OnClick()
     {
-
+        //MoveToSlot(hand.GetComponent<Hand>().FocusSlot);
+       
         if(isFocus == false)
         {
             if (hand.GetComponent<Hand>().GetFocus())
             {
-                GameObject oldCard = hand.GetComponent<Hand>().GetFocus();
-                if (hand.GetComponent<Hand>().FindEmptySlot())
-                {
+              GameObject oldCard = hand.GetComponent<Hand>().GetFocus();
+              //  if (hand.GetComponent<Hand>().FindEmptySlot())
+               // {
                     if (oldCard.GetComponent<CardScript>().GetOldSlot() == null)
                     {
+                        Debug.Log("OldCard get old slot = null");
                         oldCard.GetComponent<CardScript>().MoveToSlot(hand.GetComponent<Hand>().FindEmptySlot());
-                    }
-                }
-                else if (oldCard.GetComponent<CardScript>().GetOldSlot().GetComponent<CardSlot>().getState())
-                {
+                        gameObject.GetComponent<CardScript>().MoveToSlot(hand.GetComponent<Hand>().FocusSlot);
+                    } else
+                    {
                         oldCard.GetComponent<CardScript>().MoveToSlot(oldCard.GetComponent<CardScript>().GetOldSlot());
-                }
-                else
-                {
-                    Debug.LogError("There Was no empty slot to return the card in focus to");
-                }
+                    }
+                   
+               // }
+                //else
+               // {
+                //    Debug.LogError("There Was no empty slot to return the card in focus to");
+                //}
                 
             }
             else
             {
-                MoveToSlot(hand.GetComponent<Hand>().GetFocus().gameObject);
+                Debug.Log("There was no card in the focus slot");
+                gameObject.GetComponent<CardScript>().MoveToSlot(hand.GetComponent<Hand>().FocusSlot);
             }
         }
-        /*if (cardManagerScript.hand[handIndex].used == false)
+        {
+            if (isFocus)
+            {
+                //temp...later will play here
+
+                MoveToSlot(OldSlot);
+            }
+        } 
+       /*if (cardManagerScript.hand[handIndex].used == false)
         {
             cardManager.GetComponent<CardManager>().PlayCard(handIndex);
-        }*/
-
-
+        }
+    */
+   
     }
 
     /*public void OnHover()

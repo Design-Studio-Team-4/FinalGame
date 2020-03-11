@@ -6,7 +6,7 @@ public class CardSlot : MonoBehaviour
 {
     bool isEmpty = true;
     public GameObject CardInSlot;
-    
+    public bool FocusSlot;
     
     // Start is called before the first frame update
     void Start()
@@ -17,13 +17,23 @@ public class CardSlot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isEmpty == false)
+        {
+            if (CardInSlot)
+            {
+                CardInSlot.SetActive(true);
+            }
+        }
     }
     public void RemoveCardInSlot()
     {
         if (CardInSlot)
         {
+
             // CardInSlot.GetComponent<CardScript>().removeCardFromSlot();
+
+            // CardInSlot.GetComponent<CardScript>().PutCardInSlot(CardInSlot.GetComponent<CardScript>().GetOldSlot());
+
             CardInSlot = null;
             isEmpty = true;
         }
@@ -81,5 +91,8 @@ public class CardSlot : MonoBehaviour
     {
         return CardInSlot;
     }
-    
+    public bool isFocusSlot()
+    {
+        return FocusSlot;
+    }
 }
