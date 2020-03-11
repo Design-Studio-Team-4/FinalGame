@@ -54,7 +54,7 @@ public class CardManager : MonoBehaviour
         Card bCard = hand[slot];
 
         fCard.GetComponent<Image>().sprite = hand[slot].back;
-        fCard.GetComponent<Animator>().Play("CardHoverExit");
+        //fCard.GetComponent<Animator>().Play("CardHoverExit");
         fCard.GetComponent<Canvas>().sortingOrder = slot + 1;
 
         bCard.used = true;
@@ -159,7 +159,10 @@ public class CardManager : MonoBehaviour
 
         return pile;
     }
-
+    public GameObject getHand()
+    {
+        return handObject;
+    }
     public class Card
     {
         public Sprite front;
