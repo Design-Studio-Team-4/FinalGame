@@ -6,15 +6,14 @@ using UnityEngine.UI;
 public class CardManager : MonoBehaviour
 {
     public List<Card> deck = new List<Card>();
-    public List<Card> drawPile = new List<Card>();
     public List<Card> discard = new List<Card>();
 
     public Card[] hand = new Card[5];
     public GameObject handObject;
-    public GameObject[] handSlots = new GameObject[5];
+    public GameObject[] handSlots;
 
-    public Sprite[] cardFronts;
-    public Sprite[] cardBacks;
+    public static Sprite[] cardFronts;
+    public static Sprite[] cardBacks;
 
     void Start()
     {
@@ -23,11 +22,14 @@ public class CardManager : MonoBehaviour
             hand[i] = new Card(true);
         }
 
-        drawPile = Shuffle(drawPile);
+        deck = Shuffle(deck);
+
+        cardFronts = Resources.LoadAll<Sprite>("CardFronts");
+        cardBacks = Resources.LoadAll<Sprite>("CardBacks");
 
         for (int i = 0; i < 30; i++)
         {
-            drawPile.Add(new Card(1, 5, 1, false, cardFronts[0], cardBacks[0])); // Strike: Damage, 5 power, 1 cost.
+            deck.Add(new Card(1, 5, 1, false, cardFronts[0], cardBacks[0])); // Strike: Damage, 5 power, 1 cost.
         }
 
         Draw();
@@ -40,7 +42,7 @@ public class CardManager : MonoBehaviour
         {
             TriggerDrawAnimation();
 
-            Debug.Log(drawPile.Count);
+            Debug.Log(deck.Count);
             Debug.Log(discard.Count);
         }
     }
@@ -51,7 +53,7 @@ public class CardManager : MonoBehaviour
         Card bCard = hand[slot];
 
         fCard.GetComponent<Image>().sprite = hand[slot].back;
-        //fCard.GetComponent<Animator>().Play("CardHoverExit");
+        fCard.GetComponent<Animator>().Play("CardHoverExit");
         fCard.GetComponent<Canvas>().sortingOrder = slot + 1;
 
         bCard.used = true;
@@ -70,27 +72,27 @@ public class CardManager : MonoBehaviour
 
         int drawCount = CheckHand();
 
-        if (drawCount < drawPile.Count)
+        if (drawCount < deck.Count)
         {
             Drawing(drawCount);
         }
 
-        else if (drawCount >= drawPile.Count)
+        else if (drawCount >= deck.Count)
         {
-            if (drawPile.Count != 0)
+            if (deck.Count != 0)
             {
-                Drawing(drawPile.Count);
-                drawCount -= drawPile.Count;
+                Drawing(deck.Count);
+                drawCount -= deck.Count;
             }
             
             for (int i = 0; i < (discard.Count); i++)
             {
-                drawPile.Add(discard[i]);
-                drawPile[i].used = false;
+                deck.Add(discard[i]);
+                deck[i].used = false;
                 discard.RemoveAt(i);
             }
 
-            drawPile = Shuffle(drawPile);
+            deck = Shuffle(deck);
             Drawing(drawCount);
         }
     }
@@ -99,9 +101,9 @@ public class CardManager : MonoBehaviour
     {
         for (int i = 0; i < (cardsToDraw); i++)
         {
-            hand[i] = drawPile[drawPile.Count - 1];
+            hand[i] = deck[deck.Count - 1];
             discard.Add(hand[i]);
-            drawPile.RemoveAt(drawPile.Count - 1);
+            deck.RemoveAt(deck.Count - 1);
 
             handSlots[i].GetComponent<Image>().sprite = hand[i].front;
         }
@@ -156,10 +158,7 @@ public class CardManager : MonoBehaviour
 
         return pile;
     }
-    public GameObject getHand()
-    {
-        return handObject;
-    }
+
     public class Card
     {
         public Sprite front;
