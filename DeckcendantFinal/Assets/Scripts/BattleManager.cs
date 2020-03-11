@@ -9,25 +9,22 @@ public class BattleManager : MonoBehaviour
     public bool playerIsBlocking;
     public int playerCurrentBlockVal;
 
-    public int enemyHealth;
-    public int enemyCooldown;
-    public bool enemyIsBlocking;
-    public int enemyCurrentBlockVal;
-    public EnemyMove currentEnemyMove;
-
     public GameObject enemyOne;
     public GameObject enemyTwo;
     public GameObject enemyThree;
 
     public static GameObject[] enemyPrefabs;
 
+   /* public Enemy[] enemies = new Enemy[]
+    {
+        new Enemy(100, 0, 0, false, enemyPrefabs[0], enemyPrefabs[0].GetComponent<Moves>)
+    }; */
+
     void Start()
     {
 
         enemyPrefabs = Resources.LoadAll<GameObject>("EnemyPrefabs");
 
-        enemyHealth = 110;
-        enemyIsBlocking = false;
         playerHealth = 100;
         playerIsBlocking = false;
 
@@ -40,33 +37,14 @@ public class BattleManager : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Player Health: " + playerHealth);
-            Debug.Log("Enemy Health: " + enemyHealth);
-            Debug.Log("Enemy Cooldown: " + enemyCooldown);
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            PlayerMove(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            PlayerMove(2);
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            PlayerMove(3);
-        }
     }
 
     public void PlayerMove(int type)
     {
         ToggleUI(2);
 
+        /*
+         
         if (type == 1)
         {
             if (enemyIsBlocking)
@@ -107,6 +85,8 @@ public class BattleManager : MonoBehaviour
         }
 
         CheckGameState();
+
+        */
     }
 
     public void PlayerBlock(int power)
@@ -117,12 +97,13 @@ public class BattleManager : MonoBehaviour
 
     public void EnemyBlock(int power)
     {
-        enemyIsBlocking = true;
-        enemyCurrentBlockVal = power;
+        
     }
 
     public void EnemyTurn()
     {
+        /*
+
         if (currentEnemyMove.type == 1)
         {
             if (playerIsBlocking)
@@ -158,42 +139,36 @@ public class BattleManager : MonoBehaviour
 
         GenerateEnemyMove();
         ToggleUI(1);
-      }
+
+        */
+    }
     public void ToggleUI(int onOff)
     {
         if (onOff == 2)
         {
-            
+
         }
         else
         {
-            
+
         }
     }
 
     public void CheckGameState()
     {
-        if (enemyCooldown <= 0)
-        {
-            EnemyTurn();
-        }
-
-        else
-        {
-            ToggleUI(1);
-        }
+        
     }
 
     public void GenerateEnemyMove()
     {
         float movePct = Random.Range(0.0f, 1.0f);
 
-        if (movePct <= 0.100f )
+        if (movePct <= 0.100f)
         {
             // currentEnemyMove = enemyMoveList[2];
         }
 
-        else if( movePct >= 0.101f && movePct <= 0.250)
+        else if (movePct >= 0.101f && movePct <= 0.250)
         {
             // currentEnemyMove = enemyMoveList[1];
         }
@@ -208,7 +183,7 @@ public class BattleManager : MonoBehaviour
             // currentEnemyMove = enemyMoveList[0];
         }
 
-        enemyCooldown = currentEnemyMove.cooldown;
+        // enemyCooldown = currentEnemyMove.cooldown;
     }
 
     public void Spawn()
@@ -225,7 +200,7 @@ public class BattleManager : MonoBehaviour
 
     public void SpawnEnemy(int spawnPoint, int enemy)
     {
-        if(spawnPoint == 1)
+        if (spawnPoint == 1)
         {
             Instantiate(enemyPrefabs[enemy], new Vector3(-1.5f, 1.0f + enemyPrefabs[enemy].transform.position.y, 6.0f), Quaternion.identity, enemyOne.transform);
         }
@@ -251,26 +226,37 @@ public class BattleManager : MonoBehaviour
         public GameObject prefab;
 
         public EnemyMove[] enemyMoves;
-    }
 
-    public class EnemyMove
-    {
-        public int type;
-        public int power;
-        public int cooldown;
-        public float chance;
-
-        public EnemyMove(int t, int p, int co, float ch)
+        public Enemy(int h, int cd, int cbv, bool ib, GameObject p, EnemyMove[] em)
         {
-            type = t;
-            power = p;
-            cooldown = co;
-            chance = ch;
+            health = h;
+            cooldown = cd;
+            currentBlockVal = cbv;
+            isBlocking = ib;
+            prefab = p;
+
+            enemyMoves = em;
         }
+
+        public class EnemyMove
+        {
+            public int type;
+            public int power;
+            public int cooldown;
+            public float chance;
+
+            public EnemyMove(int t, int p, int co, float ch)
+            {
+                type = t;
+                power = p;
+                cooldown = co;
+                chance = ch;
+            }
+        }
+        /*Type:
+         * 1 = Attack
+         * 2 = Block
+         * 3 = Heal
+         */
     }
-    /*Type:
-     * 1 = Attack
-     * 2 = Block
-     * 3 = Heal
-     */
 }
