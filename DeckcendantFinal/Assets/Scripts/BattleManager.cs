@@ -241,16 +241,6 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public class Enemy
-    {
-        public int health;
-        public int cooldown;
-        public int currentBlockVal;
-        public bool isBlocking;
-
-        public GameObject prefab;
-    }
-
     public class EnemyMove
     {
         public int type;

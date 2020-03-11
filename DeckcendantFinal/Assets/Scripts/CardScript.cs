@@ -9,8 +9,6 @@ public class CardScript : MonoBehaviour
 
     private int handIndex;
 
-    public GameObject block;
-
     void Start()
     {
         handIndex = (GetComponent<Canvas>().sortingOrder) - 1;
