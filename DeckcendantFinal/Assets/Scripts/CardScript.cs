@@ -13,6 +13,9 @@ public class CardScript : MonoBehaviour
     Vector3 OriginalPos;
     Vector3 HoverPos;
     IEnumerator co;
+
+    private int handIndex;
+
     public GameObject block;
 
     void Start()
@@ -31,6 +34,9 @@ public class CardScript : MonoBehaviour
     }
   
  
+        handIndex = (GetComponent<Canvas>().sortingOrder) - 1;
+        cardManagerScript = cardManager.GetComponent<CardManager>();
+    }
 
     public void OnHover()
     {
@@ -54,7 +60,11 @@ public class CardScript : MonoBehaviour
         }
     }
 
-   
-
-  
+    public void OnClick()
+    {
+        if (cardManagerScript.hand[handIndex].used == false)
+        {
+            cardManager.GetComponent<CardManager>().PlayCard(handIndex);
+        }
+    }
 }

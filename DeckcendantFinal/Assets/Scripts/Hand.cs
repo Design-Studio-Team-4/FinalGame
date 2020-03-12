@@ -6,8 +6,6 @@ public class Hand : MonoBehaviour
 {
     public GameObject cardManager;
     private CardManager cardManagerScript;
-    
-    GameObject[] Slots = new GameObject[4];
     void Start()
     {
         cardManagerScript = cardManager.GetComponent<CardManager>();
