@@ -33,11 +33,6 @@ public class CardScript : MonoBehaviour
     }
     private void Update()
     {
-       
-        
-        
-  
- 
         handIndex = (GetComponent<Canvas>().sortingOrder) - 1;
         cardManagerScript = cardManager.GetComponent<CardManager>();
     }
