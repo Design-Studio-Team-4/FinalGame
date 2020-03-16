@@ -6,70 +6,43 @@ public class CardScript : MonoBehaviour
 {
     public GameObject cardManager;
     private CardManager cardManagerScript;
-   
-    private int handIndex;
-   
-    public GameObject hand;
-    Vector3 OriginalPos;
-    Vector3 HoverPos;
-    bool isFocus;
-    IEnumerator MoveCard;
 
-    public GameObject block;
-    private IEnumerator moveToFocus;
-    private IEnumerator moveToHand;
-    private IEnumerator onHover;
-    private IEnumerator onHoverExit;
-    public bool isMoving; 
+    private int handIndex;
+    public GameObject hand;
+
+    private Vector3 start;
+    private Vector3 end;
+    public Coroutine inst = null;
+
     void Start()
     {
-        isMoving = false;
-        hand = GameObject.FindGameObjectWithTag("PlayerHand");
-        OriginalPos = gameObject.transform.position;
-        HoverPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 50, gameObject.transform.position.z);
         handIndex = (GetComponent<Canvas>().sortingOrder) - 1;
         cardManagerScript = cardManager.GetComponent<CardManager>();
-        
+
+        start = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        end = new Vector3(transform.position.x, 30f, transform.position.z);
     }
-    private void Update()
-    {
-        handIndex = (GetComponent<Canvas>().sortingOrder) - 1;
-        cardManagerScript = cardManager.GetComponent<CardManager>();
-    }
-    public void setIsMoving(bool val)
-    {
-        isMoving = val;
-    }
-    public bool getIsFocus()
-    {
-        return isFocus;
-    }
-    public void setIsFocus(bool val)
-    {
-        isFocus = val;
-    }
+
     public void OnHover()
     {
         if (cardManagerScript.hand[handIndex].used == false)
         {
             GetComponent<Canvas>().sortingOrder = 6;
+
+            Debug.Log("YEET");
+
+            inst = StartCoroutine(MoveFromTo());
+
             //GetComponent<Animator>().Play("CardHover");
-            onHover = cardManager.GetComponent<CardManager>().MoveCard(handIndex,HoverPos);
-            StartCoroutine(onHover);
         }
     }
 
     public void OnHoverExit()
-    { 
-        //StopCoroutine(onHover);
-        if (cardManagerScript.hand[handIndex-1].used == false)
+    {
+        if (cardManagerScript.hand[handIndex].used == false)
         {
             GetComponent<Canvas>().sortingOrder = handIndex + 1;
-            //GetComponent<Animator>().Play("CardHoverExit");
-           
-            onHoverExit = cardManager.GetComponent<CardManager>().MoveCard(handIndex, OriginalPos);
-            StartCoroutine(onHoverExit);
-            gameObject.transform.position = OriginalPos;
+            GetComponent<Animator>().Play("CardHoverExit");
         }
     }
 
@@ -77,23 +50,30 @@ public class CardScript : MonoBehaviour
     {
         if (cardManagerScript.hand[handIndex].used == false)
         {
-            if (isMoving == false)
-                {
-            //cardManager.GetComponent<CardManager>().PlayCard(handIndex);
-                if (isFocus)
-                {
-                
-                    cardManagerScript.PlayCard(handIndex);
-                    moveToHand = cardManager.GetComponent<CardManager>().MoveCard(handIndex, OriginalPos);
-                    StartCoroutine(moveToHand);
-                    isFocus = false;
-                }
-                else
-                {   
-                 cardManagerScript.BringToFocus(this.gameObject);
-                }
-            }
-            
+            cardManagerScript.PlayCard(handIndex);
         }
     }
+
+    private IEnumerator MoveFromTo()
+    {
+        float step = (0.1f / (start - end).magnitude) * Time.fixedDeltaTime;
+        float t = 0;
+        while (t <= 1.0f)
+        {
+            if(transform.position == end)
+            {
+                StopCoroutine(inst);
+            }
+
+            else
+            {
+                t += step; // Goes from 0 to 1, incrementing by step each time
+                transform.position = Vector3.Lerp(start, end, t); // Move objectToMove closer to b
+                yield return new WaitForFixedUpdate();         // Leave the routine and return here in the next frame
+            }
+        }
+        
+    }
+
 }
+
