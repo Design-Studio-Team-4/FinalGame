@@ -226,7 +226,8 @@ public class CardManager : MonoBehaviour
             int slot = findWhichSlot(CardToFocusOn);
             StartCoroutine(MoveCard(slot, Focuslocation));
             CardToFocusOn.GetComponent<CardScript>().setIsFocus(true);
-            //isFocus[slot] = true;
+            handSlots
+            isFocus[slot] = true;
         //}
       //  else
        // {
