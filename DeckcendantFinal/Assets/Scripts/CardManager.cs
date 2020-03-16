@@ -14,12 +14,6 @@ public class CardManager : MonoBehaviour
 
     public static Sprite[] cardFronts;
     public static Sprite[] cardBacks;
-    //Chris Vars  
-     Vector3 Focuslocation;
-    public Vector3[] OriginalLocations;
-    float waitTime = 2f;
-    //public bool[] isMoving = new bool[5];
-    public bool[] isFocus = new bool[5];
    
     void Start()
     {
@@ -27,8 +21,6 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             hand[i] = new Card(true);
-            
-
         }
 
         deck = Shuffle(deck);
@@ -43,47 +35,28 @@ public class CardManager : MonoBehaviour
 
         Draw();
         handObject.GetComponent<Animator>().Play("HandUp");
-        for (int i = 0; i < 5; i++)
-        {
-            OriginalLocations[i] = handSlots[i].transform.position;
-            //isMoving[i] = false;
-        }
-        Focuslocation = new Vector3(handSlots[2].transform.position.x, handSlots[2].transform.position.y + 2, handSlots[2].transform.position.z);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            TriggerDrawAnimation();
-
-            Debug.Log(deck.Count);
-            Debug.Log(discard.Count);
+            Draw();
         }
     }
 
     public void PlayCard(int slot)
-    {   GameObject fCard = handSlots[slot];
+    {   
+        GameObject fCard = handSlots[slot];
         Card bCard = hand[slot];
-        
 
-
-        StartCoroutine(MoveCard(slot, OriginalLocations[slot]));
-
-        //fCard.GetComponent<Image>().sprite = hand[slot].back;
-       
-        //fCard.GetComponent<Animator>().Play("CardHoverExit");
+        fCard.GetComponent<Image>().sprite = hand[slot].back;
+        fCard.GetComponent<Animator>().Play("CardHoverExit");
         fCard.GetComponent<Canvas>().sortingOrder = slot + 1;
 
         bCard.used = true;
        
         SortHand(); 
-       
-    }
-
-    public void TriggerDrawAnimation()
-    {
-        handObject.GetComponent<Animator>().Play("HandDown");
     }
 
     public void Draw()
@@ -197,7 +170,6 @@ public class CardManager : MonoBehaviour
             used = u;
             front = f;
             back = b;
-            
         }
 
         public Card(bool u)
