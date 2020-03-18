@@ -9,12 +9,17 @@ public class BattleManager : MonoBehaviour
     public bool playerIsBlocking;
     public int playerCurrentBlockVal;
 
-    public float xPosOne = -1.5f;
-    public float xPosTwo = 1.5f;
-    public float xPosThree = 4.5f;
+    public float xPosOne;
+    public float xPosTwo;
+    public float xPosThree;
 
-    public float yPos = 1f;
-    public float zPos = 6f;
+    public Quaternion rotOne;
+    public Quaternion rotTwo;
+    public Quaternion rotThree;
+
+    public float yPos;
+    public float zPosOne;
+    public float zPosTwo;
 
     public GameObject lipsPrefab;
     public GameObject tallShroomPrefab;
@@ -24,6 +29,17 @@ public class BattleManager : MonoBehaviour
 
     void Start()
     {
+        xPosOne = -1.5f;
+        xPosTwo = 1.5f;
+        xPosThree = 4.4f;
+        yPos = 1.0f;
+        zPosOne = 6.0f;
+        zPosTwo = 7.5f;
+
+        rotOne = Quaternion.Euler(0, 5, 0);
+        rotTwo = Quaternion.Euler(0, 25, 0);
+        rotThree = Quaternion.Euler(0, 45, 0);
+
         enemies = new Enemy[]
         {
             new Enemy(100, 0, 0, false, lipsPrefab, lipsMoves),
@@ -200,7 +216,7 @@ public class BattleManager : MonoBehaviour
 
         for (int i = 0; i <= enemyAmount; i++)
         {
-            int enemy = Random.Range(0, 3);
+            int enemy = Random.Range(0, 2);
 
             SpawnEnemy(i, enemy);
         }
@@ -210,17 +226,17 @@ public class BattleManager : MonoBehaviour
     {
         if (spawnPoint == 1)
         {
-           Instantiate(enemies[enemy].prefab, new Vector3(xPosOne, enemies[enemy].prefab.transform.position.y, zPos), Quaternion.identity);
+           Instantiate(enemies[enemy].prefab, new Vector3(xPosOne, enemies[enemy].prefab.transform.position.y, zPosOne), rotOne);
         }
 
         else if (spawnPoint == 2)
         {
-            Instantiate(enemies[enemy].prefab, new Vector3(xPosTwo, enemies[enemy].prefab.transform.position.y, zPos), Quaternion.identity);
+            Instantiate(enemies[enemy].prefab, new Vector3(xPosTwo, enemies[enemy].prefab.transform.position.y, zPosTwo), rotTwo);
         }
 
         else if (spawnPoint == 3)
         {
-            Instantiate(enemies[enemy].prefab, new Vector3(xPosThree, enemies[enemy].prefab.transform.position.y, zPos), Quaternion.identity);
+            Instantiate(enemies[enemy].prefab, new Vector3(xPosThree, enemies[enemy].prefab.transform.position.y, zPosOne), rotThree);
         }
     }
 
