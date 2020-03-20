@@ -191,8 +191,6 @@ public class CardManager : MonoBehaviour
 
       
     }
-
-/*
     public void BringToFocus(GameObject CardToFocusOn)
     {
         //if (findWhichSlot(CardToFocusOn) != -1)
@@ -230,5 +228,4 @@ public class CardManager : MonoBehaviour
     {
 
     }
-    */
 }
