@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System;
 
 public class CardManager : MonoBehaviour
 {
@@ -12,8 +14,8 @@ public class CardManager : MonoBehaviour
     public GameObject handObject;
     public GameObject[] handSlots = new GameObject[5];
 
-    public static Sprite[] cardFronts;
-    public static Sprite[] cardBacks;
+    public Sprite[] cardFronts;
+    public Sprite[] cardBacks;
    
     void Start()
     {
@@ -23,17 +25,25 @@ public class CardManager : MonoBehaviour
             hand[i] = new Card(true);
         }
 
-        deck = Shuffle(deck);
-
-        cardFronts = Resources.LoadAll<Sprite>("CardFronts");
-        cardBacks = Resources.LoadAll<Sprite>("CardBacks");
-
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i <= 4; i++)
         {
-            deck.Add(new Card(1, 5, 1, false, cardFronts[0], cardBacks[0])); // Strike: Damage, 5 power, 1 cost.
+            deck.Add(new Card("Strike", 1, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+            deck.Add(new Card("Strike", 1, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+            deck.Add(new Card("Block", 2, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
+            deck.Add(new Card("Heal", 3, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
+            // deck.Add(new Card("First Strike", 1, 2, 7, false, true, cardFronts[3], cardBacks[0], "Deals 7 damage. If targeted enemies counter is less than 3, gain 3 block"));
+            // deck.Add(new Card("Hail of Daggers", 1, 4, 4, false, true, cardFronts[4], cardBacks[0], "Deal 4 damage to each enemy"));
+            // deck.Add(new Card("Shield Ward", 4, 3, 0, false, true, cardFronts[5], cardBacks[3], "Disregard all enemy Block on your next attack"));
+            // deck.Add(new Card("Soulfire Sacrifice", 1, 5, 0, false, true, cardFronts[6], cardBacks[0], "Deal 50 damage to yourself to execute an enemy"));
+            // deck.Add(new Card("Stasis", 4, 4, 0, false, false, cardFronts[7], cardBacks[3], "Non-boss enemies will not attack this round."));
+            // deck.Add(new Card("Time Steal", 4, 2, 4, false, true, cardFronts[8], cardBacks[3], "Increase the cooldown of enemy attack by 4"));
+            // deck.Add(new Card("Turn the Tides", 1, 30, 0, false, true, cardFronts[9], cardBacks[0], "Deal 30 damage to each enemy. Can only be played if you have less than 10HP"));
+            // deck.Add(new Card("Life Drink", 1, 2, 8, false, true, cardFronts[10], cardBacks[0], "Increase the cooldown of enemy attack by 4"));
         }
 
+        deck = Shuffle(deck);
         Draw();
+        discard.Clear();
         handObject.GetComponent<Animator>().Play("HandUp");
     }
 
@@ -41,21 +51,19 @@ public class CardManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Draw();
+            handObject.GetComponent<Animator>().Play("HandDown");
         }
     }
 
     public void PlayCard(int slot)
     {   
         GameObject fCard = handSlots[slot];
-        Card bCard = hand[slot];
 
-        fCard.GetComponent<Image>().sprite = hand[slot].back;
+        DisableCard(slot);
+
         fCard.GetComponent<Animator>().Play("CardHoverExit");
         fCard.GetComponent<Canvas>().sortingOrder = slot + 1;
 
-        bCard.used = true;
-       
         SortHand(); 
     }
 
@@ -88,6 +96,8 @@ public class CardManager : MonoBehaviour
             deck = Shuffle(deck);
             Drawing(drawCount);
         }
+
+        SortHand();
     }
 
     public void Drawing(int cardsToDraw)
@@ -98,7 +108,7 @@ public class CardManager : MonoBehaviour
             discard.Add(hand[i]);
             deck.RemoveAt(deck.Count - 1);
 
-            handSlots[i].GetComponent<Image>().sprite = hand[i].front;
+            handSlots[i].transform.GetChild(0).GetComponent<Image>().sprite = hand[i].front;
         }
     }
 
@@ -123,33 +133,73 @@ public class CardManager : MonoBehaviour
         {
             for (int i = 0; i <= hand.Length - 2; i++)
             {
-                if (hand[i].used == false)
+                if (hand[i].used == false && hand[i+1].used)
                 {
                     Card tempCard = hand[i + 1];
-                    Sprite tempSprite = handSlots[i + 1].GetComponent<Image>().sprite;
+                    Sprite tempSprite = handSlots[i + 1].transform.GetChild(0).GetComponent<Image>().sprite;
 
                     hand[i + 1] = hand[i];
-                    handSlots[i + 1].GetComponent<Image>().sprite = handSlots[i].GetComponent<Image>().sprite;
+                    handSlots[i + 1].transform.GetChild(0).GetComponent<Image>().sprite = handSlots[i].transform.GetChild(0).GetComponent<Image>().sprite;
 
                     hand[i] = tempCard;
-                    handSlots[i].GetComponent<Image>().sprite = tempSprite;
-
+                    handSlots[i].transform.GetChild(0).GetComponent<Image>().sprite = tempSprite;
                 }
             }
         }
+
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject card = handSlots[i].transform.GetChild(0).gameObject;
+
+            if (hand[i].used)
+            {
+                DisableCard(i);
+            }
+
+            else
+            {
+                if (hand[i].longName)
+                {
+                    card.transform.GetChild(2).GetComponent<TMP_Text>().fontSize = 5.75f;
+                }
+
+                else
+                {
+                    card.transform.GetChild(2).GetComponent<TMP_Text>().fontSize = 7.75f;
+                }
+
+                card.transform.GetChild(0).GetComponent<TMP_Text>().text = hand[i].desc;
+                card.transform.GetChild(1).GetComponent<TMP_Text>().text = hand[i].cost.ToString();
+                card.transform.GetChild(2).GetComponent<TMP_Text>().text = hand[i].name;
+            }
+        }
     }
+
+    public static System.Random rand = new System.Random();
 
     public List<Card> Shuffle(List<Card> pile)
     {
         for (int i = 0; i < pile.Count; i++)
         {
             Card temp = pile[i];
-            int random = Random.Range(i, pile.Count);
+            int random = i + rand.Next(pile.Count - i);
             pile[i] = pile[random];
             pile[random] = temp;
         }
 
         return pile;
+    }
+
+    public void DisableCard(int index)
+    {
+        GameObject card = handSlots[index].transform.GetChild(0).gameObject;
+
+        card.GetComponent<Image>().sprite = hand[index].back;
+        card.transform.GetChild(0).GetComponent<TMP_Text>().text = "";
+        card.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
+        card.transform.GetChild(2).GetComponent<TMP_Text>().text = "";
+
+        hand[index].used = true;
     }
 
     public class Card
@@ -159,15 +209,23 @@ public class CardManager : MonoBehaviour
 
         public int type;
         public int power;
+
         public int cost;
+        public string name;
+        public string desc;
+
         public bool used;
+        public bool longName;
         
-        public Card(int t, int p, int c, bool u, Sprite f, Sprite b)
+        public Card(string n, int t, int c, int p, bool u, bool ln, Sprite f, Sprite b, string d)
         {
             type = t;
             power = p;
             cost = c;
+            name = n;
+            desc = d;
             used = u;
+            longName = ln;
             front = f;
             back = b;
         }
@@ -176,56 +234,5 @@ public class CardManager : MonoBehaviour
         {
             used = u;
         }
-    }
-    int findWhichSlot(GameObject CardToLookFor)
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            if(handSlots[i] = CardToLookFor)
-            {
-                return i;
-            }
-        }
-       
-            return -1;
-
-      
-    }
-    public void BringToFocus(GameObject CardToFocusOn)
-    {
-        //if (findWhichSlot(CardToFocusOn) != -1)
-       // {
-            int slot = findWhichSlot(CardToFocusOn);
-            StartCoroutine(MoveCard(slot, Focuslocation));
-            CardToFocusOn.GetComponent<CardScript>().setIsFocus(true);
-            handSlots
-            isFocus[slot] = true;
-        //}
-      //  else
-       // {
-        //    Debug.LogError("BringToFocus failed, findWhichSlot returned -1 ");
-       // }
-    }
-    public IEnumerator MoveCard(int SlotToMove,Vector3 TargetLocation)
-    {
-        Debug.Log("MoveCard Started");
-        // isMoving[SlotToMove] = true;
-        handSlots[SlotToMove].GetComponent<CardScript>().setIsMoving(true);
-        float elapsedTime = 0f;
-        while (elapsedTime < waitTime)
-        {
-            Debug.Log("Moving to slot");
-            handSlots[SlotToMove].transform.position = Vector3.Lerp(handSlots[SlotToMove].transform.position, TargetLocation, (elapsedTime / waitTime));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        handSlots[SlotToMove].GetComponent<CardScript>().setIsMoving(false);
-        //isMoving[SlotToMove] = false;
-        //isFocus = true;
-        yield return null;
-    }
-    public void returnToPosition() 
-    {
-
     }
 }
