@@ -9,48 +9,35 @@ public class BattleManager : MonoBehaviour
     public bool playerIsBlocking;
     public int playerCurrentBlockVal;
 
-    public float xPosOne;
-    public float xPosTwo;
-    public float xPosThree;
+    // X values for enemy spawn points
+    private static float xPosOne;
+    private static float xPosTwo;
+    private static float xPosThree;
 
-    public Quaternion rotOne;
-    public Quaternion rotTwo;
-    public Quaternion rotThree;
+    // Z value for enemy spawn points
+    private static float zPos;
 
-    public float yPos;
-    public float zPosOne;
-    public float zPosTwo;
+    public GameObject[] enemyPrefabs;
 
-    public GameObject lipsPrefab;
-    public GameObject tallShroomPrefab;
-    public GameObject blueBoiPrefab;
-
-    public Enemy[] enemies;
+    public Enemy slotOne;
+    public Enemy slotTwo;
+    public Enemy slotThree;
 
     void Start()
     {
+        // Setting up enemy spawn points
         xPosOne = -1.5f;
         xPosTwo = 1.5f;
-        xPosThree = 4.4f;
-        yPos = 1.0f;
-        zPosOne = 6.0f;
-        zPosTwo = 7.5f;
+        xPosThree = 4.0f;
+        zPos = 6.0f;
 
-        rotOne = Quaternion.Euler(0, 5, 0);
-        rotTwo = Quaternion.Euler(0, 25, 0);
-        rotThree = Quaternion.Euler(0, 45, 0);
-
-        enemies = new Enemy[]
-        {
-            new Enemy(100, 0, 0, false, lipsPrefab, lipsMoves),
-            new Enemy(135, 0, 0, false, tallShroomPrefab, tallShroomMoves),
-            new Enemy(75, 0, 0, false, blueBoiPrefab, blueBoiMoves),
-         };
-
-    Debug.Log(enemies[0].prefab);
+        slotOne = null;
+        slotTwo = null;
+        slotThree = null;
 
         playerHealth = 100;
         playerIsBlocking = false;
+        playerCurrentBlockVal = 0;
 
         Spawn();
 
@@ -224,22 +211,44 @@ public class BattleManager : MonoBehaviour
 
     public void SpawnEnemy(int spawnPoint, int enemy)
     {
-        if (spawnPoint == 1)
-        {
-           Instantiate(enemies[enemy].prefab, new Vector3(xPosOne, enemies[enemy].prefab.transform.position.y, zPosOne), rotOne);
-        }
+         if (spawnPoint == 1)
+         {
+            Instantiate(enemyPrefabs[enemy], new Vector3(xPosOne, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
+            slotOne = ReturnEnemyClass(enemy);
+         }
 
-        else if (spawnPoint == 2)
-        {
-            Instantiate(enemies[enemy].prefab, new Vector3(xPosTwo, enemies[enemy].prefab.transform.position.y, zPosTwo), rotTwo);
-        }
+         else if (spawnPoint == 2)
+         {
+            Instantiate(enemyPrefabs[enemy], new Vector3(xPosTwo, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
+            slotOne = ReturnEnemyClass(enemy);
+         }
 
-        else if (spawnPoint == 3)
-        {
-            Instantiate(enemies[enemy].prefab, new Vector3(xPosThree, enemies[enemy].prefab.transform.position.y, zPosOne), rotThree);
-        }
+         else if (spawnPoint == 3)
+         {
+            Instantiate(enemyPrefabs[enemy], new Vector3(xPosThree, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
+            slotOne = ReturnEnemyClass(enemy);
+         }
     }
 
+    public Enemy ReturnEnemyClass(int enemy)
+    {
+        if(enemy == 1)
+        {
+            return new Enemy(100, -1, 0, false, lipsMoves);
+        }
+
+        else if(enemy == 2)
+        {
+            return new Enemy(75, -1, 0, false, blueBoiMoves);
+        }
+
+        else if (enemy == 3)
+        {
+            return new Enemy(125, -1, 0, false, tallShroomMoves);
+        }
+
+        return null;
+    }
     public class Enemy
     {
         public int health;
@@ -247,17 +256,14 @@ public class BattleManager : MonoBehaviour
         public int currentBlockVal;
         public bool isBlocking;
 
-        public GameObject prefab;
-
         public EnemyMove[] moves;
 
-        public Enemy(int h, int cd, int cbv, bool ib, GameObject p, EnemyMove[] em)
+        public Enemy(int h, int cd, int cbv, bool ib, EnemyMove[] em)
         {
             health = h;
             cooldown = cd;
             currentBlockVal = cbv;
             isBlocking = ib;
-            prefab = p;
 
             moves = em;
         }
