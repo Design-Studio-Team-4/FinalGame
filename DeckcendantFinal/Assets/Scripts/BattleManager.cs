@@ -28,7 +28,7 @@ public class BattleManager : MonoBehaviour
         // Setting up enemy spawn points
         xPosOne = -1.5f;
         xPosTwo = 1.5f;
-        xPosThree = 4.0f;
+        xPosThree = 4.5f;
         zPos = 6.0f;
 
         slotOne = null;
