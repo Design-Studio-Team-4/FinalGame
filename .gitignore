@@ -3,6 +3,7 @@
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
 DeckcendantFinal/[Ll]ibrary/
+DeckcendantFinal/[Ll]ibrary/[Mm]etadata/
 DeckcendantFinal/[Tt]emp/
 DeckcendantFinal/[Oo]bj/
 DeckcendantFinal/[Bb]uild/

@@ -7,14 +7,18 @@ public class CardScript : MonoBehaviour
     private int handIndex;
     public GameObject hand;
 
+    private Vector3 clickedPos;
+    Coroutine clicked;
+
     void Start()
     {
+        clickedPos = new Vector3(375.0f, 575.0f, 0.0f);
         handIndex = (GetComponent<Canvas>().sortingOrder) - 1;
     }
 
     public void OnHover()
     {
-        if (CardManager.cManagerInstance.hand[handIndex].used == false)
+        if (CardManager.cManagerInstance.hand[handIndex].used == false && Hand.handInstance.targeting == false)
         {
             GetComponent<Canvas>().sortingOrder = 6;
             GetComponent<Animator>().Play("CardHover");
@@ -23,7 +27,7 @@ public class CardScript : MonoBehaviour
 
     public void OnHoverExit()
     {
-        if (CardManager.cManagerInstance.hand[handIndex].used == false)
+        if (CardManager.cManagerInstance.hand[handIndex].used == false && Hand.handInstance.targeting == false)
         {
             GetComponent<Canvas>().sortingOrder = handIndex + 1;
             GetComponent<Animator>().Play("CardHoverExit");
@@ -32,30 +36,34 @@ public class CardScript : MonoBehaviour
 
     public void OnClick()
     {
-        if (CardManager.cManagerInstance.hand[handIndex].used == false)
+        if (CardManager.cManagerInstance.hand[handIndex].used == false && Hand.handInstance.targeting == false)
         {
-            
-            
-            // CardManager.cManagerInstance.PlayCard(handIndex);
+            Hand.handInstance.targeting = true;
+            GetComponent<Animator>().enabled = false;
+            clicked = StartCoroutine(MoveFunction());
         }
     }
-    /* IEnumerator MoveFunction()
+    
+    IEnumerator MoveFunction()
     {
         float timeSinceStarted = 0f;
+
         while (true)
         {
-            timeSinceStarted += Time.DeltaTime;
-            obj.transform.position = Vector3.Lerp(obj.transform.position, newPosition, timeSinceStarted);
+            timeSinceStarted += Time.deltaTime;
+            transform.position = Vector3.Lerp(transform.position, clickedPos, timeSinceStarted);
 
             // If the object has arrived, stop the coroutine
-            if (obj.transform.position == newPosition)
+            if (transform.position == clickedPos)
             {
-                yield break;
+                StopCoroutine(clicked);
             }
 
             // Otherwise, continue next frame
             yield return null;
         }
-    } */
+
+        
+    }
 }
 

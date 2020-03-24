@@ -26,8 +26,8 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         // Setting up enemy spawn points
-        xPosOne = -1.5f;
-        xPosTwo = 1.5f;
+        xPosOne = -1.0f;
+        xPosTwo = 1.75f;
         xPosThree = 4.5f;
         zPos = 6.0f;
 
@@ -203,7 +203,7 @@ public class BattleManager : MonoBehaviour
 
         for (int i = 0; i <= enemyAmount; i++)
         {
-            int enemy = Random.Range(0, 2);
+            int enemy = Random.Range(0, 3);
 
             SpawnEnemy(i, enemy);
         }

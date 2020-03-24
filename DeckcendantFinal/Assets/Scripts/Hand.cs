@@ -4,38 +4,17 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
-    public GameObject cardManager;
-    private CardManager cardManagerScript;
-    void Start()
+    public static Hand handInstance;
+    public bool targeting;
+
+    void Awake()
     {
-        cardManagerScript = cardManager.GetComponent<CardManager>();
+        if (handInstance == null) { handInstance = this; }
+        targeting = false;
     }
 
     public void Draw()
     {
-        cardManagerScript.Draw();
+        CardManager.cManagerInstance.Draw();
     }
-    /*  
-    public GameObject GetFocus()
-    {
-        return FocusSlot.GetComponent<CardSlot>().GetCardInSlot();
-    }
-    
-  
-    public GameObject FindEmptySlot()
-    {
-        bool foundEmpty = false;
-        for (int i = 0; i < Slots.Length; i++)
-        {
-            //getstate returns TRUE if EMPTY
-            if (Slots[i].GetComponent<CardSlot>().getState())
-            {
-               // foundEmpty = true;
-                return Slots[i];
-
-            }
-        }
-        return null;
-    }
-    */
 }
