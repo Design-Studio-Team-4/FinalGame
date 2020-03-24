@@ -65,3 +65,5 @@ DeckcendantFinal/crashlytics-build.properties
 DeckcendantFinal/Library/shadercompiler-UnityShaderCompiler.exe0.log
 *.dwlt
 *.log
+*.dwlt
+DeckcendantFinal/Library/CurrentLayout-default.dwlt
