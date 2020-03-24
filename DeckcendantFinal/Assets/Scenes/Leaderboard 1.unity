@@ -314,7 +314,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 199521093}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1555070845}
+        m_MethodName: SubmitName
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &199521093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2444,6 +2455,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52129d1369c34ea4896af33de050fc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Inputfield: {fileID: 1060070548}
+  placeholdertext: {fileID: 424078925}
+  LeaderboardCanvas: {fileID: 914391766}
+  SubmissionCanvas: {fileID: 544493836}
   Leaderboard: {fileID: 430907607}
 --- !u!4 &1555070846
 Transform:
