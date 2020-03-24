@@ -62,3 +62,6 @@ DeckcendantFinal/*.unitypackage
 # Crashlytics generated file
 DeckcendantFinal/crashlytics-build.properties
 
+DeckcendantFinal/Library/shadercompiler-UnityShaderCompiler.exe0.log
+*.dwlt
+*.log
