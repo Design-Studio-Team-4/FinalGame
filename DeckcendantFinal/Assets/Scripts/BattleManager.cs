@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
+    public static BattleManager bManagerInstance;
+
     public int playerHealth;
     public bool playerIsBlocking;
     public int playerCurrentBlockVal;
@@ -19,9 +21,14 @@ public class BattleManager : MonoBehaviour
 
     public GameObject[] enemyPrefabs;
 
-    public Enemy slotOne;
-    public Enemy slotTwo;
-    public Enemy slotThree;
+    public GameObject slotOne;
+    public GameObject slotTwo;
+    public GameObject slotThree;
+
+    void Awake()
+    {
+        if (bManagerInstance == null) { bManagerInstance = this; }
+    }
 
     void Start()
     {
@@ -213,44 +220,45 @@ public class BattleManager : MonoBehaviour
     {
          if (spawnPoint == 1)
          {
-            Instantiate(enemyPrefabs[enemy], new Vector3(xPosOne, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
-            slotOne = ReturnEnemyClass(enemy);
-         }
+            slotOne = Instantiate(enemyPrefabs[enemy], new Vector3(xPosOne, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
+            slotOne.GetComponent<EnemyScript>().SetEnemy(ReturnEnemy(enemy, 1));
+        }
 
          else if (spawnPoint == 2)
          {
-            Instantiate(enemyPrefabs[enemy], new Vector3(xPosTwo, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
-            slotOne = ReturnEnemyClass(enemy);
-         }
+            slotTwo = Instantiate(enemyPrefabs[enemy], new Vector3(xPosTwo, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
+            slotTwo.GetComponent<EnemyScript>().SetEnemy(ReturnEnemy(enemy, 2));
+        }
 
          else if (spawnPoint == 3)
          {
-            Instantiate(enemyPrefabs[enemy], new Vector3(xPosThree, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
-            slotOne = ReturnEnemyClass(enemy);
-         }
+            slotThree = Instantiate(enemyPrefabs[enemy], new Vector3(xPosThree, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
+            slotThree.GetComponent<EnemyScript>().SetEnemy(ReturnEnemy(enemy, 3));
+        }
     }
 
-    public Enemy ReturnEnemyClass(int enemy)
+    public Enemy ReturnEnemy(int enemy, int slot)
     {
         if(enemy == 1)
         {
-            return new Enemy(100, -1, 0, false, lipsMoves);
+            return new Enemy(slot, 100, -1, 0, false, lipsMoves);
         }
 
         else if(enemy == 2)
         {
-            return new Enemy(75, -1, 0, false, blueBoiMoves);
+            return new Enemy(slot, 75, -1, 0, false, blueBoiMoves);
         }
 
         else if (enemy == 3)
         {
-            return new Enemy(125, -1, 0, false, tallShroomMoves);
+            return new Enemy(slot, 125, -1, 0, false, tallShroomMoves);
         }
 
         return null;
     }
     public class Enemy
     {
+        public int slot;
         public int health;
         public int cooldown;
         public int currentBlockVal;
@@ -258,8 +266,9 @@ public class BattleManager : MonoBehaviour
 
         public EnemyMove[] moves;
 
-        public Enemy(int h, int cd, int cbv, bool ib, EnemyMove[] em)
+        public Enemy(int s, int h, int cd, int cbv, bool ib, EnemyMove[] em)
         {
+            slot = s;
             health = h;
             cooldown = cd;
             currentBlockVal = cbv;

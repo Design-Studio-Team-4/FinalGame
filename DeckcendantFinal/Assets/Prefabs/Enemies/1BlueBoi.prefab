@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 3805581170733703883}
   - component: {fileID: 5138815667098142882}
   - component: {fileID: 1065540523764039700}
+  - component: {fileID: 4990264195978259786}
   m_Layer: 0
   m_Name: 1BlueBoi
   m_TagString: Untagged
@@ -439,6 +440,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4990264195978259786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5889710192566116678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97551f58422437247b5ca9b420c1c76c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySprite: {fileID: 5138815667098142882}
 --- !u!1 &6082571308032926097
 GameObject:
   m_ObjectHideFlags: 0

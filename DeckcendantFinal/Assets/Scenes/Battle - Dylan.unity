@@ -1503,6 +1503,9 @@ MonoBehaviour:
   - {fileID: 7469180308530881431, guid: 5baabb8dc349d1c4fab38cd4975c15a0, type: 3}
   - {fileID: 5889710192566116678, guid: 0f6cb3c6a27c4e34cab1d50ed85beb41, type: 3}
   - {fileID: 5889710192566116678, guid: 377124e6cd948a546909c00546c78e7a, type: 3}
+  slotOne: {fileID: 0}
+  slotTwo: {fileID: 0}
+  slotThree: {fileID: 0}
 --- !u!4 &1936654761
 Transform:
   m_ObjectHideFlags: 0
@@ -2848,6 +2851,11 @@ PrefabInstance:
       propertyPath: cardManager
       value: 
       objectReference: {fileID: 3965332058813799250}
+    - target: {fileID: 4902556734286315156, guid: c58ed06a2bcb52f41a38209535cbaeae,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4902556734286315158, guid: c58ed06a2bcb52f41a38209535cbaeae,
         type: 3}
       propertyPath: cardManager
@@ -2930,6 +2938,21 @@ PrefabInstance:
       propertyPath: m_Type
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6321087414528825358, guid: c58ed06a2bcb52f41a38209535cbaeae,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321087414528825358, guid: c58ed06a2bcb52f41a38209535cbaeae,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321087414528825358, guid: c58ed06a2bcb52f41a38209535cbaeae,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6321087414628076290, guid: c58ed06a2bcb52f41a38209535cbaeae,
         type: 3}
       propertyPath: m_fontAsset
@@ -2963,7 +2986,15 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4902556733659340652, guid: c58ed06a2bcb52f41a38209535cbaeae, type: 3}
+    - {fileID: 4902556733733785547, guid: c58ed06a2bcb52f41a38209535cbaeae, type: 3}
+    - {fileID: 4902556734143700426, guid: c58ed06a2bcb52f41a38209535cbaeae, type: 3}
+    - {fileID: 4902556733891843410, guid: c58ed06a2bcb52f41a38209535cbaeae, type: 3}
+    - {fileID: 4902556733659340662, guid: c58ed06a2bcb52f41a38209535cbaeae, type: 3}
+    - {fileID: 4902556733733785554, guid: c58ed06a2bcb52f41a38209535cbaeae, type: 3}
+    - {fileID: 4902556734143700431, guid: c58ed06a2bcb52f41a38209535cbaeae, type: 3}
+    - {fileID: 4902556733891843415, guid: c58ed06a2bcb52f41a38209535cbaeae, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c58ed06a2bcb52f41a38209535cbaeae, type: 3}
 --- !u!114 &6598777735300226367
 MonoBehaviour:

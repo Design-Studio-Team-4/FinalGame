@@ -16,6 +16,8 @@ public class CardManager : MonoBehaviour
     public GameObject handObject;
     public GameObject[] handSlots = new GameObject[5];
 
+    public Card selectedCard;
+
     public Sprite[] cardFronts;
     public Sprite[] cardBacks;
 

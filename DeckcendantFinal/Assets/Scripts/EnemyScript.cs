@@ -1,13 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static BattleManager;
 
-public class EnemyEvents : MonoBehaviour
+public class EnemyScript : MonoBehaviour
 {
-    public SpriteRenderer enemy;
+    public static EnemyScript enemyInstance;
+
+    public Enemy enemy;
+
+    public SpriteRenderer enemySprite;
 
     private Color hoverColor;
     private Color normalColor;
+
+    void Awake()
+    {
+        if (enemyInstance == null) { enemyInstance = this; }
+    }
 
     void Start()
     {
@@ -20,7 +30,7 @@ public class EnemyEvents : MonoBehaviour
         if (Hand.handInstance.targeting)
         {
             Debug.Log("YEET");
-            enemy.color = hoverColor;
+            enemySprite.color = hoverColor;
         }
     }
 
@@ -28,7 +38,7 @@ public class EnemyEvents : MonoBehaviour
     {
         if (Hand.handInstance.targeting)
         {
-            enemy.color = normalColor;
+            enemySprite.color = normalColor;
         }
     }
 
@@ -38,5 +48,10 @@ public class EnemyEvents : MonoBehaviour
         {
             
         }
+    }
+
+    public void SetEnemy(Enemy e)
+    {
+        enemy = e;
     }
 }
