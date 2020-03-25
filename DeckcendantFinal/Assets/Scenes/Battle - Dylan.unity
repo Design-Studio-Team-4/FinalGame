@@ -2851,6 +2851,16 @@ PrefabInstance:
       propertyPath: cardManager
       value: 
       objectReference: {fileID: 3965332058813799250}
+    - target: {fileID: 4902556734286315154, guid: c58ed06a2bcb52f41a38209535cbaeae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4902556734286315154, guid: c58ed06a2bcb52f41a38209535cbaeae,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 104.95
+      objectReference: {fileID: 0}
     - target: {fileID: 4902556734286315156, guid: c58ed06a2bcb52f41a38209535cbaeae,
         type: 3}
       propertyPath: m_Color.a

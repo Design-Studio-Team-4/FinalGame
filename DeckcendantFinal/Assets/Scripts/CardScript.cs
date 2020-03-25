@@ -21,7 +21,7 @@ public class CardScript : MonoBehaviour
 
     void Start()
     {
-        clickedPos = new Vector3(375.0f, 575.0f, 0.0f);
+        clickedPos = new Vector3(375.0f, 525.0f, 0.0f);
         originalPos = transform.position;
 
         isMoving = false;
