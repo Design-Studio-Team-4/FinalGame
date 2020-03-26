@@ -99,10 +99,10 @@ public class shop : MonoBehaviour
         else if (num >= 1) CreateButton("Strike", 1, 5, false, false, CardManager.cManagerInstance.cardFronts[0], CardManager.cManagerInstance.cardBacks[0], "Deals 5 Damage", purchase);
     }
 
-    public void ExitShop()
-    {
-        // destroy buttons
-        // Disable shop
+    //public void ExitShop()
+   // {
+     //   // destroy buttons
+    //    // Disable shop
 
-    }
+    //}
 }
