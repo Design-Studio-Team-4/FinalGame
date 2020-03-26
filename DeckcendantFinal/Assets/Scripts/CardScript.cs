@@ -11,6 +11,8 @@ public class CardScript : MonoBehaviour
 
     private Vector3 clickedPos;
     private Vector3 originalPos;
+    private Vector3 offset;
+
     private bool isMoving;
     private bool selected;
 
@@ -22,6 +24,7 @@ public class CardScript : MonoBehaviour
     void Start()
     {
         clickedPos = new Vector3(375.0f, 525.0f, 0.0f);
+        offset = new Vector3(0.0f, 54.5f, 0.0f);
         originalPos = transform.position;
 
         isMoving = false;
@@ -96,7 +99,7 @@ public class CardScript : MonoBehaviour
             GetComponent<Canvas>().sortingOrder = handIndex + 1;
 
             isMoving = true;
-            click = StartCoroutine(Deselect(originalPos));
+            click = StartCoroutine(Deselect(originalPos - offset));
         }
     }
     
@@ -140,6 +143,7 @@ public class CardScript : MonoBehaviour
             {
                 isMoving = false;
 
+                Debug.Log("YEET");
                 GetComponent<Animator>().enabled = true;
                 GetComponent<Animator>().Play("CardReturn");
 

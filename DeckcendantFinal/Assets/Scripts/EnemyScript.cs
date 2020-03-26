@@ -49,9 +49,4 @@ public class EnemyScript : MonoBehaviour
             
         }
     }
-
-    public void SetEnemy(Enemy e)
-    {
-        enemy = e;
-    }
 }

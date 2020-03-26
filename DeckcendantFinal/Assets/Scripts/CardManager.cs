@@ -36,10 +36,10 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i <= 4; i++)
         {
-            deck.Add(new Card("Strike", 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-            deck.Add(new Card("Strike", 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-            deck.Add(new Card("Block", 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
-            deck.Add(new Card("Heal", 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
+            deck.Add(new Card("Strike", 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+            deck.Add(new Card("Strike", 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+            deck.Add(new Card("Block", 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
+            deck.Add(new Card("Heal", 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
             // deck.Add(new Card("First Strike", 1, 2, 7, false, true, cardFronts[3], cardBacks[0], "Deals 7 damage. If targeted enemies counter is less than 3, gain 3 block"));
             // deck.Add(new Card("Hail of Daggers", 1, 4, 4, false, true, cardFronts[4], cardBacks[0], "Deal 4 damage to each enemy"));
             // deck.Add(new Card("Shield Ward", 4, 3, 0, false, true, cardFronts[5], cardBacks[3], "Disregard all enemy Block on your next attack"));
@@ -68,7 +68,7 @@ public class CardManager : MonoBehaviour
     {   
         GameObject fCard = handSlots[slot];
 
-        DisableCard(slot);
+        FlipCard(slot);
 
         fCard.GetComponent<Animator>().Play("CardHoverExit");
         fCard.GetComponent<Canvas>().sortingOrder = slot + 1;
@@ -162,7 +162,7 @@ public class CardManager : MonoBehaviour
 
             if (hand[i].used)
             {
-                DisableCard(i);
+                FlipCard(i);
             }
 
             else
@@ -199,7 +199,7 @@ public class CardManager : MonoBehaviour
         return pile;
     }
 
-    public void DisableCard(int index)
+    public void FlipCard(int index)
     {
         GameObject card = handSlots[index].transform.GetChild(0).gameObject;
 
@@ -226,8 +226,9 @@ public class CardManager : MonoBehaviour
         public bool used;
         public bool longName;
         
-        public Card(string n, int c, int p, bool u, bool ln, Sprite f, Sprite b, string d)
+        public Card(string n, int t, int c, int p, bool u, bool ln, Sprite f, Sprite b, string d)
         {
+            type = t;
             power = p;
             cost = c;
             name = n;

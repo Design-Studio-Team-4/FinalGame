@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
@@ -21,9 +22,7 @@ public class BattleManager : MonoBehaviour
 
     public GameObject[] enemyPrefabs;
 
-    public GameObject slotOne;
-    public GameObject slotTwo;
-    public GameObject slotThree;
+    public GameObject[] enemies;
 
     void Awake()
     {
@@ -38,9 +37,10 @@ public class BattleManager : MonoBehaviour
         xPosThree = 4.5f;
         zPos = 6.0f;
 
-        slotOne = null;
-        slotTwo = null;
-        slotThree = null;
+        for (int i = 0; i < 3; i++)
+        {
+            enemies[i] = null;
+        }
 
         playerHealth = 100;
         playerIsBlocking = false;
@@ -48,7 +48,7 @@ public class BattleManager : MonoBehaviour
 
         Spawn();
 
-        //GenerateEnemyMove();
+        FindStandbyEnemies();
     }
 
     // Update is called once per frame
@@ -177,32 +177,70 @@ public class BattleManager : MonoBehaviour
         
     }
 
-    public void GenerateEnemyMove()
+    public void FindStandbyEnemies()
     {
-        float movePct = Random.Range(0.0f, 1.0f);
+            if (enemies[0].GetComponent<EnemyScript>().enemy.cooldown == -1)
+            {
+                GenerateEnemyMove(0);
+            }
 
-        if (movePct <= 0.100f)
-        {
-            // currentEnemyMove = enemyMoveList[2];
-        }
+            if (enemies[1].GetComponent<EnemyScript>().enemy.cooldown == -1)
+            {
+                GenerateEnemyMove(1);
+            }
 
-        else if (movePct >= 0.101f && movePct <= 0.250)
-        {
-            // currentEnemyMove = enemyMoveList[1];
-        }
-
-        else if (movePct >= 0.251f && movePct <= 0.500)
-        {
-            // currentEnemyMove = enemyMoveList[3];
-        }
-
-        else
-        {
-            // currentEnemyMove = enemyMoveList[0];
-        }
-
-        // enemyCooldown = currentEnemyMove.cooldown;
+            if (enemies[2].GetComponent<EnemyScript>().enemy.cooldown == -1)
+            {
+                GenerateEnemyMove(2);
+            }
     }
+
+    public void GenerateEnemyMove(int enemy)
+    {
+        float movePct = Random.Range(0.00f, 1.00f);
+        Debug.Log(movePct);
+
+        Enemy currentClass = enemies[enemy].GetComponent<EnemyScript>().enemy;
+
+        float moveWeightOne = currentClass.moves[0].chance;
+        float moveWeightTwo = currentClass.moves[0].chance + currentClass.moves[1].chance;
+        float moveWeightThree = moveWeightTwo + currentClass.moves[2].chance;
+
+        if (movePct <= moveWeightOne)
+        {
+            currentClass.currentMove = currentClass.moves[0];
+            currentClass.cooldown = currentClass.moves[0].cooldown;
+
+            enemies[enemy].transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
+        }
+
+        else if (movePct > moveWeightOne && movePct <= moveWeightTwo)
+        {
+            currentClass.currentMove = currentClass.moves[1];
+            currentClass.cooldown = currentClass.moves[1].cooldown;
+
+            enemies[enemy].transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
+        }
+
+        else if (movePct > moveWeightTwo && movePct <= moveWeightThree)
+        {
+            currentClass.currentMove = currentClass.moves[2];
+            currentClass.cooldown = currentClass.moves[2].cooldown;
+
+            enemies[enemy].transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
+        }
+
+        else if (movePct >= moveWeightThree)
+        {
+            currentClass.currentMove = currentClass.moves[3];
+            currentClass.cooldown = currentClass.moves[3].cooldown;
+
+            enemies[enemy].transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
+        }
+
+        enemies[enemy].GetComponent<EnemyScript>().enemy = currentClass;
+    }
+
 
     public void Spawn()
     {
@@ -210,7 +248,7 @@ public class BattleManager : MonoBehaviour
 
         for (int i = 0; i <= enemyAmount; i++)
         {
-            int enemy = Random.Range(0, 3);
+            int enemy = Random.Range(0, 2);
 
             SpawnEnemy(i, enemy);
         }
@@ -220,38 +258,38 @@ public class BattleManager : MonoBehaviour
     {
          if (spawnPoint == 1)
          {
-            slotOne = Instantiate(enemyPrefabs[enemy], new Vector3(xPosOne, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
-            slotOne.GetComponent<EnemyScript>().SetEnemy(ReturnEnemy(enemy, 1));
+            enemies[0] = Instantiate(enemyPrefabs[enemy], new Vector3(xPosOne, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
+            enemies[0].GetComponent<EnemyScript>().enemy = (ReturnEnemy(enemy, 0));
         }
 
          else if (spawnPoint == 2)
          {
-            slotTwo = Instantiate(enemyPrefabs[enemy], new Vector3(xPosTwo, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
-            slotTwo.GetComponent<EnemyScript>().SetEnemy(ReturnEnemy(enemy, 2));
+            enemies[1] = Instantiate(enemyPrefabs[enemy], new Vector3(xPosTwo, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
+            enemies[1].GetComponent<EnemyScript>().enemy = (ReturnEnemy(enemy, 1));
         }
 
          else if (spawnPoint == 3)
          {
-            slotThree = Instantiate(enemyPrefabs[enemy], new Vector3(xPosThree, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
-            slotThree.GetComponent<EnemyScript>().SetEnemy(ReturnEnemy(enemy, 3));
+            enemies[2] = Instantiate(enemyPrefabs[enemy], new Vector3(xPosThree, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
+            enemies[2].GetComponent<EnemyScript>().enemy = (ReturnEnemy(enemy, 2));
         }
     }
 
     public Enemy ReturnEnemy(int enemy, int slot)
     {
-        if(enemy == 1)
+        if(enemy == 0)
         {
-            return new Enemy(slot, 100, -1, 0, false, lipsMoves);
+            return new Enemy(slot, 100, -1, null, 0, false, lipsMoves);
         }
 
-        else if(enemy == 2)
+        else if(enemy == 1)
         {
-            return new Enemy(slot, 75, -1, 0, false, blueBoiMoves);
+            return new Enemy(slot, 75, -1, null, 0, false, blueBoiMoves);
         }
 
-        else if (enemy == 3)
+        else if (enemy == 2)
         {
-            return new Enemy(slot, 125, -1, 0, false, tallShroomMoves);
+            return new Enemy(slot, 125, -1, null, 0, false, tallShroomMoves);
         }
 
         return null;
@@ -261,20 +299,27 @@ public class BattleManager : MonoBehaviour
         public int slot;
         public int health;
         public int cooldown;
+        public EnemyMove currentMove;
         public int currentBlockVal;
         public bool isBlocking;
 
         public EnemyMove[] moves;
 
-        public Enemy(int s, int h, int cd, int cbv, bool ib, EnemyMove[] em)
+        public Enemy(int s, int h, int cd, EnemyMove cm, int cbv, bool ib, EnemyMove[] em)
         {
             slot = s;
             health = h;
             cooldown = cd;
+            currentMove = cm;
             currentBlockVal = cbv;
             isBlocking = ib;
 
             moves = em;
+        }
+
+        public Enemy(int cd)
+        {
+            cooldown = cd;
         }
     }
 
@@ -312,11 +357,10 @@ public class BattleManager : MonoBehaviour
 
     public static EnemyMove[] blueBoiMoves = new EnemyMove[]
     {
-            new EnemyMove(1, 10, 2, 0.40f), // Singe (Attack/10/2/0.40)
-            new EnemyMove(1, 25, 4, 0.20f), // Hex (Attack/25/4/0.20)
+            new EnemyMove(1, 10, 2, 0.45f), // Singe (Attack/10/2/0.40)
+            new EnemyMove(1, 25, 4, 0.25f), // Hex (Attack/25/4/0.20)
             new EnemyMove(1, 65, 9, 0.10f), // Fireball (Attack/65/9/0.10)
             new EnemyMove(3, 40, 3, 0.20f), // Heal (Heal/40/3/0.20)
-            new EnemyMove(3, 70, 7, 0.10f), // Big Heal (Heal/70/7/0.10)
     };
 
 

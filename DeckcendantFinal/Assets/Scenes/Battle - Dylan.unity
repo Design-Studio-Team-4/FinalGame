@@ -1503,9 +1503,10 @@ MonoBehaviour:
   - {fileID: 7469180308530881431, guid: 5baabb8dc349d1c4fab38cd4975c15a0, type: 3}
   - {fileID: 5889710192566116678, guid: 0f6cb3c6a27c4e34cab1d50ed85beb41, type: 3}
   - {fileID: 5889710192566116678, guid: 377124e6cd948a546909c00546c78e7a, type: 3}
-  slotOne: {fileID: 0}
-  slotTwo: {fileID: 0}
-  slotThree: {fileID: 0}
+  enemies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1936654761
 Transform:
   m_ObjectHideFlags: 0
@@ -2830,6 +2831,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Hand
+      objectReference: {fileID: 0}
+    - target: {fileID: 4902556733659340653, guid: c58ed06a2bcb52f41a38209535cbaeae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4902556733659340653, guid: c58ed06a2bcb52f41a38209535cbaeae,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 105
       objectReference: {fileID: 0}
     - target: {fileID: 4902556733659340661, guid: c58ed06a2bcb52f41a38209535cbaeae,
         type: 3}
