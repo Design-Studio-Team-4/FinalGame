@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// all comands that will need to take place once the shop awakes
+// must be updated as new cards are introduced ( CARDTOTAL and ChoseButton )
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -30,6 +33,8 @@ public class shop : MonoBehaviour
 
     void Start()
     {
+
+        // if button to go to shop is pressed
         // initialize shop elements
         Awake();
 
@@ -37,6 +42,9 @@ public class shop : MonoBehaviour
         ChooseButton(Purchase1);
         ChooseButton(Purchase2);
         ChooseButton(Purchase3);
+        ChooseButton(Purchase3);
+
+        // exit button
 
     }
 
@@ -49,14 +57,19 @@ public class shop : MonoBehaviour
     //    }
     //}
 
-    public void CreateButton(string name, int cost, int power, bool isUsed, bool hasLongName, Sprite Fronts, Sprite Backs, string d, UnityEngine.Transform purchase)
+    public void CreateButton(string name, int type, int cost, int power, bool isUsed, bool hasLongName, Sprite Fronts, Sprite Backs, string d, UnityEngine.Transform purchase)
     {
         Transform PurchaseFieldTransform = Instantiate(purchase, PurchaseField);
         PurchaseFieldTransform.gameObject.SetActive(true);
 
-        // set name, cost, and description
+        // set font size for name
+        if (hasLongName == true) PurchaseFieldTransform.Find("name").GetComponent<TextMeshProUGUI>().fontSize = 5.75f;       
+        if (hasLongName == false) PurchaseFieldTransform.Find("name").GetComponent<TextMeshProUGUI>().fontSize = 7.75f;
+
+        // set name, cooldown, cost, and description
         PurchaseFieldTransform.Find("name").GetComponent<TextMeshProUGUI>().SetText(name);
         PurchaseFieldTransform.Find("cost").GetComponent<TextMeshProUGUI>().SetText(cost.ToString());
+        PurchaseFieldTransform.Find("Cooldown").GetComponent<TextMeshProUGUI>().SetText(cost.ToString());
         PurchaseFieldTransform.Find("desc").GetComponent<TextMeshProUGUI>().SetText(d);
 
         // set front
@@ -69,7 +82,7 @@ public class shop : MonoBehaviour
             Debug.Log("you clicked");
             //if (score >= cost)
 
-            //CardManager.cManagerInstance.deck.Add(new Card(name, cost, power, isUsed, hasLongName, Fronts, Backs, d));
+            //CardManager.cManagerInstance.deck.Add(new Card(name, type, cost, power, isUsed, hasLongName, Fronts, Backs, d));
 
             // score - cost = score
 
@@ -86,23 +99,24 @@ public class shop : MonoBehaviour
         Debug.Log(num);
 
         // takes all normal card values plus purchase as the button to place it at
-        if (num >= 11) CreateButton("Life Drink", 1, 2, false, true, CardManager.cManagerInstance.cardFronts[10], CardManager.cManagerInstance.cardBacks[0], "Increase the cooldown of enemy attack by 4", purchase);
-        else if (num >= 10) CreateButton("Turn the Tides", 1, 30, false, true, CardManager.cManagerInstance.cardFronts[9], CardManager.cManagerInstance.cardBacks[0], "Deal 30 damage to each enemy. Can only be played if you have less than 10HP", purchase);
-        else if (num >= 9) CreateButton("Time Steal", 4, 2, false, true, CardManager.cManagerInstance.cardFronts[8], CardManager.cManagerInstance.cardBacks[3], "Increase the cooldown of enemy attack by 4", purchase);
-        else if (num >= 8) CreateButton("Stasis", 4, 4, false, false, CardManager.cManagerInstance.cardFronts[7], CardManager.cManagerInstance.cardBacks[3], "Non-boss enemies will not attack this round", purchase);
-        else if (num >= 7) CreateButton("Soulfire Sacrifice", 1, 5, false, true, CardManager.cManagerInstance.cardFronts[6], CardManager.cManagerInstance.cardBacks[0], "Deal 50 damage to yourself to execute an enemy", purchase);
-        else if (num >= 6) CreateButton("Shield Ward", 4, 3, false, true, CardManager.cManagerInstance.cardFronts[5], CardManager.cManagerInstance.cardBacks[3], "Disregard all enemy Block on your next attack", purchase);
-        else if (num >= 5) CreateButton("Hail of Daggers", 1, 4, false, true, CardManager.cManagerInstance.cardFronts[4], CardManager.cManagerInstance.cardBacks[0], "Deal 4 damage to each enemy", purchase);
-        else if (num >= 4) CreateButton("First Strike", 1, 2, false, true, CardManager.cManagerInstance.cardFronts[3], CardManager.cManagerInstance.cardBacks[0], "Deals 7 damage. If targeted enemies counter is less than 3, gain 3 block", purchase);
-        else if (num >= 3) CreateButton("Heal", 1, 5, false, false, CardManager.cManagerInstance.cardFronts[2], CardManager.cManagerInstance.cardBacks[2], "Heals 5 health", purchase);
-        else if (num >= 2) CreateButton("Block", 1, 10, false, false, CardManager.cManagerInstance.cardFronts[1], CardManager.cManagerInstance.cardBacks[1], "Blocks 10 damage", purchase);
-        else if (num >= 1) CreateButton("Strike", 1, 5, false, false, CardManager.cManagerInstance.cardFronts[0], CardManager.cManagerInstance.cardBacks[0], "Deals 5 Damage", purchase);
+        if (num >= 11) CreateButton("Life Drink", 0, 1, 0, false, true, CardManager.cManagerInstance.cardFronts[10], CardManager.cManagerInstance.cardBacks[0], "Increase the cooldown of enemy attack by 4", purchase);
+        else if (num >= 10) CreateButton("Turn the Tides", 0, 1, 30, false, true, CardManager.cManagerInstance.cardFronts[9], CardManager.cManagerInstance.cardBacks[0], "Deal 30 damage to each enemy. Can only be played if you have less than 10HP", purchase);
+        else if (num >= 9) CreateButton("Time Steal", 0, 4, 2, false, true, CardManager.cManagerInstance.cardFronts[8], CardManager.cManagerInstance.cardBacks[3], "Increase the cooldown of enemy attack by 4", purchase);
+        else if (num >= 8) CreateButton("Stasis", 0, 4, 4, false, false, CardManager.cManagerInstance.cardFronts[7], CardManager.cManagerInstance.cardBacks[3], "Non-boss enemies will not attack this round", purchase);
+        else if (num >= 7) CreateButton("Soulfire Sacrifice", 0, 1, 5, false, true, CardManager.cManagerInstance.cardFronts[6], CardManager.cManagerInstance.cardBacks[0], "Deal 50 damage to yourself to execute an enemy", purchase);
+        else if (num >= 6) CreateButton("Shield Ward", 0, 4, 3, false, true, CardManager.cManagerInstance.cardFronts[5], CardManager.cManagerInstance.cardBacks[3], "Disregard all enemy Block on your next attack", purchase);
+        else if (num >= 5) CreateButton("Hail of Daggers", 1, 1, 4, false, true, CardManager.cManagerInstance.cardFronts[4], CardManager.cManagerInstance.cardBacks[0], "Deal 4 damage to each enemy", purchase);
+        else if (num >= 4) CreateButton("First Strike", 1, 1, 2, false, true, CardManager.cManagerInstance.cardFronts[3], CardManager.cManagerInstance.cardBacks[0], "Deals 7 damage. If targeted enemies counter is less than 3, gain 3 block", purchase);
+        else if (num >= 3) CreateButton("Heal", 1, 1, 5, false, false, CardManager.cManagerInstance.cardFronts[2], CardManager.cManagerInstance.cardBacks[2], "Heals 5 health", purchase);
+        else if (num >= 2) CreateButton("Block", 1, 1, 10, false, false, CardManager.cManagerInstance.cardFronts[1], CardManager.cManagerInstance.cardBacks[1], "Blocks 10 damage", purchase);
+        else if (num >= 1) CreateButton("Strike", 0, 1, 5, false, false, CardManager.cManagerInstance.cardFronts[0], CardManager.cManagerInstance.cardBacks[0], "Deals 5 Damage", purchase);
     }
 
-    public void ExitShop()
-    {
-        // destroy buttons
-        // Disable shop
+    // when exitshop button is pressed
+    //public void ShopLeave()
+    //{
+    //    // destroy buttons
+    //    // Disable shop
 
-    }
+    //}
 }
