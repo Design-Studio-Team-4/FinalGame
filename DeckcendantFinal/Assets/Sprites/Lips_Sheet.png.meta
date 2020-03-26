@@ -1,0 +1,343 @@
+fileFormatVersion: 2
+guid: 5a8946b27fd6cc349a6676167708d272
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4209293236395418733
+    second: Lips_Sheet_0
+  - first:
+      213: 5964940875865949596
+    second: Lips_Sheet_1
+  - first:
+      213: -4785092988895382312
+    second: Lips_Sheet_2
+  - first:
+      213: 2131038310472055973
+    second: Lips_Sheet_3
+  - first:
+      213: -6669991736436452149
+    second: Lips_Sheet_4
+  - first:
+      213: -4009767696914416236
+    second: Lips_Sheet_5
+  - first:
+      213: -2710055783072108147
+    second: Lips_Sheet_6
+  - first:
+      213: 4038302138274414089
+    second: Lips_Sheet_7
+  - first:
+      213: 1270820438460652166
+    second: Lips_Sheet_8
+  - first:
+      213: 6626005871802787306
+    second: Lips_Sheet_9
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Lips_Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 458
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa622f23803c0074d86b49c33f063de2
+      internalID: 4209293236395418733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lips_Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 458
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b10cc73fa82c6824d9fbcb098efd8eac
+      internalID: 5964940875865949596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lips_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 458
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d26c1ab43d8e7dc44adc23a62cee9d88
+      internalID: -4785092988895382312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lips_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 458
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4e290ff472ef724499c7226dc4ffe27
+      internalID: 2131038310472055973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lips_Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 229
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 762bba4ba9861724a8d62ced23c3ce93
+      internalID: -6669991736436452149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lips_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 229
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89a4d7a758c7c384e818303aa20c2ccb
+      internalID: -4009767696914416236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lips_Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0112c968ae7f8c3448728b9ba6df0243
+      internalID: -2710055783072108147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lips_Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 0
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c06d1565c372c8b40a0bfeadcdbf58e4
+      internalID: 4038302138274414089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lips_Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 0
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76afc2b48b47e324fbc6b8b724d71046
+      internalID: 1270820438460652166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lips_Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 0
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0030e36be0a9b7a4da75659a3e526bf3
+      internalID: 6626005871802787306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: dde4fa90858ad28459edd0ba9c8ee575
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

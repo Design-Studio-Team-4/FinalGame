@@ -8,6 +8,8 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager bManagerInstance;
 
+    public GameObject player;
+
     public int playerHealth;
     public bool playerIsBlocking;
     public int playerCurrentBlockVal;
@@ -219,6 +221,7 @@ public class BattleManager : MonoBehaviour
             currentClass.currentMove = currentClass.moves[1];
             currentClass.cooldown = currentClass.moves[1].cooldown;
 
+            
             enemies[enemy].transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
         }
 
@@ -239,6 +242,8 @@ public class BattleManager : MonoBehaviour
         }
 
         enemies[enemy].GetComponent<EnemyScript>().enemy = currentClass;
+
+        Debug.Log(enemies[enemy].GetComponent<EnemyScript>().enemy.cooldown);
     }
 
 
@@ -248,7 +253,7 @@ public class BattleManager : MonoBehaviour
 
         for (int i = 0; i <= enemyAmount; i++)
         {
-            int enemy = Random.Range(0, 2);
+            int enemy = Random.Range(0, 1);
 
             SpawnEnemy(i, enemy);
         }
