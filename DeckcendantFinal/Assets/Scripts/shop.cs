@@ -72,22 +72,13 @@ public class shop : MonoBehaviour
         PurchaseFieldTransform.Find("Cooldown").GetComponent<TextMeshProUGUI>().SetText(cost.ToString());
         PurchaseFieldTransform.Find("desc").GetComponent<TextMeshProUGUI>().SetText(d);
 
-        // set front
+        //set front
         PurchaseFieldTransform.Find("Image").GetComponent<Image>().sprite = Fronts;
 
-        //PurchaseFieldTransform.GetComponent<Button>().AddListener(BuyOnClick);
-
-        void BuyOnClick()
-        {
-            Debug.Log("you clicked");
-            //if (score >= cost)
-
-            //CardManager.cManagerInstance.deck.Add(new Card(name, type, cost, power, isUsed, hasLongName, Fronts, Backs, d));
-
-            // score - cost = score
-
-        }
-        // Clicked on shop button
+        //PurchaseFieldTransform.GetComponent<Button>().ClickFunc = () =>
+        //{
+        //    BuyOnClick(cost);
+        //};
 
     }
 
@@ -112,11 +103,27 @@ public class shop : MonoBehaviour
         else if (num >= 1) CreateButton("Strike", 0, 1, 5, false, false, CardManager.cManagerInstance.cardFronts[0], CardManager.cManagerInstance.cardBacks[0], "Deals 5 Damage", purchase);
     }
 
-    // when exitshop button is pressed
-    //public void ShopLeave()
-    //{
-    //    // destroy buttons
-    //    // Disable shop
+    void BuyOnClick()
+    {
+        Debug.Log("you clicked");
+        //if (score >= cost)
 
-    //}
+        //CardManager.cManagerInstance.deck.Add(new Card(name, type, cost, power, isUsed, hasLongName, Fronts, Backs, d));
+
+        // score - cost = score
+
+    }
+    // Clicked on shop button
+
+    // when exitshop button is pressed
+    public void ShopLeave()
+    {
+        // destroy buttons
+        // Disable shop
+        Purchase1.gameObject.SetActive(false);
+        Purchase2.gameObject.SetActive(false);
+        Purchase3.gameObject.SetActive(false);
+        BottomMenu.gameObject.SetActive(false);
+
+    }
 }
