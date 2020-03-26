@@ -21,6 +21,8 @@ public class CardManager : MonoBehaviour
     public Sprite[] cardFronts;
     public Sprite[] cardBacks;
 
+    private Coroutine playC;
+
     void Awake()
     {
         if (cManagerInstance == null) { cManagerInstance = this; }
@@ -64,16 +66,40 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public void PlayCard(int slot)
-    {   
-        GameObject fCard = handSlots[slot];
+    public void PlayCard(int cardSlot, int enemySlot)
+    {
+        playC = StartCoroutine(CardUse(cardSlot, enemySlot));
+    }
 
-        FlipCard(slot);
+    private IEnumerator CardUse(int cardSlot, int enemySlot)
+    {
+        FlipCard(cardSlot);
 
-        fCard.GetComponent<Animator>().Play("CardHoverExit");
-        fCard.GetComponent<Canvas>().sortingOrder = slot + 1;
+        yield return new WaitForSeconds(0.50f);
 
-        SortHand(); 
+        handSlots[cardSlot].GetComponent<CardScript>().PutBack();
+
+        yield return new WaitForSeconds(0.50f);
+
+        SortHand();
+        BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Attack");
+
+        yield return new WaitForSeconds(0.55f);
+
+        GameObject enemy = BattleManager.bManagerInstance.enemies[enemySlot];
+
+        BattleManager.bManagerInstance.enemies[enemySlot].GetComponent<Animator>().Play("OnHit");
+
+        int newHealth = enemy.GetComponent<EnemyScript>().enemy.health -= hand[cardSlot].power;
+        enemy.transform.GetChild(1).GetChild(0).GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = newHealth.ToString() + "/100";
+
+
+        int newCooldown = enemy.GetComponent<EnemyScript>().enemy.cooldown -= hand[cardSlot].cost;
+        enemy.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = newCooldown.ToString();
+
+        BattleManager.bManagerInstance.enemies[enemySlot] = enemy;
+
+        StopCoroutine(playC);
     }
 
     public void Draw()
@@ -158,28 +184,28 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < 5; i++)
         {
-            GameObject card = handSlots[i].transform.GetChild(0).gameObject;
-
-            if (hand[i].used)
+            if (hand[i].used == false)
             {
-                FlipCard(i);
-            }
+                Debug.Log(i);
+                Debug.Log(hand[i].used.ToString());
 
-            else
-            {
                 if (hand[i].longName)
                 {
-                    card.transform.GetChild(2).GetComponent<TMP_Text>().fontSize = 5.75f;
+                    handSlots[i].transform.GetChild(0).gameObject.transform.GetChild(2).GetComponent<TMP_Text>().fontSize = 5.75f;
                 }
 
                 else
                 {
-                    card.transform.GetChild(2).GetComponent<TMP_Text>().fontSize = 7.75f;
+                    handSlots[i].transform.GetChild(0).gameObject.transform.GetChild(2).GetComponent<TMP_Text>().fontSize = 7.75f;
                 }
 
-                card.transform.GetChild(0).GetComponent<TMP_Text>().text = hand[i].desc;
-                card.transform.GetChild(1).GetComponent<TMP_Text>().text = hand[i].cost.ToString();
-                card.transform.GetChild(2).GetComponent<TMP_Text>().text = hand[i].name;
+                handSlots[i].transform.GetChild(0).gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = hand[i].desc;
+                handSlots[i].transform.GetChild(0).gameObject.transform.GetChild(1).GetComponent<TMP_Text>().text = hand[i].cost.ToString();
+                handSlots[i].transform.GetChild(0).gameObject.transform.GetChild(2).GetComponent<TMP_Text>().text = hand[i].name;
+            }
+            else
+            {
+                FlipCard(i);
             }
         }
     }

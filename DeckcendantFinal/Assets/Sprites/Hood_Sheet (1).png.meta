@@ -1,0 +1,343 @@
+fileFormatVersion: 2
+guid: 006fe5f4fabd84446bd256881f23b1c4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9040081958636588069
+    second: Hood_Sheet (1)_0
+  - first:
+      213: 310862667165688463
+    second: Hood_Sheet (1)_1
+  - first:
+      213: -1864898159755622669
+    second: Hood_Sheet (1)_2
+  - first:
+      213: 4020881649299181244
+    second: Hood_Sheet (1)_3
+  - first:
+      213: -4986521637196713758
+    second: Hood_Sheet (1)_4
+  - first:
+      213: 6051744094586300639
+    second: Hood_Sheet (1)_5
+  - first:
+      213: -6561090039896711477
+    second: Hood_Sheet (1)_6
+  - first:
+      213: -7621643616802724067
+    second: Hood_Sheet (1)_7
+  - first:
+      213: -31999151227676922
+    second: Hood_Sheet (1)_8
+  - first:
+      213: -3029395110703809804
+    second: Hood_Sheet (1)_9
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 458
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abc4df6c1f572974a8c52c197d3b5fde
+      internalID: 9040081958636588069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_1
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 458
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 223f4e24f1aadc94cbddbc74f6b424cc
+      internalID: 310862667165688463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_2
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 458
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49e4a52644b141942ad2d301f8da4c94
+      internalID: -1864898159755622669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_3
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 458
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2818409251bc7f143831ea52e210b3c7
+      internalID: 4020881649299181244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 229
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afb76003aac7f3a49870d2ce94a49950
+      internalID: -4986521637196713758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_5
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 229
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7de4840ff9ff3b24f9ff2f2832b0618d
+      internalID: 6051744094586300639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00ce89038c56f434489413d36e6d6ec9
+      internalID: -6561090039896711477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_7
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 0
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4af3cd29adf6e744d88f285a19c5dfd2
+      internalID: -7621643616802724067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_8
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 0
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 260be32270fe1d84f80ca9a922bf0f21
+      internalID: -31999151227676922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hood_Sheet (1)_9
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 0
+        width: 303.75
+        height: 229
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb01674d9ffd17c479a2cdf129a28b29
+      internalID: -3029395110703809804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

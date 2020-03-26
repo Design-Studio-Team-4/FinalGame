@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4902556732615242798}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -626, y: -365.2, z: 0}
   m_LocalScale: {x: 4.2, y: 4.2, z: 4.2}
   m_Children:
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc956cdf7150b5499a633411fefea74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardManager: {fileID: 0}
+  targeting: 0
 --- !u!95 &4902556732615242799
 Animator:
   serializedVersion: 3
@@ -81,12 +81,10 @@ GameObject:
   - component: {fileID: 4902556733659340649}
   - component: {fileID: 4902556733659340654}
   - component: {fileID: 4902556733659340655}
-  - component: {fileID: 4902556733659340652}
   - component: {fileID: 4902556733659340648}
   - component: {fileID: 4902556733659340660}
   - component: {fileID: 4902556733659340659}
   - component: {fileID: 4902556733659340661}
-  - component: {fileID: 4902556733659340662}
   m_Layer: 5
   m_Name: Slot 5
   m_TagString: Untagged
@@ -212,18 +210,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4902556733659340652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4902556733659340658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23d43e7b2d84e334d83a28ee2767addc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4902556733659340648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,29 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardManager: {fileID: 0}
   hand: {fileID: 0}
---- !u!50 &4902556733659340662
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4902556733659340658}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  selected: 0
 --- !u!1 &4902556733733785550
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,12 +289,10 @@ GameObject:
   - component: {fileID: 4902556733733785540}
   - component: {fileID: 4902556733733785541}
   - component: {fileID: 4902556733733785546}
-  - component: {fileID: 4902556733733785547}
   - component: {fileID: 4902556733733785544}
   - component: {fileID: 4902556733733785552}
   - component: {fileID: 4902556733733785551}
   - component: {fileID: 4902556733733785553}
-  - component: {fileID: 4902556733733785554}
   m_Layer: 5
   m_Name: Slot 3
   m_TagString: Untagged
@@ -455,18 +418,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4902556733733785547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4902556733733785550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23d43e7b2d84e334d83a28ee2767addc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4902556733733785544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,29 +483,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardManager: {fileID: 0}
   hand: {fileID: 0}
---- !u!50 &4902556733733785554
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4902556733733785550}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  selected: 0
 --- !u!1 &4902556733891843409
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,12 +497,10 @@ GameObject:
   - component: {fileID: 4902556733891843407}
   - component: {fileID: 4902556733891843404}
   - component: {fileID: 4902556733891843405}
-  - component: {fileID: 4902556733891843410}
   - component: {fileID: 4902556733891843411}
   - component: {fileID: 4902556733891843413}
   - component: {fileID: 4902556733891843412}
   - component: {fileID: 4902556733891843414}
-  - component: {fileID: 4902556733891843415}
   m_Layer: 5
   m_Name: Slot 4
   m_TagString: Untagged
@@ -698,18 +626,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4902556733891843410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4902556733891843409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23d43e7b2d84e334d83a28ee2767addc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4902556733891843411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,29 +691,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardManager: {fileID: 0}
   hand: {fileID: 0}
---- !u!50 &4902556733891843415
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4902556733891843409}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  selected: 0
 --- !u!1 &4902556734143700425
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,12 +705,10 @@ GameObject:
   - component: {fileID: 4902556734143700423}
   - component: {fileID: 4902556734143700420}
   - component: {fileID: 4902556734143700421}
-  - component: {fileID: 4902556734143700426}
   - component: {fileID: 4902556734143700427}
   - component: {fileID: 4902556734143700429}
   - component: {fileID: 4902556734143700428}
   - component: {fileID: 4902556734143700430}
-  - component: {fileID: 4902556734143700431}
   m_Layer: 5
   m_Name: Slot 2
   m_TagString: Untagged
@@ -941,18 +834,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4902556734143700426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4902556734143700425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23d43e7b2d84e334d83a28ee2767addc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4902556734143700427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1018,29 +899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardManager: {fileID: 0}
   hand: {fileID: 0}
---- !u!50 &4902556734143700431
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4902556734143700425}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  selected: 0
 --- !u!1 &4902556734286315155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,8 +941,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: -20}
-  m_SizeDelta: {x: 65, y: 105}
+  m_AnchoredPosition: {x: 9.8, y: -20.1}
+  m_SizeDelta: {x: 65, y: 104.95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4902556734286315145
 Canvas:
@@ -1219,8 +1079,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435422788a652d64782b3de10fb6f026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardManager: {fileID: 0}
   hand: {fileID: 4902556732615242798}
+  selected: 0
 --- !u!114 &4902556734286315156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1470,9 +1330,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 578bdfc86e1fd7240bd361935b81d236, type: 2}
-  m_sharedMaterial: {fileID: 7061364117920159747, guid: 578bdfc86e1fd7240bd361935b81d236,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2164,9 +2023,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 578bdfc86e1fd7240bd361935b81d236, type: 2}
-  m_sharedMaterial: {fileID: 7061364117920159747, guid: 578bdfc86e1fd7240bd361935b81d236,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3097,9 +2955,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 578bdfc86e1fd7240bd361935b81d236, type: 2}
-  m_sharedMaterial: {fileID: 7061364117920159747, guid: 578bdfc86e1fd7240bd361935b81d236,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3641,9 +3498,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 578bdfc86e1fd7240bd361935b81d236, type: 2}
-  m_sharedMaterial: {fileID: 7061364117920159747, guid: 578bdfc86e1fd7240bd361935b81d236,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3873,9 +3729,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 578bdfc86e1fd7240bd361935b81d236, type: 2}
-  m_sharedMaterial: {fileID: 7061364117920159747, guid: 578bdfc86e1fd7240bd361935b81d236,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

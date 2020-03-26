@@ -6,6 +6,8 @@ using TMPro;
 
 public class CardScript : MonoBehaviour
 {
+    public static CardScript cScriptInstance;
+
     private int handIndex;
     public GameObject hand;
 
@@ -14,12 +16,17 @@ public class CardScript : MonoBehaviour
     private Vector3 offset;
 
     private bool isMoving;
-    private bool selected;
+    public bool selected;
 
     private Color grey;
     private Color normal;
 
     Coroutine click;
+
+    void Awake()
+    {
+        if (cScriptInstance == null) { cScriptInstance = this; }
+    }
 
     void Start()
     {
@@ -81,26 +88,31 @@ public class CardScript : MonoBehaviour
 
         else if (Hand.handInstance.targeting && !isMoving && selected)
         {
-            CardManager.cManagerInstance.selectedCard = CardManager.cManagerInstance.hand[handIndex];
-            Hand.handInstance.targeting = false;
-
-            for (int i = 0; i < 5; i++)
-            {
-                GameObject slot = CardManager.cManagerInstance.handSlots[i];
-                if (!slot.GetComponent<CardScript>().selected)
-                {
-                    slot.transform.GetChild(0).GetComponent<Image>().color = normal;
-                    slot.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = normal;
-                    slot.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = normal;
-                }
-            }
-
-            selected = false;
-            GetComponent<Canvas>().sortingOrder = handIndex + 1;
-
-            isMoving = true;
-            click = StartCoroutine(Deselect(originalPos - offset));
+            PutBack();
         }
+    }
+
+    public void PutBack()
+    {
+        CardManager.cManagerInstance.selectedCard = CardManager.cManagerInstance.hand[handIndex];
+        Hand.handInstance.targeting = false;
+
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject slot = CardManager.cManagerInstance.handSlots[i];
+            if (!slot.GetComponent<CardScript>().selected)
+            {
+                slot.transform.GetChild(0).GetComponent<Image>().color = normal;
+                slot.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = normal;
+                slot.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = normal;
+            }
+        }
+
+        selected = false;
+        GetComponent<Canvas>().sortingOrder = handIndex + 1;
+
+        isMoving = true;
+        click = StartCoroutine(Deselect(originalPos - offset));
     }
     
     IEnumerator Select(Vector3 end)
@@ -143,7 +155,6 @@ public class CardScript : MonoBehaviour
             {
                 isMoving = false;
 
-                Debug.Log("YEET");
                 GetComponent<Animator>().enabled = true;
                 GetComponent<Animator>().Play("CardReturn");
 

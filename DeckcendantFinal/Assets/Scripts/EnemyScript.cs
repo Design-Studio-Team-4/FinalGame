@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using static BattleManager;
 
 public class EnemyScript : MonoBehaviour
@@ -29,7 +30,6 @@ public class EnemyScript : MonoBehaviour
     {
         if (Hand.handInstance.targeting)
         {
-            Debug.Log("YEET");
             enemySprite.color = hoverColor;
         }
     }
@@ -42,11 +42,22 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    public void OnClick()
+    public void OnMouseDown()
     {
         if (Hand.handInstance.targeting)
         {
-            
+            Hand.handInstance.targeting = false;
+            enemySprite.color = normalColor;
+
+            for (int i = 0; i < 5; i++)
+            {
+                GameObject slot = CardManager.cManagerInstance.handSlots[i];
+                if (slot.GetComponent<CardScript>().selected)
+                {
+                    CardManager.cManagerInstance.PlayCard(i,enemy.slot);
+                    break;
+                }
+            }
         }
     }
 }
