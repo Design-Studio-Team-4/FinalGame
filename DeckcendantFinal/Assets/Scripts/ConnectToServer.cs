@@ -61,7 +61,7 @@ public class ConnectToServer : MonoBehaviour
         form.AddField("name", name);
         form.AddField("score", score);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/Deckcendant/board.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://ugrad.bitdegree.ca/~christopherwclar/deck/board.php", form))
         {
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
