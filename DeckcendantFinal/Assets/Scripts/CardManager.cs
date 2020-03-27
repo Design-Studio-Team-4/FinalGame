@@ -9,8 +9,9 @@ public class CardManager : MonoBehaviour
 {
     public static CardManager cManagerInstance;
 
+    public List<Card> drawpile = new List<Card>();
     public List<Card> deck = new List<Card>();
-    public List<Card> discard = new List<Card>();
+    // public List<Card> discard = new List<Card>();
 
     public Card[] hand = new Card[5];
     public GameObject handObject;
@@ -33,28 +34,41 @@ public class CardManager : MonoBehaviour
        
         for (int i = 0; i < 5; i++)
         {
-            hand[i] = new Card(true);
+            hand[i] = new Card("Blank", 0, 0, 0, 0, true, false, null, null, "Blank");
         }
 
-        for (int i = 0; i <= 4; i++)
-        {
-            deck.Add(new Card("Strike", 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-            deck.Add(new Card("Strike", 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-            deck.Add(new Card("Block", 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
-            deck.Add(new Card("Heal", 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
-            // deck.Add(new Card("First Strike", 1, 2, 7, false, true, cardFronts[3], cardBacks[0], "Deals 7 damage. If targeted enemies counter is less than 3, gain 3 block"));
-            // deck.Add(new Card("Hail of Daggers", 1, 4, 4, false, true, cardFronts[4], cardBacks[0], "Deal 4 damage to each enemy"));
-            // deck.Add(new Card("Shield Ward", 4, 3, 0, false, true, cardFronts[5], cardBacks[3], "Disregard all enemy Block on your next attack"));
-            // deck.Add(new Card("Soulfire Sacrifice", 1, 5, 0, false, true, cardFronts[6], cardBacks[0], "Deal 50 damage to yourself to execute an enemy"));
-            // deck.Add(new Card("Stasis", 4, 4, 0, false, false, cardFronts[7], cardBacks[3], "Non-boss enemies will not attack this round."));
-            // deck.Add(new Card("Time Steal", 4, 2, 4, false, true, cardFronts[8], cardBacks[3], "Increase the cooldown of enemy attack by 4"));
-            // deck.Add(new Card("Turn the Tides", 1, 30, 0, false, true, cardFronts[9], cardBacks[0], "Deal 30 damage to each enemy. Can only be played if you have less than 10HP"));
-            // deck.Add(new Card("Life Drink", 1, 2, 8, false, true, cardFronts[10], cardBacks[0], "Increase the cooldown of enemy attack by 4"));
-        }
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+        deck.Add(new Card("Block", 1, 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
+        deck.Add(new Card("Block", 1, 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
+        deck.Add(new Card("Block", 1, 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
+        deck.Add(new Card("Heal", 2, 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
+        deck.Add(new Card("Heal", 2, 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
 
-        deck = Shuffle(deck);
+        // deck.Add(new Card("Block", 1, 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
+        // deck.Add(new Card("Heal", 2, 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
+        // deck.Add(new Card("First Strike", 1, 2, 7, false, true, cardFronts[3], cardBacks[0], "Deals 7 damage. If targeted enemies counter is less than 3, gain 3 block"));
+        // deck.Add(new Card("Hail of Daggers", 1, 4, 4, false, true, cardFronts[4], cardBacks[0], "Deal 4 damage to each enemy"));
+        // deck.Add(new Card("Shield Ward", 4, 3, 0, false, true, cardFronts[5], cardBacks[3], "Disregard all enemy Block on your next attack"));
+        // deck.Add(new Card("Soulfire Sacrifice", 1, 5, 0, false, true, cardFronts[6], cardBacks[0], "Deal 50 damage to yourself to execute an enemy"));
+        // deck.Add(new Card("Stasis", 4, 4, 0, false, false, cardFronts[7], cardBacks[3], "Non-boss enemies will not attack this round."));
+        // deck.Add(new Card("Time Steal", 4, 2, 4, false, true, cardFronts[8], cardBacks[3], "Increase the cooldown of enemy attack by 4"));
+        // deck.Add(new Card("Turn the Tides", 1, 30, 0, false, true, cardFronts[9], cardBacks[0], "Deal 30 damage to each enemy. Can only be played if you have less than 10HP"));
+        // deck.Add(new Card("Life Drink", 1, 2, 8, false, true, cardFronts[10], cardBacks[0], "Increase the cooldown of enemy attack by 4"));
+
+
+        drawpile = new List<Card>(deck);
+
+        drawpile = Shuffle(drawpile);
         Draw();
-        discard.Clear();
         handObject.GetComponent<Animator>().Play("HandUp");
     }
 
@@ -64,6 +78,18 @@ public class CardManager : MonoBehaviour
         {
             handObject.GetComponent<Animator>().Play("HandDown");
         }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Debug.Log("Dis how many in discard pile:");
+
+            for (int i = 0; i < 5; i++)
+            {
+                Debug.Log(hand[i].name);
+                Debug.Log(hand[i].power);
+            }
+        }
+
     }
 
     public void PlayCard(int cardSlot, int enemySlot)
@@ -73,6 +99,8 @@ public class CardManager : MonoBehaviour
 
     private IEnumerator CardUse(int cardSlot, int enemySlot)
     {
+
+        hand[cardSlot].used = true;
         FlipCard(cardSlot);
 
         yield return new WaitForSeconds(0.50f);
@@ -81,21 +109,27 @@ public class CardManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.50f);
 
-        SortHand();
-        BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Attack");
+        if (hand[cardSlot].cardType == 0)
+        {
+            BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Attack");
+        }
+
+        else if (hand[cardSlot].cardType == 3)
+        {
+            // BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Effect");
+        }
+
+        SortHand();  
 
         yield return new WaitForSeconds(0.55f);
 
         GameObject enemy = BattleManager.bManagerInstance.enemies[enemySlot];
 
-        BattleManager.bManagerInstance.enemies[enemySlot].GetComponent<Animator>().Play("OnHit");
+        BattleManager.bManagerInstance.enemies[enemySlot].transform.GetChild(0).GetComponent<Animator>().Play("OnHit");
 
-        int newHealth = enemy.GetComponent<EnemyScript>().enemy.health -= hand[cardSlot].power;
-        enemy.transform.GetChild(1).GetChild(0).GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = newHealth.ToString() + "/100";
+        enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= hand[cardSlot].power;
 
-
-        int newCooldown = enemy.GetComponent<EnemyScript>().enemy.cooldown -= hand[cardSlot].cost;
-        enemy.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = newCooldown.ToString();
+        BattleManager.bManagerInstance.ReduceEnemyCooldown(hand[cardSlot].cost);
 
         BattleManager.bManagerInstance.enemies[enemySlot] = enemy;
 
@@ -108,30 +142,33 @@ public class CardManager : MonoBehaviour
 
         int drawCount = CheckHand();
 
-        if (drawCount < deck.Count)
+        if (drawCount < drawpile.Count)
         {
             Drawing(drawCount);
         }
 
-        else if (drawCount >= deck.Count)
+        else if (drawCount >= drawpile.Count)
         {
-            if (deck.Count != 0)
+
+            if (drawpile.Count != 0)
             {
-                Drawing(deck.Count);
-                drawCount -= deck.Count;
-            }
-            
-            for (int i = 0; i < (discard.Count); i++)
-            {
-                deck.Add(discard[i]);
-                deck[i].used = false;
-                discard.RemoveAt(i);
+                drawCount -= drawpile.Count;
+                SortHand();
+                Drawing(drawpile.Count);
             }
 
-            deck = Shuffle(deck);
-            Drawing(drawCount);
+            drawpile.Clear();
+
+            drawpile = new List<Card>(deck);
+
+            if (drawCount != 0)
+            {
+                drawpile = Shuffle(drawpile);
+
+                SortHand();
+                Drawing(drawCount);
+            }
         }
-
         SortHand();
     }
 
@@ -139,9 +176,9 @@ public class CardManager : MonoBehaviour
     {
         for (int i = 0; i < (cardsToDraw); i++)
         {
-            hand[i] = deck[deck.Count - 1];
-            discard.Add(hand[i]);
-            deck.RemoveAt(deck.Count - 1);
+            hand[i] = drawpile[drawpile.Count - 1];
+
+            drawpile.RemoveAt(drawpile.Count - 1);
 
             handSlots[i].transform.GetChild(0).GetComponent<Image>().sprite = hand[i].front;
         }
@@ -186,8 +223,8 @@ public class CardManager : MonoBehaviour
         {
             if (hand[i].used == false)
             {
-                Debug.Log(i);
-                Debug.Log(hand[i].used.ToString());
+
+                handSlots[i].transform.GetChild(0).gameObject.GetComponent<Image>().sprite = hand[i].front;
 
                 if (hand[i].longName)
                 {
@@ -233,16 +270,15 @@ public class CardManager : MonoBehaviour
         card.transform.GetChild(0).GetComponent<TMP_Text>().text = "";
         card.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
         card.transform.GetChild(2).GetComponent<TMP_Text>().text = "";
-
-        hand[index].used = true;
     }
 
-    public class Card
+    public struct Card
     {
         public Sprite front;
         public Sprite back;
 
-        public int type;
+        public int cardType;
+        public int functionType;
         public int power;
 
         public int cost;
@@ -252,22 +288,18 @@ public class CardManager : MonoBehaviour
         public bool used;
         public bool longName;
         
-        public Card(string n, int t, int c, int p, bool u, bool ln, Sprite f, Sprite b, string d)
+        public Card(string n, int ct, int ft, int c, int p, bool u, bool ln, Sprite f, Sprite b, string d)
         {
-            type = t;
-            power = p;
-            cost = c;
             name = n;
-            desc = d;
+            cardType = ct;
+            functionType = ft;
+            cost = c;
+            power = p;
             used = u;
             longName = ln;
             front = f;
             back = b;
-        }
-
-        public Card(bool u)
-        {
-            used = u;
+            desc = d;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using static BattleManager;
 
@@ -9,6 +10,8 @@ public class EnemyScript : MonoBehaviour
     public static EnemyScript enemyInstance;
 
     public Enemy enemy;
+
+    public int baseHealth;
 
     public SpriteRenderer enemySprite;
 
@@ -22,8 +25,30 @@ public class EnemyScript : MonoBehaviour
 
     void Start()
     {
+        baseHealth = enemy.health;
+
         hoverColor = new Color(1.00f, 0.90f, 0.00f);
         normalColor = new Color(1.00f, 1.00f, 1.00f);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            transform.GetChild(1).GetComponent<Animator>().Play("Heal");
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            transform.GetChild(1).GetComponent<Animator>().Play("Block");
+        }
+
+        Transform indicator = transform.GetChild(2).GetChild(0);
+
+        indicator.GetChild(0).GetComponent<TMP_Text>().text = enemy.cooldown.ToString();
+
+        indicator.GetChild(1).GetComponent<Slider>().value = enemy.health;
+        indicator.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = enemy.health.ToString() + "/" + baseHealth;
     }
 
     public void OnMouseOver()

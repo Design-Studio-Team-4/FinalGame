@@ -18,8 +18,8 @@ public class CardScript : MonoBehaviour
     private bool isMoving;
     public bool selected;
 
-    private Color grey;
-    private Color normal;
+    public Color grey;
+    public Color normal;
 
     Coroutine click;
 
@@ -45,7 +45,7 @@ public class CardScript : MonoBehaviour
 
     public void OnHover()
     {
-        if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving)
+        if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn)
         {
             GetComponent<Canvas>().sortingOrder = 6;
             GetComponent<Animator>().Play("CardHover");
@@ -54,7 +54,7 @@ public class CardScript : MonoBehaviour
 
     public void OnHoverExit()
     {
-        if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving)
+        if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn)
         {
             GetComponent<Canvas>().sortingOrder = handIndex + 1;
             GetComponent<Animator>().Play("CardHoverExit");
@@ -63,7 +63,33 @@ public class CardScript : MonoBehaviour
 
     public void OnClick()
     {
-        if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving)
+        if(!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn && CardManager.cManagerInstance.hand[handIndex].cardType == 1 || CardManager.cManagerInstance.hand[handIndex].cardType == 2)
+        {
+            CardManager.cManagerInstance.hand[handIndex].used = true;
+            CardManager.cManagerInstance.FlipCard(handIndex);
+
+            if(CardManager.cManagerInstance.hand[handIndex].cardType == 1)
+            {
+                BattleManager.bManagerInstance.player.transform.GetChild(2).GetComponent<Animator>().Play("Block");
+
+                BattleManager.bManagerInstance.playerCurrentBlockVal += CardManager.cManagerInstance.hand[handIndex].power;
+                BattleManager.bManagerInstance.ReduceEnemyCooldown(CardManager.cManagerInstance.hand[handIndex].cost);
+            }
+
+            else if (CardManager.cManagerInstance.hand[handIndex].cardType == 2)
+            {
+                BattleManager.bManagerInstance.player.transform.GetChild(2).GetComponent<Animator>().Play("Heal");
+
+                BattleManager.bManagerInstance.playerHealth += CardManager.cManagerInstance.hand[handIndex].power;
+                BattleManager.bManagerInstance.ReduceEnemyCooldown(CardManager.cManagerInstance.hand[handIndex].cost);
+            }
+
+            GetComponent<Animator>().Play("CardHoverExit");
+            GetComponent<Canvas>().sortingOrder = handIndex + 1;
+            CardManager.cManagerInstance.SortHand();
+        }
+
+        else if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn)
         {
             CardManager.cManagerInstance.selectedCard = CardManager.cManagerInstance.hand[handIndex];
             Hand.handInstance.targeting = true;
@@ -86,7 +112,7 @@ public class CardScript : MonoBehaviour
             click = StartCoroutine(Select(clickedPos));
         }
 
-        else if (Hand.handInstance.targeting && !isMoving && selected)
+        else if (Hand.handInstance.targeting && !isMoving && selected && !BattleManager.bManagerInstance.enemyTurn)
         {
             PutBack();
         }

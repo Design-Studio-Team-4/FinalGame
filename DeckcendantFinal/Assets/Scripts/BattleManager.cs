@@ -11,8 +11,12 @@ public class BattleManager : MonoBehaviour
     public GameObject player;
 
     public int playerHealth;
-    public bool playerIsBlocking;
+    public Slider healthBar;
+    public TMP_Text healthText;
+
     public int playerCurrentBlockVal;
+    public GameObject blockIcon;
+    public TMP_Text blockText;
 
     // X values for enemy spawn points
     private static float xPosOne;
@@ -22,9 +26,17 @@ public class BattleManager : MonoBehaviour
     // Z value for enemy spawn points
     private static float zPos;
 
+    private static Quaternion rotTwo;
+    private static Quaternion rotThree;
+
     public GameObject[] enemyPrefabs;
 
     public GameObject[] enemies;
+
+    public bool enemyTurn;
+
+    private Coroutine UI;
+    private Coroutine EA;
 
     void Awake()
     {
@@ -35,9 +47,12 @@ public class BattleManager : MonoBehaviour
     {
         // Setting up enemy spawn points
         xPosOne = -1.0f;
-        xPosTwo = 1.75f;
-        xPosThree = 4.5f;
+        xPosTwo = 1.5f;
+        xPosThree = 4.2f;
         zPos = 6.0f;
+
+        rotTwo = Quaternion.Euler(0.0f, 17.5f, 0.0f);
+        rotThree = Quaternion.Euler(0.0f, 34.0f, 0.0f);
 
         for (int i = 0; i < 3; i++)
         {
@@ -45,18 +60,15 @@ public class BattleManager : MonoBehaviour
         }
 
         playerHealth = 100;
-        playerIsBlocking = false;
         playerCurrentBlockVal = 0;
+
+        enemyTurn = false;
+
+        UpdatePlayerUI();
 
         Spawn();
 
         FindStandbyEnemies();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void PlayerMove(int type)
@@ -111,7 +123,6 @@ public class BattleManager : MonoBehaviour
 
     public void PlayerBlock(int power)
     {
-        playerIsBlocking = true;
         playerCurrentBlockVal = power;
     }
 
@@ -120,7 +131,7 @@ public class BattleManager : MonoBehaviour
         
     }
 
-    public void EnemyTurn()
+    public void EnemyTurnnnnn()
     {
         /*
 
@@ -174,24 +185,116 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void CheckGameState()
+    public void ReduceEnemyCooldown(int cardCost)
     {
-        
+        for (int i = 0; i < 3; i++)
+        {
+            if(enemies[i] == null)
+            {
+                continue;
+            }
+            
+            enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown -= cardCost;
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            if(enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == 0)
+            {
+                enemyTurn = true;
+                EnemyTurn();
+                break;
+            }
+        }
+    }
+
+    public void EnemyTurn()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject slot = CardManager.cManagerInstance.handSlots[i];
+
+            slot.transform.GetChild(0).GetComponent<Image>().color = CardScript.cScriptInstance.grey;
+            slot.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
+            slot.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (enemies[i] == null)
+            {
+                continue;
+            }
+
+            if(enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == 0)
+            {
+                EnemyAnimate(i);
+            }
+        }
+    }
+
+    public void EnemyAnimate(int enemy)
+    {
+        EA = StartCoroutine(EnemyAnimateCo(enemy));
+    }
+
+    private IEnumerator EnemyAnimateCo(int enemy)
+    {
+        Enemy current = enemies[enemy].transform.GetChild(0).GetComponent<EnemyScript>().enemy;
+
+        if (current.currentMove.type == 0)
+        {
+            if (playerCurrentBlockVal > 0)
+            {
+                enemies[enemy].transform.GetChild(0).GetComponent<Animator>().Play("Attack");
+
+                yield return new WaitForSeconds(0.50f);
+
+                player.GetComponent<Animator>().Play("Player_OnHit");
+
+                playerHealth -= (current.currentMove.power - playerCurrentBlockVal);
+                playerCurrentBlockVal -= current.currentMove.power;
+            }
+
+            else
+            {
+                enemies[enemy].transform.GetChild(0).GetComponent<Animator>().Play("Attack");
+
+                yield return new WaitForSeconds(0.50f);
+
+                player.GetComponent<Animator>().Play("Player_OnHit");
+                playerHealth -= current.currentMove.power;
+            }
+        }
+
+        else if (current.currentMove.type == 1)
+        {
+            enemies[enemy].transform.GetChild(0).GetChild(1).GetComponent<Animator>().Play("Block");
+            current.currentBlockVal += current.currentMove.power;
+        }
+
+        else if (current.currentMove.type == 2)
+        {
+            enemies[enemy].transform.GetChild(0).GetChild(1).GetComponent<Animator>().Play("Heal");
+            current.health += current.currentMove.power;
+        }
+
+        StopCoroutine(EA);
     }
 
     public void FindStandbyEnemies()
     {
-            if (enemies[0].GetComponent<EnemyScript>().enemy.cooldown == -1)
+            if (enemies[0].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
             {
                 GenerateEnemyMove(0);
             }
 
-            if (enemies[1].GetComponent<EnemyScript>().enemy.cooldown == -1)
+            if (enemies[1].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
             {
                 GenerateEnemyMove(1);
             }
 
-            if (enemies[2].GetComponent<EnemyScript>().enemy.cooldown == -1)
+            if (enemies[2].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
             {
                 GenerateEnemyMove(2);
             }
@@ -200,9 +303,8 @@ public class BattleManager : MonoBehaviour
     public void GenerateEnemyMove(int enemy)
     {
         float movePct = Random.Range(0.00f, 1.00f);
-        Debug.Log(movePct);
 
-        Enemy currentClass = enemies[enemy].GetComponent<EnemyScript>().enemy;
+        Enemy currentClass = enemies[enemy].transform.GetChild(0).GetComponent<EnemyScript>().enemy;
 
         float moveWeightOne = currentClass.moves[0].chance;
         float moveWeightTwo = currentClass.moves[0].chance + currentClass.moves[1].chance;
@@ -213,7 +315,7 @@ public class BattleManager : MonoBehaviour
             currentClass.currentMove = currentClass.moves[0];
             currentClass.cooldown = currentClass.moves[0].cooldown;
 
-            enemies[enemy].transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
+            enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
         }
 
         else if (movePct > moveWeightOne && movePct <= moveWeightTwo)
@@ -222,7 +324,7 @@ public class BattleManager : MonoBehaviour
             currentClass.cooldown = currentClass.moves[1].cooldown;
 
             
-            enemies[enemy].transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
+            enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
         }
 
         else if (movePct > moveWeightTwo && movePct <= moveWeightThree)
@@ -230,7 +332,7 @@ public class BattleManager : MonoBehaviour
             currentClass.currentMove = currentClass.moves[2];
             currentClass.cooldown = currentClass.moves[2].cooldown;
 
-            enemies[enemy].transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
+            enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
         }
 
         else if (movePct >= moveWeightThree)
@@ -238,12 +340,10 @@ public class BattleManager : MonoBehaviour
             currentClass.currentMove = currentClass.moves[3];
             currentClass.cooldown = currentClass.moves[3].cooldown;
 
-            enemies[enemy].transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
+            enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = currentClass.cooldown.ToString();
         }
 
-        enemies[enemy].GetComponent<EnemyScript>().enemy = currentClass;
-
-        Debug.Log(enemies[enemy].GetComponent<EnemyScript>().enemy.cooldown);
+        enemies[enemy].transform.GetChild(0).GetComponent<EnemyScript>().enemy = currentClass;
     }
 
 
@@ -264,19 +364,21 @@ public class BattleManager : MonoBehaviour
          if (spawnPoint == 1)
          {
             enemies[0] = Instantiate(enemyPrefabs[enemy], new Vector3(xPosOne, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
-            enemies[0].GetComponent<EnemyScript>().enemy = (ReturnEnemy(enemy, 0));
+            enemies[0].transform.GetChild(0).GetComponent<EnemyScript>().enemy = (ReturnEnemy(enemy, 0));
         }
 
          else if (spawnPoint == 2)
          {
-            enemies[1] = Instantiate(enemyPrefabs[enemy], new Vector3(xPosTwo, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
-            enemies[1].GetComponent<EnemyScript>().enemy = (ReturnEnemy(enemy, 1));
+            enemies[1] = Instantiate(enemyPrefabs[enemy], new Vector3(xPosTwo, enemyPrefabs[enemy].transform.position.y, zPos), rotTwo);
+            enemies[1].transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().rotation = Quaternion.identity;
+            enemies[1].transform.GetChild(0).GetComponent<EnemyScript>().enemy = (ReturnEnemy(enemy, 1));
         }
 
          else if (spawnPoint == 3)
          {
-            enemies[2] = Instantiate(enemyPrefabs[enemy], new Vector3(xPosThree, enemyPrefabs[enemy].transform.position.y, zPos), Quaternion.identity);
-            enemies[2].GetComponent<EnemyScript>().enemy = (ReturnEnemy(enemy, 2));
+            enemies[2] = Instantiate(enemyPrefabs[enemy], new Vector3(xPosThree, enemyPrefabs[enemy].transform.position.y, zPos), rotThree);
+            enemies[2].transform.GetChild(0).GetChild(2).GetComponent<RectTransform>().rotation = Quaternion.identity;
+            enemies[2].transform.GetChild(0).GetComponent<EnemyScript>().enemy = (ReturnEnemy(enemy, 2));
         }
     }
 
@@ -284,21 +386,68 @@ public class BattleManager : MonoBehaviour
     {
         if(enemy == 0)
         {
-            return new Enemy(slot, 100, -1, null, 0, false, lipsMoves);
+            return new Enemy(slot, 18, -1, null, 0, false, lipsMoves);
         }
 
         else if(enemy == 1)
         {
-            return new Enemy(slot, 75, -1, null, 0, false, blueBoiMoves);
+            return new Enemy(slot, 12, -1, null, 0, false, blueBoiMoves);
         }
 
         else if (enemy == 2)
         {
-            return new Enemy(slot, 125, -1, null, 0, false, tallShroomMoves);
+            return new Enemy(slot, 26, -1, null, 0, false, tallShroomMoves);
         }
 
         return null;
     }
+
+    public void UpdatePlayerUI()
+    {
+        UI = StartCoroutine(RefreshUI());
+    }
+
+    private IEnumerator RefreshUI()
+    {
+        while (true)
+        {
+            if (playerCurrentBlockVal > 0)
+            {
+                blockIcon.SetActive(true);
+                blockText.text = playerCurrentBlockVal.ToString();
+            }
+
+            else if (playerCurrentBlockVal <= 0)
+            {
+                blockIcon.SetActive(false);
+                playerCurrentBlockVal = 0;
+                blockText.text = playerCurrentBlockVal.ToString();
+            }
+
+            if (playerHealth > 100)
+            {
+                playerHealth = 100;
+                healthBar.value = playerHealth;
+                healthText.text = "HP: " + playerHealth.ToString();
+            }
+
+            else if (playerHealth < 0)
+            {
+                playerHealth = 0;
+                healthBar.value = playerHealth;
+                healthText.text = "HP: " + playerHealth.ToString();
+            }
+
+            else
+            {
+                healthBar.value = playerHealth;
+                healthText.text = "HP: " + playerHealth.ToString();
+            }
+
+            yield return null;
+        }
+    }
+
     public class Enemy
     {
         public int slot;
@@ -346,26 +495,26 @@ public class BattleManager : MonoBehaviour
 
     public static EnemyMove[] lipsMoves = new EnemyMove[]
     {
-            new EnemyMove(1, 15, 2, 0.50f), // Slap (Attack/15/2/0.50)
-            new EnemyMove(2, 10, 2, 0.10f), // Block (Block/10/2/0.10)
-            new EnemyMove(3, 10, 3, 0.25f), // Heal (Heal/10/3/0.25)
-            new EnemyMove(1, 45, 6, 0.15f), // Big Punch (Attack/45/6/0.15)
+            new EnemyMove(0, 15, 2, 0.50f), // Slap (Attack/15/2/0.50)
+            new EnemyMove(1, 10, 2, 0.10f), // Block (Block/10/2/0.10)
+            new EnemyMove(2, 10, 3, 0.25f), // Heal (Heal/10/3/0.25)
+            new EnemyMove(0, 45, 6, 0.15f), // Big Punch (Attack/45/6/0.15)
     };
 
     public static EnemyMove[] tallShroomMoves = new EnemyMove[]
     {
-            new EnemyMove(1, 10, 4, 0.20f), // Ball Shake (Attack/10/4/0.20)
-            new EnemyMove(2, 15, 2, 0.30f), // Stalk Strengthen (Defend/15/2/0.30)
-            new EnemyMove(2, 35, 4, 0.35f), // Tall Ball Wall (Defend/35/4/0.35)
-            new EnemyMove(3, 60, 8, 0.15f), // Heal Spore (Heal/60/8/0.15)
+            new EnemyMove(0, 10, 4, 0.20f), // Ball Shake (Attack/10/4/0.20)
+            new EnemyMove(1, 15, 2, 0.30f), // Stalk Strengthen (Defend/15/2/0.30)
+            new EnemyMove(1, 35, 4, 0.35f), // Tall Ball Wall (Defend/35/4/0.35)
+            new EnemyMove(2, 60, 8, 0.15f), // Heal Spore (Heal/60/8/0.15)
     };
 
     public static EnemyMove[] blueBoiMoves = new EnemyMove[]
     {
-            new EnemyMove(1, 10, 2, 0.45f), // Singe (Attack/10/2/0.40)
-            new EnemyMove(1, 25, 4, 0.25f), // Hex (Attack/25/4/0.20)
-            new EnemyMove(1, 65, 9, 0.10f), // Fireball (Attack/65/9/0.10)
-            new EnemyMove(3, 40, 3, 0.20f), // Heal (Heal/40/3/0.20)
+            new EnemyMove(0, 10, 2, 0.45f), // Singe (Attack/10/2/0.40)
+            new EnemyMove(0, 25, 4, 0.25f), // Hex (Attack/25/4/0.20)
+            new EnemyMove(0, 65, 9, 0.10f), // Fireball (Attack/65/9/0.10)
+            new EnemyMove(2, 40, 3, 0.20f), // Heal (Heal/40/3/0.20)
     };
 
 
