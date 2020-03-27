@@ -462,7 +462,16 @@ public class BattleManager : MonoBehaviour
     {
         while (true)
         {
-            if(enemies[0] == null && enemies[1] == null && enemies[2] == null)
+            if (playerHealth <= 0)
+            {
+                Destroy(player);
+
+                uiBottom.SetActive(false);
+                Hand.handInstance.gameObject.SetActive(false);
+                gameOver.SetActive(true);
+            }
+
+            if (enemies[0] == null && enemies[1] == null && enemies[2] == null)
             {
                 uiBottom.SetActive(false);
                 Hand.handInstance.gameObject.SetActive(false);
@@ -587,7 +596,7 @@ public class BattleManager : MonoBehaviour
             new EnemyMove(0, 15, 2, 0.50f), // Slap (Attack/15/2/0.50)
             new EnemyMove(0, 15, 2, 0.10f), // Slap (Attack/15/2/0.50)
             new EnemyMove(2, 10, 3, 0.25f), // Heal (Heal/10/3/0.25)
-            new EnemyMove(0, 45, 6, 0.15f), // Big Punch (Attack/45/6/0.15)
+            new EnemyMove(0, 45, 5, 0.15f), // Big Punch (Attack/45/6/0.15)
     };
 
     public static EnemyMove[] tallShroomMoves = new EnemyMove[]
@@ -595,14 +604,14 @@ public class BattleManager : MonoBehaviour
             new EnemyMove(0, 10, 4, 0.20f), // Ball Shake (Attack/10/4/0.20)
             new EnemyMove(0, 10, 4, 0.30f), // Ball Shake (Attack/10/4/0.20)
             new EnemyMove(0, 10, 4, 0.35f), // Ball Shake (Attack/10/4/0.20)
-            new EnemyMove(2, 60, 8, 0.15f), // Heal Spore (Heal/60/8/0.15)
+            new EnemyMove(2, 60, 4, 0.15f), // Heal Spore (Heal/60/8/0.15)
     };
 
     public static EnemyMove[] blueBoiMoves = new EnemyMove[]
     {
             new EnemyMove(0, 10, 2, 0.45f), // Singe (Attack/10/2/0.40)
             new EnemyMove(0, 25, 4, 0.25f), // Hex (Attack/25/4/0.20)
-            new EnemyMove(0, 65, 9, 0.10f), // Fireball (Attack/65/9/0.10)
+            new EnemyMove(0, 65, 4, 0.10f), // Fireball (Attack/65/9/0.10)
             new EnemyMove(2, 40, 3, 0.20f), // Heal (Heal/40/3/0.20)
     };
 

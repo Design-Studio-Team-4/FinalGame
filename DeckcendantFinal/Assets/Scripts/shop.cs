@@ -75,7 +75,7 @@ public class shop : MonoBehaviour
         Debug.Log(num);
 
         // takes all normal card values plus purchase as the button to place it at
-        if (num >= 11) CreateButton("Life Drink", 1, true, CardManager.cManagerInstance.cardFronts[10], "Increase the cooldown of enemy attack by 4", purchase);
+       if (num >= 11) CreateButton("Life Drink", 1, true, CardManager.cManagerInstance.cardFronts[10], "Increase the cooldown of enemy attack by 4", purchase);
         else if (num >= 10) CreateButton("Turn the Tides", 1, true, CardManager.cManagerInstance.cardFronts[9], "Deal 30 damage to each enemy. Can only be played if you have less than 10HP", purchase);
         else if (num >= 9) CreateButton("Time Steal", 4, true, CardManager.cManagerInstance.cardFronts[8], "Increase the cooldown of enemy attack by 4", purchase);
         else if (num >= 8) CreateButton("Stasis", 4, false, CardManager.cManagerInstance.cardFronts[7], "Non-boss enemies will not attack this round", purchase);
@@ -98,7 +98,7 @@ public class shop : MonoBehaviour
         Debug.Log("this card is");
         Debug.Log(cardname);
 
-        if (cardname == "Strike") CardManager.cManagerInstance.deck.Add(new Card("Strike", 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
+       /* if (cardname == "Strike") CardManager.cManagerInstance.deck.Add(new Card("Strike", 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
         if (cardname == "Block") CardManager.cManagerInstance.deck.Add(new Card("Block", 1, 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
         if (cardname == "Heal") CardManager.cManagerInstance.deck.Add(new Card("Heal", 2, 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
         if (cardname == "First Strike") CardManager.cManagerInstance.deck.Add(new Card("First Strike", 1, 2, 7, false, true, cardFronts[3], cardBacks[0], "Deals 7 damage. If targeted enemies counter is less than 3, gain 3 block"));
@@ -109,7 +109,7 @@ public class shop : MonoBehaviour
         if (cardname == "Time Steal") CardManager.cManagerInstance.deck.Add(new Card("Stasis", 4, 4, 0, false, false, cardFronts[7], cardBacks[3], "Non-boss enemies will not attack this round."));
         if (cardname == "Turn the Tides") CardManager.cManagerInstance.deck.Add(new Card("Turn the Tides", 1, 30, 0, false, true, cardFronts[9], cardBacks[0], "Deal 30 damage to each enemy. Can only be played if you have less than 10HP"));
         if (cardname == "Life Drink") CardManager.cManagerInstance.deck.Add(new Card("Life Drink", 1, 2, 8, false, true, cardFronts[10], cardBacks[0], "Increase the cooldown of enemy attack by 4"));
-
+        */
         //.gameObject.SetActive(true);
 
     }
