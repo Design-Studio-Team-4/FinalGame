@@ -16,12 +16,16 @@ public class ConnectToServer : MonoBehaviour
     int score = 1;
     string name = " ";
     bool submitted = false;
-    bool ranConnect = false;
-
+    bool ranBoard = false;
+    string sort = "false";
     public TMPro.TextMeshProUGUI Leaderboard;
+    bool connected = false;
+    bool added = false;
     // Start is called before the first frame update
     void Start()
     {
+        ranBoard = false;
+        added = false;
         SubmissionCanvas.SetActive(true);
         LeaderboardCanvas.SetActive(false);
 
@@ -30,38 +34,123 @@ public class ConnectToServer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         if (submitted == true)
         {
-            if (ranConnect == false)
+            if (connected == false)
             {
-               // StartCoroutine(connect());
-                StartCoroutine(RunLeaderboard(name, score));
+
                 SubmissionCanvas.SetActive(false);
                 LeaderboardCanvas.SetActive(true);
-                ranConnect = true;
+                StartCoroutine(connect());
+                StartCoroutine(AddPlaythrough(name, score));
+                
+                
             }
-  
+            else
+            {
+                if(ranBoard == false)
+                {
+                StartCoroutine(RunLeaderboard(sort));
+                }
+                
+                //StartCoroutine(GetLeaderboard());
+            }
+
+
         }
+        else
+        {
+
+           
+            
+        }
+
+    }
+    IEnumerator GetLeaderboard()
+    {
+
+        using (UnityWebRequest www = UnityWebRequest.Get("http://ugrad.bitdegree.ca/~christopherwclar/deck/text.txt"))
+        {
+            yield return www.Send();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+
+            }
+            else
+            {
+                
+                byte[] results = www.downloadHandler.data;
+            }
+        }
+        yield return null;
     }
     IEnumerator connect() {
-        using (UnityWebRequest www = UnityWebRequest.Get("http://localhost/Deckcendant/connect.php")) {
+        using (UnityWebRequest www = UnityWebRequest.Get("http://ugrad.bitdegree.ca/~christopherwclar/deck/connect.php")) {
             yield return www.Send();
             if (www.isNetworkError || www.isHttpError) {
                 Debug.Log(www.error);
 
             } else {
+                connected = true;
                 Debug.Log(www.downloadHandler.text);
                 byte[] results = www.downloadHandler.data;
             }
         }
+      
+        yield return null;
     }
-    IEnumerator RunLeaderboard(string name, int score)
+    IEnumerator disconnect()
     {
+        using (UnityWebRequest www = UnityWebRequest.Get("http://ugrad.bitdegree.ca/~christopherwclar/deck/disconnect.php"))
+        {
+            yield return www.Send();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+
+            }
+            else
+            {
+                connected = false;
+                Debug.Log(www.downloadHandler.text);
+                byte[] results = www.downloadHandler.data;
+            }
+        }
+        yield return null;
+    }
+    IEnumerator AddPlaythrough(string name, int score)
+    {
+        if(added == false)
+        { added = true;
         WWWForm form = new WWWForm();
         form.AddField("name", name);
         form.AddField("score", score);
+        using (UnityWebRequest www = UnityWebRequest.Post("http://ugrad.bitdegree.ca/~christopherwclar/deck/addplaythrough.php", form))
+        {
+            yield return www.Send();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/Deckcendant/board.php", form))
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+            }
+
+        }
+        }
+       
+        
+        yield return null;
+    } 
+    IEnumerator RunLeaderboard(string sort)
+    {   ranBoard = true;
+        WWWForm form = new WWWForm();
+        form.AddField("sort", sort);
+        using (UnityWebRequest www = UnityWebRequest.Post("http://ugrad.bitdegree.ca/~christopherwclar/deck/getleaderboard.php", form))
         {
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
@@ -71,12 +160,14 @@ public class ConnectToServer : MonoBehaviour
             }
             else
             {
+                
                 Leaderboard.text = www.downloadHandler.text;
                 byte[] results = www.downloadHandler.data;
             }
 
 
         }
+        yield return null;
     }
     public void NextPage()
     {
@@ -104,6 +195,27 @@ public class ConnectToServer : MonoBehaviour
             placeholdertext.GetComponent<TMPro.TextMeshProUGUI>().text = "Invalid";
         }
    
+    }
+    public void Menu()
+    {
+        StartCoroutine(disconnect());
+        Debug.Log("Hit Menu Button");
+    }
+    public void sortbutton()
+    {
+        if (sort == "false")
+        {
+            sort = "true";
+        }
+        else
+        {
+            sort = "false";
+        }
+        StartCoroutine(RunLeaderboard(sort));
+    }
+    private void OnApplicationQuit()
+    {
+        StartCoroutine(disconnect());
     }
 } 
 
