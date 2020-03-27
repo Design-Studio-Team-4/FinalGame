@@ -967,7 +967,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 424512932}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418742583479737253}
+        m_MethodName: BuyOnClick
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1575521175}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &424512932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1859,15 +1870,15 @@ RectTransform:
   m_GameObject: {fileID: 1118709013}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.1658149, y: 1.472212, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1418742583564513307}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1143.55, y: 370.99738}
-  m_SizeDelta: {x: 64, y: 64}
+  m_AnchoredPosition: {x: 870, y: 370.99738}
+  m_SizeDelta: {x: 268, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1118709015
 MonoBehaviour:
@@ -2033,7 +2044,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1175003873}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418742583479737253}
+        m_MethodName: BuyOnClick
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 199606568}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1175003873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3248,10 +3270,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerHealth: 0
-  playerIsBlocking: 0
+  healthBar: {fileID: 0}
+  healthText: {fileID: 0}
   playerCurrentBlockVal: 0
+  blockIcon: {fileID: 0}
+  blockText: {fileID: 0}
   enemyPrefabs: []
   enemies: []
+  enemyTurn: 0
+  iteration: 0
+  coins: {fileID: 0}
 --- !u!4 &1936654761
 Transform:
   m_ObjectHideFlags: 0
@@ -3351,7 +3379,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1940847531}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1418742583479737253}
+        m_MethodName: BuyOnClick
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 6705605349501515330}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1940847531
 MonoBehaviour:
   m_ObjectHideFlags: 0
