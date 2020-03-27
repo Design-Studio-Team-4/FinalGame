@@ -34,9 +34,15 @@ public class BattleManager : MonoBehaviour
     public GameObject[] enemies;
 
     public bool enemyTurn;
+    public int iteration;
 
     private Coroutine UI;
-    private Coroutine EA;
+
+    private Coroutine EA1;
+    private Coroutine EA2;
+    private Coroutine EA3;
+
+    public TMP_Text coins;
 
     void Awake()
     {
@@ -63,6 +69,7 @@ public class BattleManager : MonoBehaviour
         playerCurrentBlockVal = 0;
 
         enemyTurn = false;
+        iteration = 0;
 
         UpdatePlayerUI();
 
@@ -71,108 +78,6 @@ public class BattleManager : MonoBehaviour
         FindStandbyEnemies();
     }
 
-    public void PlayerMove(int type)
-    {
-        ToggleUI(2);
-
-        /*
-         
-        if (type == 1)
-        {
-            if (enemyIsBlocking)
-            {
-                Debug.Log("Player punched for: 20 and the enemy blocked it to reduce to damage to: " + (20 - enemyCurrentBlockVal));
-
-                enemyHealth -= (20 - enemyCurrentBlockVal);
-                enemyIsBlocking = false;
-                enemyCurrentBlockVal = -1;
-
-                enemyCooldown -= 3;
-            }
-
-            else
-            {
-                Debug.Log("Player punched for: 20");
-
-                enemyHealth -= 20;
-
-                enemyCooldown -= 3;
-            }
-        }
-
-        else if (type == 2)
-        {
-            Debug.Log("Player blocked for: 10");
-            PlayerBlock(10);
-
-            enemyCooldown -= 2;
-        }
-
-        else
-        {
-            Debug.Log("Player healed for: 15");
-            playerHealth += 15;
-
-            enemyCooldown -= 4;
-        }
-
-        CheckGameState();
-
-        */
-    }
-
-    public void PlayerBlock(int power)
-    {
-        playerCurrentBlockVal = power;
-    }
-
-    public void EnemyBlock(int power)
-    {
-        
-    }
-
-    public void EnemyTurnnnnn()
-    {
-        /*
-
-        if (currentEnemyMove.type == 1)
-        {
-            if (playerIsBlocking)
-            {
-                Debug.Log("Enemy punched for: " + currentEnemyMove.power + " and the player blocked it to reduce to damage to: " + (currentEnemyMove.power - playerCurrentBlockVal));
-
-                playerHealth -= (currentEnemyMove.power - playerCurrentBlockVal);
-                playerIsBlocking = false;
-                playerCurrentBlockVal = -1;
-            }
-
-            else
-            {
-                Debug.Log("Enemy damaged player by: " + currentEnemyMove.power);
-
-                playerHealth -= currentEnemyMove.power;
-            }
-        }
-
-        else if (currentEnemyMove.type == 2)
-        {
-            Debug.Log("Enemy blocked for: " + currentEnemyMove.power);
-
-            EnemyBlock(currentEnemyMove.power);
-        }
-
-        else
-        {
-            Debug.Log("Enemy healed for: " + currentEnemyMove.power);
-
-            enemyHealth += currentEnemyMove.power;
-        }
-
-        GenerateEnemyMove();
-        ToggleUI(1);
-
-        */
-    }
     public void ToggleUI(int onOff)
     {
         if (onOff == 2)
@@ -194,7 +99,10 @@ public class BattleManager : MonoBehaviour
                 continue;
             }
             
-            enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown -= cardCost;
+            if(enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown > 0)
+            {
+                enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown -= cardCost;
+            } 
         }
 
         for (int i = 0; i < 3; i++)
@@ -230,16 +138,48 @@ public class BattleManager : MonoBehaviour
             {
                 EnemyAnimate(i);
             }
+
+            else
+            {
+                continue;
+            }
         }
     }
 
     public void EnemyAnimate(int enemy)
     {
-        EA = StartCoroutine(EnemyAnimateCo(enemy));
+        iteration++;
+
+        if(enemy == 0)
+        {
+            EA1 = StartCoroutine(EnemyAnimateCo(enemy, iteration));
+        }
+
+        else if (enemy == 1)
+        {
+            EA2 = StartCoroutine(EnemyAnimateCo(enemy, iteration));
+        }
+
+        if (enemy == 2)
+        {
+            EA3 = StartCoroutine(EnemyAnimateCo(enemy, iteration));
+        }
     }
 
-    private IEnumerator EnemyAnimateCo(int enemy)
+    private IEnumerator EnemyAnimateCo(int enemy, int iteration)
     {
+        yield return new WaitForSeconds(0.80f);
+
+        if (iteration == 2)
+        {
+            yield return new WaitForSeconds(1.25f);
+        }
+
+        if (iteration == 3)
+        {
+            yield return new WaitForSeconds(2.50f);
+        }
+
         Enemy current = enemies[enemy].transform.GetChild(0).GetComponent<EnemyScript>().enemy;
 
         if (current.currentMove.type == 0)
@@ -279,25 +219,86 @@ public class BattleManager : MonoBehaviour
             current.health += current.currentMove.power;
         }
 
-        StopCoroutine(EA);
+        if (enemy == 0)
+        {
+            current.cooldown = -1;
+            FindEnemiesAtZero();
+            StopCoroutine(EA1);
+        }
+
+        else if (enemy == 1)
+        {
+            current.cooldown = -1;
+            FindEnemiesAtZero();
+            StopCoroutine(EA2);
+        }
+
+        if (enemy == 2)
+        {
+            current.cooldown = -1;
+            FindEnemiesAtZero();
+            StopCoroutine(EA3);
+        }
+    }
+
+    public void FindEnemiesAtZero()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == 0)
+            {
+                break;
+            }
+        }
+
+        int count;
+        count = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1 || enemies[i] == null)
+            {
+                count++;
+            }
+        }
+
+        if(count == 3)
+        {
+            Hand.handInstance.GetComponent<Animator>().Play("HandDown");
+            FindStandbyEnemies();
+            iteration = 0;
+        }
+        Debug.Log(count);
     }
 
     public void FindStandbyEnemies()
     {
-            if (enemies[0].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
-            {
-                GenerateEnemyMove(0);
-            }
+        if(enemies[0] == null)
+        {
 
-            if (enemies[1].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
-            {
-                GenerateEnemyMove(1);
-            }
+        }
+        else if (enemies[0].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
+        {
+            GenerateEnemyMove(0);
+        }
 
-            if (enemies[2].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
-            {
-                GenerateEnemyMove(2);
-            }
+        if (enemies[1] == null)
+        {
+
+        }
+        else if (enemies[1].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
+        {
+            GenerateEnemyMove(1);
+        }
+
+        if (enemies[2] == null)
+        {
+
+        }
+        else if (enemies[2].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
+        {
+            GenerateEnemyMove(2);
+        }
     }
 
     public void GenerateEnemyMove(int enemy)
@@ -443,6 +444,8 @@ public class BattleManager : MonoBehaviour
                 healthBar.value = playerHealth;
                 healthText.text = "HP: " + playerHealth.ToString();
             }
+
+            coins.text = CoinandScore.coinsAndScoreInstance.coins.ToString();
 
             yield return null;
         }

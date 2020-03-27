@@ -45,10 +45,46 @@ public class EnemyScript : MonoBehaviour
 
         Transform indicator = transform.GetChild(2).GetChild(0);
 
-        indicator.GetChild(0).GetComponent<TMP_Text>().text = enemy.cooldown.ToString();
+        if (enemy.health > baseHealth)
+        {
+            enemy.health = baseHealth;
+            indicator.GetChild(1).GetComponent<Slider>().value = enemy.health;
+            indicator.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = enemy.health.ToString() + "/" + baseHealth;
+        }
+        else if (enemy.health < 0)
+        {
+            enemy.health = 0;
+            indicator.GetChild(1).GetComponent<Slider>().value = enemy.health;
+            indicator.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = enemy.health.ToString() + "/" + baseHealth;
+        }
+        else
+        {
+            indicator.GetChild(1).GetComponent<Slider>().value = enemy.health;
+            indicator.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = enemy.health.ToString() + "/" + baseHealth;
+        }
 
-        indicator.GetChild(1).GetComponent<Slider>().value = enemy.health;
-        indicator.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = enemy.health.ToString() + "/" + baseHealth;
+        if (enemy.currentBlockVal > 0)
+        {
+            indicator.GetChild(2).gameObject.SetActive(true);
+            indicator.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = enemy.currentBlockVal.ToString();
+        }
+        else if (enemy.currentBlockVal <= 0)
+        {
+            indicator.GetChild(2).gameObject.SetActive(false);
+            enemy.currentBlockVal = 0;
+            indicator.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = enemy.currentBlockVal.ToString();
+        }
+
+        if(enemy.cooldown == -1)
+        {
+            indicator.GetChild(0).GetComponent<TMP_Text>().text = "-";
+        }
+        else
+        {
+            indicator.GetChild(0).GetComponent<TMP_Text>().text = enemy.cooldown.ToString();
+        }
+        
+
     }
 
     public void OnMouseOver()

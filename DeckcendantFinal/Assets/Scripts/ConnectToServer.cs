@@ -5,8 +5,6 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
-
 public class ConnectToServer : MonoBehaviour
 {
     public TMPro.TMP_InputField Inputfield;
@@ -43,7 +41,7 @@ public class ConnectToServer : MonoBehaviour
                 SubmissionCanvas.SetActive(false);
                 LeaderboardCanvas.SetActive(true);
                 StartCoroutine(connect());
-                StartCoroutine(AddPlaythrough(name, score));
+                StartCoroutine(AddPlaythrough(name, score)); // CoinandScore.coinsAndScoreInstance.score
                 
                 
             }

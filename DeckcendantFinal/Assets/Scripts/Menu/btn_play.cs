@@ -7,6 +7,6 @@ public class btn_play : MonoBehaviour
 {
     public void NextScene()
     {
-        SceneManager.LoadScene("Battle");
+        SceneManager.LoadScene(1);
     }
 }
