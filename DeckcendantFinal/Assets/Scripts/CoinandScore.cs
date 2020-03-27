@@ -18,9 +18,4 @@ public class CoinandScore : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-
-    void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
 }

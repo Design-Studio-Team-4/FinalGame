@@ -72,26 +72,6 @@ public class CardManager : MonoBehaviour
         handObject.GetComponent<Animator>().Play("HandUp");
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            handObject.GetComponent<Animator>().Play("HandDown");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Debug.Log("Dis how many in discard pile:");
-
-            for (int i = 0; i < 5; i++)
-            {
-                Debug.Log(hand[i].name);
-                Debug.Log(hand[i].power);
-            }
-        }
-
-    }
-
     public void PlayCard(int cardSlot, int enemySlot)
     {
         playC = StartCoroutine(CardUse(cardSlot, enemySlot));

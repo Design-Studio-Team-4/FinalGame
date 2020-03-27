@@ -41,7 +41,7 @@ public class ConnectToServer : MonoBehaviour
                 SubmissionCanvas.SetActive(false);
                 LeaderboardCanvas.SetActive(true);
                 StartCoroutine(connect());
-                StartCoroutine(AddPlaythrough(name, score)); // CoinandScore.coinsAndScoreInstance.score
+                StartCoroutine(AddPlaythrough(name, CoinandScore.coinsAndScoreInstance.score));
                 
                 
             }

@@ -51,11 +51,23 @@ public class EnemyScript : MonoBehaviour
             indicator.GetChild(1).GetComponent<Slider>().value = enemy.health;
             indicator.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = enemy.health.ToString() + "/" + baseHealth;
         }
-        else if (enemy.health < 0)
+        else if (enemy.health <= 0)
         {
             enemy.health = 0;
             indicator.GetChild(1).GetComponent<Slider>().value = enemy.health;
             indicator.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = enemy.health.ToString() + "/" + baseHealth;
+
+        if (gameObject.transform.parent.gameObject == null)
+        {
+                
+        }
+        else
+        {
+            CoinandScore.coinsAndScoreInstance.coins += Random.Range(1, 11);
+            CoinandScore.coinsAndScoreInstance.score = CoinandScore.coinsAndScoreInstance.coins;
+            Destroy(gameObject.transform.parent.gameObject);
+        }
+
         }
         else
         {
