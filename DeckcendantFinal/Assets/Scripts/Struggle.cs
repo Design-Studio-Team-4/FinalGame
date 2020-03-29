@@ -8,9 +8,12 @@ public class Struggle : MonoBehaviour
 
     public void ButtonPress()
     {
-        BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Attack");
+        if(Hand.handInstance.targeting == false)
+        {
+            BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Attack");
 
-        attack = StartCoroutine(StruggleCo());
+            attack = StartCoroutine(StruggleCo());
+        }
     }
 
     private IEnumerator StruggleCo()

@@ -704,7 +704,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5286,9 +5286,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  enemyTurn: 0
+  attackingEnemies: 0
   iteration: 0
-  count: 0
+  completedAttack: 0
+  enemyTurn: 0
   coins: {fileID: 2112332568}
   atkStruggle: {fileID: 861542719}
   blkStruggle: {fileID: 1507637120}

@@ -53,8 +53,6 @@ public class CardManager : MonoBehaviour
         deck.Add(new Card("Heal", 2, 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
         deck.Add(new Card("Heal", 2, 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
 
-        // deck.Add(new Card("Block", 1, 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
-        // deck.Add(new Card("Heal", 2, 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
         // deck.Add(new Card("First Strike", 1, 2, 7, false, true, cardFronts[3], cardBacks[0], "Deals 7 damage. If targeted enemies counter is less than 3, gain 3 block"));
         // deck.Add(new Card("Hail of Daggers", 1, 4, 4, false, true, cardFronts[4], cardBacks[0], "Deal 4 damage to each enemy"));
         // deck.Add(new Card("Shield Ward", 4, 3, 0, false, true, cardFronts[5], cardBacks[3], "Disregard all enemy Block on your next attack"));
@@ -99,15 +97,17 @@ public class CardManager : MonoBehaviour
             // BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Effect");
         }
 
-        SortHand();  
+        SortHand();
 
-        yield return new WaitForSeconds(0.55f);
+        yield return new WaitForSeconds(0.50f);
 
         GameObject enemy = BattleManager.bManagerInstance.enemies[enemySlot];
 
+        enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= hand[cardSlot].power;
+
         BattleManager.bManagerInstance.enemies[enemySlot].transform.GetChild(0).GetComponent<Animator>().Play("OnHit");
 
-        enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= hand[cardSlot].power;
+        // yield return new WaitForSeconds(0.1f);
 
         BattleManager.bManagerInstance.ReduceEnemyCooldown(hand[cardSlot].cost);
 

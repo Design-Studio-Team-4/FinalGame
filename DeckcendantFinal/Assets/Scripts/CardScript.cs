@@ -63,7 +63,7 @@ public class CardScript : MonoBehaviour
 
     public void OnClick()
     {
-        if(!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn && CardManager.cManagerInstance.hand[handIndex].cardType == 1 || CardManager.cManagerInstance.hand[handIndex].cardType == 2)
+        if(!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn && (CardManager.cManagerInstance.hand[handIndex].cardType == 1 || CardManager.cManagerInstance.hand[handIndex].cardType == 2))
         {
             CardManager.cManagerInstance.hand[handIndex].used = true;
             CardManager.cManagerInstance.FlipCard(handIndex);

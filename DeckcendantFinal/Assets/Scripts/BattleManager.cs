@@ -34,10 +34,11 @@ public class BattleManager : MonoBehaviour
 
     public GameObject[] enemies;
 
-    public bool enemyTurn;
+    public int attackingEnemies;
     public int iteration;
-    public int count;
-
+    public int completedAttack;
+    public bool enemyTurn;
+    
     private Coroutine UI;
 
     private Coroutine EA1;
@@ -79,6 +80,8 @@ public class BattleManager : MonoBehaviour
         playerHealth = 100;
         playerCurrentBlockVal = 0;
 
+        completedAttack = 0;
+        attackingEnemies = 0;
         enemyTurn = false;
         iteration = 0;
 
@@ -151,133 +154,144 @@ public class BattleManager : MonoBehaviour
 
             if(enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == 0)
             {
-                count++;
+                attackingEnemies++;
                 EnemyAnimate(i);
-            }
-
-            else
-            {
-                continue;
             }
         }
     }
 
     public void EnemyAnimate(int enemy)
     {
-        iteration++;
-
-        if (enemy == 0)
+        if (enemies[0] == null)
         {
+            // ...
+        }
+        else if (enemy == 0)
+        {
+            iteration++;
             EA1 = StartCoroutine(EnemyAnimateCo(enemy, iteration));
         }
 
+        if (enemies[1] == null)
+        {
+            // ...
+        }
         else if (enemy == 1)
         {
+            iteration++;
             EA2 = StartCoroutine(EnemyAnimateCo(enemy, iteration));
         }
 
-        if (enemy == 2)
+        if (enemies[2] == null)
         {
+            // ...
+        }
+        else if (enemy == 2)
+        {
+            iteration++;
             EA3 = StartCoroutine(EnemyAnimateCo(enemy, iteration));
         }
     }
 
     private IEnumerator EnemyAnimateCo(int enemy, int iteration)
     {
-        enemyTurn = true;
-        yield return new WaitForSeconds(0.80f);
+            enemyTurn = true;
 
-        if (iteration == 2)
-        {
-            yield return new WaitForSeconds(1.25f);
-        }
-
-        if (iteration == 3)
-        {
-            yield return new WaitForSeconds(2.50f);
-        }
-
-        Enemy current = enemies[enemy].transform.GetChild(0).GetComponent<EnemyScript>().enemy;
-
-        if (current.currentMove.type == 0)
-        {
-            if (playerCurrentBlockVal > 0)
+            if (iteration == 1)
             {
-                enemies[enemy].transform.GetChild(0).GetComponent<Animator>().Play("Attack");
-
-                yield return new WaitForSeconds(0.50f);
-
-                player.GetComponent<Animator>().Play("Player_OnHit");
-
-                playerHealth -= (current.currentMove.power - playerCurrentBlockVal);
-                playerCurrentBlockVal -= current.currentMove.power;
+                yield return new WaitForSeconds(1.00f);
+                completedAttack++;
             }
 
-            else
+            if (iteration == 2)
             {
-                enemies[enemy].transform.GetChild(0).GetComponent<Animator>().Play("Attack");
-
-                yield return new WaitForSeconds(0.50f);
-
-                player.GetComponent<Animator>().Play("Player_OnHit");
-                playerHealth -= current.currentMove.power;
+                yield return new WaitForSeconds(2.00f);
+                completedAttack++;
             }
-        }
 
-        else if (current.currentMove.type == 1)
-        {
-            enemies[enemy].transform.GetChild(0).GetChild(1).GetComponent<Animator>().Play("Block");
-            current.currentBlockVal += current.currentMove.power;
-        }
+            if (iteration == 3)
+            {
+                yield return new WaitForSeconds(3.00f);
+                completedAttack++;
+            }
 
-        else if (current.currentMove.type == 2)
-        {
-            enemies[enemy].transform.GetChild(0).GetChild(1).GetComponent<Animator>().Play("Heal");
-            current.health += current.currentMove.power;
-        }
+            Enemy current = enemies[enemy].transform.GetChild(0).GetComponent<EnemyScript>().enemy;
 
-        if (enemy == 0)
-        {
-            enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = false;
+            if (current.currentMove.type == 0)
+            {
+                if (playerCurrentBlockVal > 0)
+                {
+                    enemies[enemy].transform.GetChild(0).GetComponent<Animator>().Play("Attack");
 
-            current.cooldown = -1;
-            FindEnemiesAtZero();
-            StopCoroutine(EA1);
-        }
+                    yield return new WaitForSeconds(0.50f);
 
-        else if (enemy == 1)
-        {
-            enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = false;
+                    player.GetComponent<Animator>().Play("Player_OnHit");
 
-            current.cooldown = -1;
-            FindEnemiesAtZero();
-            StopCoroutine(EA2);
-        }
+                    playerHealth -= (current.currentMove.power - playerCurrentBlockVal);
+                    playerCurrentBlockVal -= current.currentMove.power;
+                }
+                else
+                {
+                    enemies[enemy].transform.GetChild(0).GetComponent<Animator>().Play("Attack");
 
-        if (enemy == 2)
-        {
-            enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = false;
+                    yield return new WaitForSeconds(0.50f);
 
-            current.cooldown = -1;
-            FindEnemiesAtZero();
-            StopCoroutine(EA3);
-        }
+                    player.GetComponent<Animator>().Play("Player_OnHit");
+                    playerHealth -= current.currentMove.power;
+                }
+            }
+
+            else if (current.currentMove.type == 1)
+            {
+                enemies[enemy].transform.GetChild(0).GetChild(1).GetComponent<Animator>().Play("Block");
+                current.currentBlockVal += current.currentMove.power;
+            }
+
+            else if (current.currentMove.type == 2)
+            {
+                enemies[enemy].transform.GetChild(0).GetChild(1).GetComponent<Animator>().Play("Heal");
+                current.health += current.currentMove.power;
+            }
+
+            if (enemy == 0)
+            {
+                enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = false;
+
+                current.cooldown = -1;
+                StopCoroutine(EA1);
+            }
+
+            else if (enemy == 1)
+            {
+                enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = false;
+
+                current.cooldown = -1;
+                StopCoroutine(EA2);
+            }
+
+            else if (enemy == 2)
+            {
+                enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = false;
+
+                current.cooldown = -1;
+                StopCoroutine(EA3);
+            }
+        CheckEnemyTurn();
     }
 
-    public void FindEnemiesAtZero()
+    public void CheckEnemyTurn()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            if (enemies[i] == null)
-            {
-                continue;
-            }
+        Debug.Log(completedAttack);
+        Debug.Log(attackingEnemies);
 
-            if (enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == 0)
-            {
-                break;
-            }
+        if (completedAttack == attackingEnemies)
+        {
+            iteration = 0;
+            attackingEnemies = 0;
+            completedAttack = 0;
+            enemyTurn = false;
         }
+
 
         int count;
         count = 0;
@@ -300,12 +314,6 @@ public class BattleManager : MonoBehaviour
             CardManager.cManagerInstance.Draw();
             FindStandbyEnemies();
             iteration = 0;
-            count = 0;
-            enemyTurn = false;
-        }
-
-        if(iteration == count)
-        {
             enemyTurn = false;
         }
     }
@@ -396,7 +404,6 @@ public class BattleManager : MonoBehaviour
             enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().sprite = heal;
         }
     }
-
 
     public void Spawn()
     {
@@ -568,13 +575,7 @@ public class BattleManager : MonoBehaviour
 
             moves = em;
         }
-
-        public Enemy(int cd)
-        {
-            cooldown = cd;
-        }
     }
-
     public class EnemyMove
     {
         public int type;

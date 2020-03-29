@@ -33,16 +33,6 @@ public class EnemyScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            transform.GetChild(1).GetComponent<Animator>().Play("Heal");
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            transform.GetChild(1).GetComponent<Animator>().Play("Block");
-        }
-
         Transform indicator = transform.GetChild(2).GetChild(0);
 
         if (enemy.health > baseHealth)
@@ -53,21 +43,15 @@ public class EnemyScript : MonoBehaviour
         }
         else if (enemy.health <= 0)
         {
-            enemy.health = 0;
-            indicator.GetChild(1).GetComponent<Slider>().value = enemy.health;
-            indicator.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = enemy.health.ToString() + "/" + baseHealth;
+            enemy.cooldown = -2;
+            bManagerInstance.enemies[enemy.slot] = null;
 
-        if (gameObject.transform.parent.gameObject == null)
-        {
-                
-        }
-        else
-        {
+            bManagerInstance.CheckEnemyTurn();
+
             CoinandScore.coinsAndScoreInstance.coins += Random.Range(1, 11);
             CoinandScore.coinsAndScoreInstance.score = CoinandScore.coinsAndScoreInstance.coins;
-            Destroy(gameObject.transform.parent.gameObject);
-        }
 
+            Destroy(gameObject.transform.parent.gameObject);
         }
         else
         {
