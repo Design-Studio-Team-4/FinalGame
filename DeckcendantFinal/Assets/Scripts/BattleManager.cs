@@ -438,7 +438,7 @@ public class BattleManager : MonoBehaviour
 
         for (int i = 0; i <= enemyAmount; i++)
         {
-            int enemy = Random.Range(0, 1);
+            int enemy = Random.Range(0, 3);
 
             SpawnEnemy(i, enemy);
         }
