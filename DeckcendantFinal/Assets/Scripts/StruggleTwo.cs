@@ -1,10 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StruggleTwo : MonoBehaviour
 {
-    // Start is called before the first frame update
+    void Update()
+    {
+        if (Hand.handInstance.targeting == true || BattleManager.bManagerInstance.enemyTurn == true)
+        {
+            GetComponent<Button>().enabled = false;
+        }
+        else
+        {
+            GetComponent<Button>().enabled = true;
+        }
+    }
+
     public void ButtonPress()
     {
         if (Hand.handInstance.targeting == false)

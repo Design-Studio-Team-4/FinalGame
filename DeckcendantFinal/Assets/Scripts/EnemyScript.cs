@@ -16,7 +16,7 @@ public class EnemyScript : MonoBehaviour
     public SpriteRenderer enemySprite;
 
     private Color hoverColor;
-    private Color normalColor;
+    public Color normalColor;
 
     void Awake()
     {
@@ -43,10 +43,11 @@ public class EnemyScript : MonoBehaviour
         }
         else if (enemy.health <= 0)
         {
-            enemy.cooldown = -2;
+            Debug.Log(bManagerInstance.enemies[enemy.slot]);
             bManagerInstance.enemies[enemy.slot] = null;
+            Debug.Log(bManagerInstance.enemies[enemy.slot]);
 
-            bManagerInstance.CheckEnemyTurn();
+            // bManagerInstance.CheckEnemyTurn();
 
             CoinandScore.coinsAndScoreInstance.coins += Random.Range(1, 11);
             CoinandScore.coinsAndScoreInstance.score = CoinandScore.coinsAndScoreInstance.coins;
@@ -79,8 +80,6 @@ public class EnemyScript : MonoBehaviour
         {
             indicator.GetChild(0).GetComponent<TMP_Text>().text = enemy.cooldown.ToString();
         }
-        
-
     }
 
     public void OnMouseOver()
@@ -103,7 +102,6 @@ public class EnemyScript : MonoBehaviour
     {
         if (Hand.handInstance.targeting)
         {
-            Hand.handInstance.targeting = false;
             enemySprite.color = normalColor;
 
             for (int i = 0; i < 5; i++)
@@ -111,6 +109,10 @@ public class EnemyScript : MonoBehaviour
                 GameObject slot = CardManager.cManagerInstance.handSlots[i];
                 if (slot.GetComponent<CardScript>().selected)
                 {
+                    slot.transform.GetChild(0).GetComponent<Image>().color = CardScript.cScriptInstance.grey;
+                    slot.transform.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
+                    slot.transform.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
+
                     CardManager.cManagerInstance.PlayCard(i,enemy.slot);
                     break;
                 }

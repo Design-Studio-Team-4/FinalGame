@@ -43,6 +43,24 @@ public class CardScript : MonoBehaviour
         handIndex = (GetComponent<Canvas>().sortingOrder) - 1;
     }
 
+    void Update()
+    {
+        if (BattleManager.bManagerInstance.enemyTurn == true && Hand.handInstance.targeting == false)
+        {
+            transform.GetChild(0).GetComponent<Image>().color = grey;
+            transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = grey;
+            transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = grey;
+
+            GetComponent<Animator>().Play("CardReturn");
+        }
+        else if (Hand.handInstance.targeting == false)
+        {
+            transform.GetChild(0).GetComponent<Image>().color = normal;
+            transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = normal;
+            transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = normal;
+        }
+    }
+
     public void OnHover()
     {
         if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn)
@@ -65,6 +83,8 @@ public class CardScript : MonoBehaviour
     {
         if(!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn && (CardManager.cManagerInstance.hand[handIndex].cardType == 1 || CardManager.cManagerInstance.hand[handIndex].cardType == 2))
         {
+            GetComponent<Animator>().Play("CardTop");
+
             CardManager.cManagerInstance.hand[handIndex].used = true;
             CardManager.cManagerInstance.FlipCard(handIndex);
 
@@ -91,6 +111,8 @@ public class CardScript : MonoBehaviour
 
         else if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn)
         {
+            GetComponent<Animator>().Play("CardTop");
+
             CardManager.cManagerInstance.selectedCard = CardManager.cManagerInstance.hand[handIndex];
             Hand.handInstance.targeting = true;
 
@@ -101,14 +123,13 @@ public class CardScript : MonoBehaviour
                 GameObject slot = CardManager.cManagerInstance.handSlots[i];
                 if (!slot.GetComponent<CardScript>().selected)
                 {
-                    slot.transform.GetChild(0).GetComponent<Image>().color = grey;
-                    slot.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = grey;
-                    slot.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = grey;
+                    CardManager.cManagerInstance.handSlots[i].transform.GetChild(0).GetComponent<Image>().color = grey;
+                    CardManager.cManagerInstance.handSlots[i].transform.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = grey;
+                    CardManager.cManagerInstance.handSlots[i].transform.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = grey;
                 }
             }
 
             isMoving = true;
-            GetComponent<Animator>().enabled = false;
             click = StartCoroutine(Select(clickedPos));
         }
 
@@ -120,19 +141,9 @@ public class CardScript : MonoBehaviour
 
     public void PutBack()
     {
-        CardManager.cManagerInstance.selectedCard = CardManager.cManagerInstance.hand[handIndex];
-        Hand.handInstance.targeting = false;
-
-        for (int i = 0; i < 5; i++)
-        {
-            GameObject slot = CardManager.cManagerInstance.handSlots[i];
-            if (!slot.GetComponent<CardScript>().selected)
-            {
-                slot.transform.GetChild(0).GetComponent<Image>().color = normal;
-                slot.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = normal;
-                slot.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = normal;
-            }
-        }
+        transform.GetChild(0).GetComponent<Image>().color = grey;
+        transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = grey;
+        transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = grey;
 
         selected = false;
         GetComponent<Canvas>().sortingOrder = handIndex + 1;
@@ -143,6 +154,10 @@ public class CardScript : MonoBehaviour
     
     IEnumerator Select(Vector3 end)
     {
+        yield return new WaitForSeconds(0.1f);
+
+        GetComponent<Animator>().enabled = false;
+
         float timeSinceStarted = 0f;
 
         while (isMoving)
@@ -179,7 +194,20 @@ public class CardScript : MonoBehaviour
             // If the object has arrived, stop the coroutine
             if (diff < 0.1)
             {
+                yield return new WaitForSeconds(0.55f);
+
                 isMoving = false;
+                Hand.handInstance.targeting = false;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    if (BattleManager.bManagerInstance.enemies[i] == null)
+                    {
+                        continue;
+                    }
+
+                    BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemySprite.color = EnemyScript.enemyInstance.normalColor;
+                }
 
                 GetComponent<Animator>().enabled = true;
                 GetComponent<Animator>().Play("CardReturn");

@@ -62,9 +62,6 @@ public class CardManager : MonoBehaviour
         // deck.Add(new Card("Turn the Tides", 1, 30, 0, false, true, cardFronts[9], cardBacks[0], "Deal 30 damage to each enemy. Can only be played if you have less than 10HP"));
         // deck.Add(new Card("Life Drink", 1, 2, 8, false, true, cardFronts[10], cardBacks[0], "Increase the cooldown of enemy attack by 4"));
 
-
-        drawpile = new List<Card>(deck);
-
         drawpile = Shuffle(drawpile);
         Draw();
         handObject.GetComponent<Animator>().Play("HandUp");
@@ -97,21 +94,22 @@ public class CardManager : MonoBehaviour
             // BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Effect");
         }
 
-        SortHand();
-
         yield return new WaitForSeconds(0.50f);
-
-        GameObject enemy = BattleManager.bManagerInstance.enemies[enemySlot];
-
-        enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= hand[cardSlot].power;
 
         BattleManager.bManagerInstance.enemies[enemySlot].transform.GetChild(0).GetComponent<Animator>().Play("OnHit");
 
-        // yield return new WaitForSeconds(0.1f);
+        GameObject enemy = BattleManager.bManagerInstance.enemies[enemySlot];
+        enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= hand[cardSlot].power;
 
-        BattleManager.bManagerInstance.ReduceEnemyCooldown(hand[cardSlot].cost);
+        int slotBeforeSort = cardSlot;
 
-        BattleManager.bManagerInstance.enemies[enemySlot] = enemy;
+        SortHand();
+
+        yield return new WaitForSeconds(0.10f);
+
+        BattleManager.bManagerInstance.ReduceEnemyCooldown(hand[slotBeforeSort].cost);
+
+        
 
         StopCoroutine(playC);
     }
@@ -175,7 +173,6 @@ public class CardManager : MonoBehaviour
                 draw++;
             }
         }
-
         return draw;
     }
 

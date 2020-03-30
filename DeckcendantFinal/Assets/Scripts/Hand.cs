@@ -17,4 +17,14 @@ public class Hand : MonoBehaviour
     {
         CardManager.cManagerInstance.Draw();
     }
+
+    public void EnemyTurnOn()
+    {
+        BattleManager.bManagerInstance.enemyTurn = true;
+    }
+
+    public void EnemyTurnOff()
+    {
+        BattleManager.bManagerInstance.enemyTurn = false;
+    }
 }

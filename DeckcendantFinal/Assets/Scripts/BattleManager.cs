@@ -94,7 +94,6 @@ public class BattleManager : MonoBehaviour
 
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             enemyTurn = false;
@@ -141,6 +140,30 @@ public class BattleManager : MonoBehaviour
                 break;
             }
         }
+
+        int count;
+        count = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (enemies[i] == null)
+            {
+                count++;
+            }
+
+            else if (enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown == -1)
+            {
+                count++;
+            }
+        }
+
+        if (count == 3)
+        {
+            CardManager.cManagerInstance.handObject.GetComponent<Animator>().Play("HandDown");
+            FindStandbyEnemies();
+            iteration = 0;
+            enemyTurn = false;
+        }
     }
 
     public void EnemyTurn()
@@ -162,6 +185,11 @@ public class BattleManager : MonoBehaviour
 
     public void EnemyAnimate(int enemy)
     {
+        for (int i = 0; i < 3; i++)
+        {
+            Debug.Log(enemies[i]);
+        }
+
         if (enemies[0] == null)
         {
             // ...
@@ -276,14 +304,13 @@ public class BattleManager : MonoBehaviour
                 current.cooldown = -1;
                 StopCoroutine(EA3);
             }
+        Debug.Log("YEET");
+
         CheckEnemyTurn();
     }
 
     public void CheckEnemyTurn()
     {
-        Debug.Log(completedAttack);
-        Debug.Log(attackingEnemies);
-
         if (completedAttack == attackingEnemies)
         {
             iteration = 0;
@@ -311,7 +338,7 @@ public class BattleManager : MonoBehaviour
 
         if(count == 3)
         {
-            CardManager.cManagerInstance.Draw();
+            CardManager.cManagerInstance.handObject.GetComponent<Animator>().Play("HandDown");
             FindStandbyEnemies();
             iteration = 0;
             enemyTurn = false;
@@ -411,7 +438,7 @@ public class BattleManager : MonoBehaviour
 
         for (int i = 0; i <= enemyAmount; i++)
         {
-            int enemy = Random.Range(0, 3);
+            int enemy = Random.Range(0, 1);
 
             SpawnEnemy(i, enemy);
         }
@@ -519,35 +546,6 @@ public class BattleManager : MonoBehaviour
             }
 
             coins.text = CoinandScore.coinsAndScoreInstance.coins.ToString();
-
-            if (enemyTurn)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    GameObject slot = CardManager.cManagerInstance.handSlots[i];
-
-                    slot.transform.GetChild(0).GetComponent<Image>().color = CardScript.cScriptInstance.grey;
-                    slot.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
-                    slot.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
-
-                    atkStruggle.enabled = false;
-                    blkStruggle.enabled = false;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    GameObject slot = CardManager.cManagerInstance.handSlots[i];
-
-                    slot.transform.GetChild(0).GetComponent<Image>().color = CardScript.cScriptInstance.normal;
-                    slot.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.normal;
-                    slot.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.normal;
-
-                    atkStruggle.enabled = true;
-                    blkStruggle.enabled = true;
-                }
-            }
 
             yield return null;
         }
