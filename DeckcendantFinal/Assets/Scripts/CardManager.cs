@@ -74,7 +74,6 @@ public class CardManager : MonoBehaviour
 
     private IEnumerator CardUse(int cardSlot, int enemySlot)
     {
-
         hand[cardSlot].used = true;
         FlipCard(cardSlot);
 
@@ -83,6 +82,8 @@ public class CardManager : MonoBehaviour
         handSlots[cardSlot].GetComponent<CardScript>().PutBack();
 
         yield return new WaitForSeconds(0.50f);
+
+        GameObject enemy = BattleManager.bManagerInstance.enemies[enemySlot];
 
         if (hand[cardSlot].cardType == 0)
         {
@@ -96,10 +97,20 @@ public class CardManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.50f);
 
-        BattleManager.bManagerInstance.enemies[enemySlot].transform.GetChild(0).GetComponent<Animator>().Play("OnHit");
+        if (hand[cardSlot].cardType == 0)
+        {
+            BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Attack");
 
-        GameObject enemy = BattleManager.bManagerInstance.enemies[enemySlot];
-        enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= hand[cardSlot].power;
+            if (enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal > 0)
+            {
+                enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= (hand[cardSlot].power - enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal);
+                newBlockVal -= hand[cardSlot].power;
+            }
+            else
+            {
+                enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= hand[cardSlot].power;
+            }
+        }
 
         int slotBeforeSort = cardSlot;
 
@@ -108,8 +119,6 @@ public class CardManager : MonoBehaviour
         yield return new WaitForSeconds(0.10f);
 
         BattleManager.bManagerInstance.ReduceEnemyCooldown(hand[slotBeforeSort].cost);
-
-        
 
         StopCoroutine(playC);
     }
