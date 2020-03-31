@@ -51,6 +51,7 @@ public class BattleManager : MonoBehaviour
     public Button blkStruggle;
 
     public Sprite atk;
+    public Sprite blk;
     public Sprite heal;
 
     public GameObject uiBottom;
@@ -162,7 +163,6 @@ public class BattleManager : MonoBehaviour
             CardManager.cManagerInstance.handObject.GetComponent<Animator>().Play("HandDown");
             FindStandbyEnemies();
             iteration = 0;
-            enemyTurn = false;
         }
     }
 
@@ -247,30 +247,38 @@ public class BattleManager : MonoBehaviour
 
             if (current.currentMove.type == 0)
             {
+                enemies[enemy].transform.GetChild(0).GetComponent<Animator>().Play("Attack");
+                yield return new WaitForSeconds(0.50f);
+
+                player.GetComponent<Animator>().Play("Player_OnHit");
+
                 if (playerCurrentBlockVal > 0)
                 {
-                    enemies[enemy].transform.GetChild(0).GetComponent<Animator>().Play("Attack");
-
-                    yield return new WaitForSeconds(0.50f);
-
-                    player.GetComponent<Animator>().Play("Player_OnHit");
-
-                    playerHealth -= (current.currentMove.power - playerCurrentBlockVal);
-                    playerCurrentBlockVal -= current.currentMove.power;
+                    if ((playerCurrentBlockVal - current.currentMove.power) >= 0)
+                    {
+                        playerCurrentBlockVal -= current.currentMove.power;
+                    }
+                    else
+                    {
+                        playerHealth -= (current.currentMove.power - playerCurrentBlockVal);
+                        playerCurrentBlockVal = 0;
+                    }
                 }
                 else
                 {
-                    enemies[enemy].transform.GetChild(0).GetComponent<Animator>().Play("Attack");
-
-                    yield return new WaitForSeconds(0.50f);
-
-                    player.GetComponent<Animator>().Play("Player_OnHit");
                     playerHealth -= current.currentMove.power;
                 }
+
+            yield return new WaitForSeconds(0.50f);
+
+            player.GetComponent<Animator>().Play("Player_OnHit");
+
             }
 
             else if (current.currentMove.type == 1)
             {
+                
+                
                 enemies[enemy].transform.GetChild(0).GetChild(1).GetComponent<Animator>().Play("Block");
                 current.currentBlockVal += current.currentMove.power;
             }
@@ -341,7 +349,6 @@ public class BattleManager : MonoBehaviour
             CardManager.cManagerInstance.handObject.GetComponent<Animator>().Play("HandDown");
             FindStandbyEnemies();
             iteration = 0;
-            enemyTurn = false;
         }
     }
 
@@ -425,6 +432,11 @@ public class BattleManager : MonoBehaviour
             enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = true;
             enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().sprite = atk;
         }
+        else if((enemies[enemy].transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentMove.type == 1))
+        {
+            enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = true;
+            enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().sprite = blk;
+        }
         else
         {
             enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = true;
@@ -436,11 +448,11 @@ public class BattleManager : MonoBehaviour
     {
         int enemyAmount = Random.Range(3, 4);
 
-        for (int i = 0; i <= enemyAmount; i++)
+        for (int i = 0; i < 3; i++)
         {
             int enemy = Random.Range(0, 3);
 
-            SpawnEnemy(i, enemy);
+            SpawnEnemy(i+1, i);
         }
     }
 
@@ -471,12 +483,12 @@ public class BattleManager : MonoBehaviour
     {
         if(enemy == 0)
         {
-            return new Enemy(slot, 18, -1, null, 0, false, lipsMoves);
+            return new Enemy(slot, 21, -1, null, 0, false, lipsMoves);
         }
 
         else if(enemy == 1)
         {
-            return new Enemy(slot, 12, -1, null, 0, false, blueBoiMoves);
+            return new Enemy(slot, 16, -1, null, 0, false, blueBoiMoves);
         }
 
         else if (enemy == 2)
@@ -512,13 +524,18 @@ public class BattleManager : MonoBehaviour
                 gameOver.SetActive(true);
             }
 
-            if (playerCurrentBlockVal > 0)
+            if(playerCurrentBlockVal > 20)
+            {
+                blockIcon.SetActive(true);
+                playerCurrentBlockVal = 20;
+                blockText.text = playerCurrentBlockVal.ToString();
+            }
+            else if (playerCurrentBlockVal > 0)
             {
                 blockIcon.SetActive(true);
                 blockText.text = playerCurrentBlockVal.ToString();
             }
-
-            else if (playerCurrentBlockVal <= 0)
+            else
             {
                 blockIcon.SetActive(false);
                 playerCurrentBlockVal = 0;
@@ -528,13 +545,6 @@ public class BattleManager : MonoBehaviour
             if (playerHealth > 100)
             {
                 playerHealth = 100;
-                healthBar.value = playerHealth;
-                healthText.text = "HP: " + playerHealth.ToString();
-            }
-
-            else if (playerHealth < 0)
-            {
-                playerHealth = 0;
                 healthBar.value = playerHealth;
                 healthText.text = "HP: " + playerHealth.ToString();
             }
@@ -592,26 +602,26 @@ public class BattleManager : MonoBehaviour
 
     public static EnemyMove[] lipsMoves = new EnemyMove[]
     {
-            new EnemyMove(0, 15, 2, 0.50f), // Slap (Attack/15/2/0.50)
-            new EnemyMove(0, 15, 2, 0.10f), // Slap (Attack/15/2/0.50)
-            new EnemyMove(2, 10, 3, 0.25f), // Heal (Heal/10/3/0.25)
-            new EnemyMove(0, 45, 5, 0.15f), // Big Punch (Attack/45/6/0.15)
+            new EnemyMove(0, 15, 2, 0.55f), // Slap
+            new EnemyMove(1, 10, 2, 0.15f), // Block
+            new EnemyMove(2, 10, 3, 0.15f), // Heal 
+            new EnemyMove(0, 45, 5, 0.15f), // Big Punch 
     };
 
     public static EnemyMove[] tallShroomMoves = new EnemyMove[]
     {
-            new EnemyMove(0, 10, 4, 0.20f), // Ball Shake (Attack/10/4/0.20)
-            new EnemyMove(0, 10, 4, 0.30f), // Ball Shake (Attack/10/4/0.20)
-            new EnemyMove(0, 10, 4, 0.35f), // Ball Shake (Attack/10/4/0.20)
-            new EnemyMove(2, 60, 4, 0.15f), // Heal Spore (Heal/60/8/0.15)
+            new EnemyMove(0, 15, 2, 0.35f), // Ball Shake
+            new EnemyMove(1, 5, 3, 0.30f), // Stalk Strengthen
+            new EnemyMove(1, 10, 4, 0.20f), // Tall Ball Wall
+            new EnemyMove(2, 20, 4, 0.15f), // Heal Spore 
     };
 
     public static EnemyMove[] blueBoiMoves = new EnemyMove[]
     {
-            new EnemyMove(0, 10, 2, 0.45f), // Singe (Attack/10/2/0.40)
-            new EnemyMove(0, 25, 4, 0.25f), // Hex (Attack/25/4/0.20)
-            new EnemyMove(0, 65, 4, 0.10f), // Fireball (Attack/65/9/0.10)
-            new EnemyMove(2, 40, 3, 0.20f), // Heal (Heal/40/3/0.20)
+            new EnemyMove(0, 10, 1, 0.40f), // Singe
+            new EnemyMove(0, 25, 2, 0.30f), // Hex
+            new EnemyMove(0, 65, 4, 0.15f), // Fireball
+            new EnemyMove(2, 10, 2, 0.15f), // Heal
     };
 
 

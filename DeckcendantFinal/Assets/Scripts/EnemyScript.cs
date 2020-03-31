@@ -60,12 +60,18 @@ public class EnemyScript : MonoBehaviour
             indicator.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = enemy.health.ToString() + "/" + baseHealth;
         }
 
-        if (enemy.currentBlockVal > 0)
+        if (enemy.currentBlockVal > 20)
+        {
+            indicator.GetChild(2).gameObject.SetActive(true);
+            enemy.currentBlockVal = 20;
+            indicator.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = enemy.currentBlockVal.ToString();
+        }
+        else if (enemy.currentBlockVal > 0)
         {
             indicator.GetChild(2).gameObject.SetActive(true);
             indicator.GetChild(2).GetChild(0).GetComponent<TMP_Text>().text = enemy.currentBlockVal.ToString();
         }
-        else if (enemy.currentBlockVal <= 0)
+        else
         {
             indicator.GetChild(2).gameObject.SetActive(false);
             enemy.currentBlockVal = 0;
@@ -84,7 +90,19 @@ public class EnemyScript : MonoBehaviour
 
     public void OnMouseOver()
     {
-        if (Hand.handInstance.targeting)
+        bool isMoving = false;
+
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject moving = CardManager.cManagerInstance.handSlots[i];
+            if (moving.GetComponent<CardScript>().selected)
+            {
+                isMoving = moving.GetComponent<CardScript>().isMoving;
+                break;
+            }
+        }
+
+        if (Hand.handInstance.targeting && !isMoving)
         {
             enemySprite.color = hoverColor;
         }
@@ -100,7 +118,19 @@ public class EnemyScript : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (Hand.handInstance.targeting)
+        bool isMoving = false;
+
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject moving = CardManager.cManagerInstance.handSlots[i];
+            if (moving.GetComponent<CardScript>().selected)
+            {
+                isMoving = moving.GetComponent<CardScript>().isMoving;
+                break;
+            }
+        }
+
+        if (Hand.handInstance.targeting && !isMoving)
         {
             enemySprite.color = normalColor;
 

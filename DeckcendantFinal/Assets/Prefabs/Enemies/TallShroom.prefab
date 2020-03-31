@@ -518,6 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseHealth: 0
   enemySprite: {fileID: 391443442065743970}
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!61 &2549544288159504506
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -929,8 +930,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 0.2
-  m_fontSizeBase: 0.2
+  m_fontSize: 0.3
+  m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -967,7 +968,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -0.043513503, y: -0.15971078, z: -0.05058464, w: -0.11171447}
   m_textInfo:
     textComponent: {fileID: 6124361083189814296}
     characterCount: 1

@@ -11,7 +11,7 @@ public class CardManager : MonoBehaviour
 
     public List<Card> drawpile = new List<Card>();
     public List<Card> deck = new List<Card>();
-    // public List<Card> discard = new List<Card>();
+    public List<Card> discard = new List<Card>();
 
     public Card[] hand = new Card[5];
     public GameObject handObject;
@@ -37,19 +37,19 @@ public class CardManager : MonoBehaviour
             hand[i] = new Card("Blank", 0, 0, 0, 0, true, false, null, null, "Blank");
         }
 
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 Damage"));
-        deck.Add(new Card("Block", 1, 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
-        deck.Add(new Card("Block", 1, 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
-        deck.Add(new Card("Block", 1, 1, 1, 10, false, false, cardFronts[1], cardBacks[1], "Blocks 10 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
+        deck.Add(new Card("Block", 1, 1, 1, 7, false, false, cardFronts[1], cardBacks[1], "Blocks 7 damage"));
+        deck.Add(new Card("Block", 1, 1, 1, 7, false, false, cardFronts[1], cardBacks[1], "Blocks 7 damage"));
+        deck.Add(new Card("Block", 1, 1, 1, 7, false, false, cardFronts[1], cardBacks[1], "Blocks 7 damage"));
         deck.Add(new Card("Heal", 2, 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
         deck.Add(new Card("Heal", 2, 1, 1, 5, false, false, cardFronts[2], cardBacks[2], "Heals 5 health"));
 
@@ -62,8 +62,11 @@ public class CardManager : MonoBehaviour
         // deck.Add(new Card("Turn the Tides", 1, 30, 0, false, true, cardFronts[9], cardBacks[0], "Deal 30 damage to each enemy. Can only be played if you have less than 10HP"));
         // deck.Add(new Card("Life Drink", 1, 2, 8, false, true, cardFronts[10], cardBacks[0], "Increase the cooldown of enemy attack by 4"));
 
-        drawpile = Shuffle(drawpile);
+        discard = new List<Card>(deck);
+
+        discard = Shuffle(discard);
         Draw();
+        discard.Clear();
         handObject.GetComponent<Animator>().Play("HandUp");
     }
 
@@ -95,16 +98,26 @@ public class CardManager : MonoBehaviour
             // BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Effect");
         }
 
-        yield return new WaitForSeconds(0.50f);
 
         if (hand[cardSlot].cardType == 0)
         {
             BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Attack");
 
+            yield return new WaitForSeconds(0.50f);
+
+            enemy.transform.GetChild(0).GetComponent<Animator>().Play("OnHit");
+
             if (enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal > 0)
             {
-                enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= (hand[cardSlot].power - enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal);
-                newBlockVal -= hand[cardSlot].power;
+                if((enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal - hand[cardSlot].power) >= 0)
+                {
+                   enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal -= hand[cardSlot].power;
+                }
+                else
+                {
+                    enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= (hand[cardSlot].power - enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal);
+                    enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal = 0;
+                }
             }
             else
             {
@@ -146,7 +159,9 @@ public class CardManager : MonoBehaviour
 
             drawpile.Clear();
 
-            drawpile = new List<Card>(deck);
+            drawpile = new List<Card>(discard);
+
+            discard.Clear();
 
             if (drawCount != 0)
             {
@@ -163,6 +178,9 @@ public class CardManager : MonoBehaviour
     {
         for (int i = 0; i < (cardsToDraw); i++)
         {
+            hand[i].used = false;
+            discard.Add(hand[i]);
+
             hand[i] = drawpile[drawpile.Count - 1];
 
             drawpile.RemoveAt(drawpile.Count - 1);

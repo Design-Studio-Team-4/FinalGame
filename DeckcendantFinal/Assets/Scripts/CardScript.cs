@@ -15,13 +15,16 @@ public class CardScript : MonoBehaviour
     private Vector3 originalPos;
     private Vector3 offset;
 
-    private bool isMoving;
+    public bool isMoving;
     public bool selected;
 
     public Color grey;
     public Color normal;
 
     Coroutine click;
+
+    private float resH;
+    private float resW;
 
     void Awake()
     {
@@ -30,8 +33,11 @@ public class CardScript : MonoBehaviour
 
     void Start()
     {
-        clickedPos = new Vector3(375.0f, 525.0f, 0.0f);
-        offset = new Vector3(0.0f, 54.5f, 0.0f);
+        resH = Screen.height;
+        resW = Screen.width;
+
+        clickedPos = new Vector3(415.0f * (resW/1920), 575.0f * (resH/1080), 0.0f);
+        offset = new Vector3(0.0f, 63.0f * (resH / 1080), 0.0f);
         originalPos = transform.position;
 
         isMoving = false;

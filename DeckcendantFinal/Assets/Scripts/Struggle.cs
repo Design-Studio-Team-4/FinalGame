@@ -38,8 +38,19 @@ public class Struggle : MonoBehaviour
             }
 
             BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<Animator>().Play("OnHit");
-            BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= 1;
+
+            if(BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal > 0)
+            {
+                BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal -= 1;
+            }
+            else
+            {
+                BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.health -= 1;
+            }
         }
+
+        yield return new WaitForSeconds(0.10f);
+
         BattleManager.bManagerInstance.ReduceEnemyCooldown(1);
 
         StopCoroutine(attack);
