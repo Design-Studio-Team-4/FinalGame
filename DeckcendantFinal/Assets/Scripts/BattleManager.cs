@@ -93,7 +93,7 @@ public class BattleManager : MonoBehaviour
         UpdatePlayerUI();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -314,12 +314,14 @@ public class BattleManager : MonoBehaviour
             }
         Debug.Log("YEET");
 
-        CheckEnemyTurn();
+        StartCoroutine(FinishEnemyTurn());
     }
 
-    public void CheckEnemyTurn()
+    private IEnumerator FinishEnemyTurn()
     {
-        if (completedAttack == attackingEnemies)
+        yield return new WaitForSeconds(2.0f);
+
+        if(completedAttack == attackingEnemies)
         {
             iteration = 0;
             attackingEnemies = 0;
@@ -344,12 +346,14 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        if(count == 3)
+        if (count == 3)
         {
             CardManager.cManagerInstance.handObject.GetComponent<Animator>().Play("HandDown");
             FindStandbyEnemies();
             iteration = 0;
         }
+
+        StopCoroutine(FinishEnemyTurn());
     }
 
     public void FindStandbyEnemies()
