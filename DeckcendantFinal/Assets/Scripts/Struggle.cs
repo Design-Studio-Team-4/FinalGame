@@ -39,7 +39,12 @@ public class Struggle : MonoBehaviour
 
             BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<Animator>().Play("OnHit");
 
-            if(BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal > 0)
+            if (BattleManager.bManagerInstance.cower == true)
+            {
+                // ...
+            }
+            
+            else if(BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal > 0)
             {
                 BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal -= 1;
             }

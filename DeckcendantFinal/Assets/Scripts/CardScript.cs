@@ -17,6 +17,7 @@ public class CardScript : MonoBehaviour
 
     public bool isMoving;
     public bool selected;
+    public bool disabled;
 
     public Color grey;
     public Color normal;
@@ -42,6 +43,7 @@ public class CardScript : MonoBehaviour
 
         isMoving = false;
         selected = false;
+        disabled = false;
 
         grey = new Color(0.47f, 0.47f, 0.47f);
         normal = new Color(1.00f, 1.00f, 1.00f);
@@ -51,7 +53,18 @@ public class CardScript : MonoBehaviour
 
     void Update()
     {
-        if (BattleManager.bManagerInstance.enemyTurn == true && Hand.handInstance.targeting == false)
+        int lowest = FindLowestCooldown();
+
+        if (!CardManager.cManagerInstance.hand[handIndex].used && CardManager.cManagerInstance.hand[handIndex].cost > lowest)
+        {
+            disabled = true;
+        }
+        else if (CardManager.cManagerInstance.hand[handIndex].cost <= lowest)
+        {
+            disabled = false;
+        }
+
+        if (BattleManager.bManagerInstance.enemyTurn == true || disabled == true)
         {
             transform.GetChild(0).GetComponent<Image>().color = grey;
             transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = grey;
@@ -59,17 +72,43 @@ public class CardScript : MonoBehaviour
 
             GetComponent<Animator>().Play("CardReturn");
         }
-        else if (Hand.handInstance.targeting == false)
+        else if (Hand.handInstance.targeting == false && BattleManager.bManagerInstance.enemyTurn == false && disabled == false)
         {
             transform.GetChild(0).GetComponent<Image>().color = normal;
             transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = normal;
             transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = normal;
         }
+
+        
+    }
+
+    public int FindLowestCooldown()
+    {
+        int lowestCooldown = -11;
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (BattleManager.bManagerInstance.enemies[i] == null)
+            {
+                continue;
+            }
+
+            else if (lowestCooldown == -11 && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
+            {
+                lowestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
+            }
+
+            else if (BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown < lowestCooldown && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
+            {
+                lowestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
+            }
+        }
+        return lowestCooldown;
     }
 
     public void OnHover()
     {
-        if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn)
+        if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn && !disabled)
         {
             GetComponent<Canvas>().sortingOrder = 6;
             GetComponent<Animator>().Play("CardHover");
@@ -78,7 +117,7 @@ public class CardScript : MonoBehaviour
 
     public void OnHoverExit()
     {
-        if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn)
+        if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn && !disabled)
         {
             GetComponent<Canvas>().sortingOrder = handIndex + 1;
             GetComponent<Animator>().Play("CardHoverExit");
@@ -87,7 +126,7 @@ public class CardScript : MonoBehaviour
 
     public void OnClick()
     {
-        if(!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn && (CardManager.cManagerInstance.hand[handIndex].cardType == 1 || CardManager.cManagerInstance.hand[handIndex].cardType == 2))
+        if(!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn && (CardManager.cManagerInstance.hand[handIndex].cardType == 1 || CardManager.cManagerInstance.hand[handIndex].cardType == 2) && !disabled)
         {
             GetComponent<Animator>().Play("CardTop");
 
@@ -97,6 +136,13 @@ public class CardScript : MonoBehaviour
             if(CardManager.cManagerInstance.hand[handIndex].cardType == 1)
             {
                 BattleManager.bManagerInstance.player.transform.GetChild(2).GetComponent<Animator>().Play("Block");
+
+                if(CardManager.cManagerInstance.hand[handIndex].name == "Cower")
+                {
+                    Debug.Log("COWER PLAYED");
+
+                    BattleManager.bManagerInstance.cower = true;
+                }
 
                 BattleManager.bManagerInstance.playerCurrentBlockVal += CardManager.cManagerInstance.hand[handIndex].power;
                 BattleManager.bManagerInstance.ReduceEnemyCooldown(CardManager.cManagerInstance.hand[handIndex].cost);
@@ -115,7 +161,7 @@ public class CardScript : MonoBehaviour
             CardManager.cManagerInstance.SortHand();
         }
 
-        else if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn)
+        else if (!CardManager.cManagerInstance.hand[handIndex].used && !Hand.handInstance.targeting && !isMoving && !BattleManager.bManagerInstance.enemyTurn && !disabled)
         {
             GetComponent<Animator>().Play("CardTop");
 

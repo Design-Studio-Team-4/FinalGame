@@ -7,8 +7,7 @@ public class Reset : MonoBehaviour
 {
     public void NextScene()
     {
-        CoinandScore.coinsAndScoreInstance.coins = 0;
-        CoinandScore.coinsAndScoreInstance.coins = 0;
+        Destroy(CoinandScore.coinsAndScoreInstance.gameObject);
 
         SceneManager.LoadScene(0);
     }

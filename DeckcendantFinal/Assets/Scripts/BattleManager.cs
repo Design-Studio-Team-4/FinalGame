@@ -54,8 +54,17 @@ public class BattleManager : MonoBehaviour
     public Sprite blk;
     public Sprite heal;
 
+    public GameObject waveTransition;
+    public int wave;
+    public TMP_Text waveText;
+    public GameObject WavePointer;
+
+    public GameObject shop;
+
     public GameObject uiBottom;
     public GameObject gameOver;
+
+    public bool cower;
 
     void Awake()
     {
@@ -81,24 +90,20 @@ public class BattleManager : MonoBehaviour
         playerHealth = 100;
         playerCurrentBlockVal = 0;
 
+        cower = false;
+
         completedAttack = 0;
         attackingEnemies = 0;
         enemyTurn = false;
         iteration = 0;
+
+        wave = 1;
 
         Spawn();
 
         FindStandbyEnemies();
 
         UpdatePlayerUI();
-    }
-
-    private void FixedUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            enemyTurn = false;
-        }
     }
 
     public void ToggleUI(int onOff)
@@ -326,6 +331,10 @@ public class BattleManager : MonoBehaviour
             iteration = 0;
             attackingEnemies = 0;
             completedAttack = 0;
+
+            cower = false;
+            playerCurrentBlockVal = 0;
+
             enemyTurn = false;
         }
 
@@ -503,6 +512,37 @@ public class BattleManager : MonoBehaviour
         return null;
     }
 
+    public void Shop()
+    {
+        shop.SetActive(true);
+        waveTransition.SetActive(false);
+    }
+
+    public void NextWave()
+    {
+        uiBottom.SetActive(true);
+        Hand.handInstance.gameObject.SetActive(true);
+
+        wave++;
+        waveText.text = "Level 1: Wave " + wave.ToString();
+
+        playerHealth = 100;
+
+        playerCurrentBlockVal = 0;
+
+        completedAttack = 0;
+        attackingEnemies = 0;
+        iteration = 0;
+
+        cower = false;
+
+        Spawn();
+
+        FindStandbyEnemies();
+
+        CardManager.cManagerInstance.NextWave();
+    }
+
     public void UpdatePlayerUI()
     {
         UI = StartCoroutine(RefreshUI());
@@ -523,18 +563,21 @@ public class BattleManager : MonoBehaviour
 
             if (enemies[0] == null && enemies[1] == null && enemies[2] == null)
             {
-                uiBottom.SetActive(false);
-                Hand.handInstance.gameObject.SetActive(false);
-                gameOver.SetActive(true);
+                if (wave == 1)
+                {
+                    uiBottom.SetActive(false);
+                    Hand.handInstance.gameObject.SetActive(false);
+                    waveTransition.SetActive(true);
+                }
+                else if(wave == 2)
+                {
+                    uiBottom.SetActive(false);
+                    Hand.handInstance.gameObject.SetActive(false);
+                    gameOver.SetActive(true);
+                }
             }
 
-            if(playerCurrentBlockVal > 20)
-            {
-                blockIcon.SetActive(true);
-                playerCurrentBlockVal = 20;
-                blockText.text = playerCurrentBlockVal.ToString();
-            }
-            else if (playerCurrentBlockVal > 0)
+            if (playerCurrentBlockVal > 0)
             {
                 blockIcon.SetActive(true);
                 blockText.text = playerCurrentBlockVal.ToString();

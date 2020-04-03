@@ -49,8 +49,8 @@ public class EnemyScript : MonoBehaviour
 
             // bManagerInstance.CheckEnemyTurn();
 
-            CoinandScore.coinsAndScoreInstance.coins += Random.Range(1, 11);
-            CoinandScore.coinsAndScoreInstance.score = CoinandScore.coinsAndScoreInstance.coins;
+            CoinandScore.coinsAndScoreInstance.coins += 2;
+            CoinandScore.coinsAndScoreInstance.score += 2;
 
             Destroy(gameObject.transform.parent.gameObject);
         }
@@ -139,12 +139,19 @@ public class EnemyScript : MonoBehaviour
                 GameObject slot = CardManager.cManagerInstance.handSlots[i];
                 if (slot.GetComponent<CardScript>().selected)
                 {
-                    slot.transform.GetChild(0).GetComponent<Image>().color = CardScript.cScriptInstance.grey;
-                    slot.transform.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
-                    slot.transform.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
+                    if(CardManager.cManagerInstance.hand[i].cardType == 3 && enemy.cooldown == -1)
+                    {
+                        // ...
+                    }
+                    else
+                    {
+                        slot.transform.GetChild(0).GetComponent<Image>().color = CardScript.cScriptInstance.grey;
+                        slot.transform.transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
+                        slot.transform.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>().color = CardScript.cScriptInstance.grey;
 
-                    CardManager.cManagerInstance.PlayCard(i,enemy.slot);
-                    break;
+                        CardManager.cManagerInstance.PlayCard(i, enemy.slot);
+                        break;
+                    }
                 }
             }
         }

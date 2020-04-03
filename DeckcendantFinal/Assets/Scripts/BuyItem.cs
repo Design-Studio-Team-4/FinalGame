@@ -42,15 +42,15 @@ public class BuyItem : MonoBehaviour
     {
             if (cardName == "Time Steal")
             {
-                cManagerInstance.deck.Add(new Card("Time Steal", 4, 2, 4, 0, false, true, cManagerInstance.cardFronts[4], cManagerInstance.cardBacks[3], "Increase the cooldown of enemy attack by 4"));
+                cManagerInstance.deck.Add(new Card("Time Steal", 3, 0, 2, 6, false, true, cManagerInstance.cardFronts[4], cManagerInstance.cardBacks[3], "Increase the cooldown of enemy attack by 6"));
             }
             if (cardName == "Cower")
             {
-                cManagerInstance.deck.Add(new Card("Cower", 1, 1, 2, 25, false, true, cManagerInstance.cardFronts[5], cManagerInstance.cardBacks[1], "Gain 25 block, attack cards you play this turn do 0 damage"));
+                cManagerInstance.deck.Add(new Card("Cower", 1, 0, 2, 30, false, true, cManagerInstance.cardFronts[5], cManagerInstance.cardBacks[1], "Gain 30 block, attack cards you play this turn do 0 damage"));
             }
             if (cardName == "Life Drink")
             {
-                cManagerInstance.deck.Add(new Card("Life Drink", 2, 1, 3, 7, false, true, cManagerInstance.cardFronts[3], cManagerInstance.cardBacks[0], "Deal 8 damage, gain 8 hp"));
+                cManagerInstance.deck.Add(new Card("Life Drink", 0, 0, 3, 8, false, true, cManagerInstance.cardFronts[3], cManagerInstance.cardBacks[0], "Deal 8 damage, gain 8 hp"));
             }
 
             Shop.shopInstance.UpdateEggPrompt("Good Choice!");
