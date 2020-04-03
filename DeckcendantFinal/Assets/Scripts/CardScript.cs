@@ -95,13 +95,14 @@ public class CardScript : MonoBehaviour
                 continue;
             }
 
-            highestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
-           
-            if (BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown > highestCooldown && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
+            if(i == 0)
             {
                 highestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
             }
-
+            else if ((BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown > highestCooldown))
+            {
+                highestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
+            }
         }
         return highestCooldown;
     }
