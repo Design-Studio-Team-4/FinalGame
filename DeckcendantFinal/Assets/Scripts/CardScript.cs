@@ -57,10 +57,12 @@ public class CardScript : MonoBehaviour
 
         if (!CardManager.cManagerInstance.hand[handIndex].used && CardManager.cManagerInstance.hand[handIndex].cost > highest)
         {
+            Debug.Log(highest);
             disabled = true;
         }
         else if (CardManager.cManagerInstance.hand[handIndex].cost <= highest)
         {
+            
             disabled = false;
         }
 
@@ -84,7 +86,7 @@ public class CardScript : MonoBehaviour
 
     public int FindHighestCooldown()
     {
-        int highestCooldown = -11;
+        int highestCooldown = 0;
 
         for (int i = 0; i < 3; i++)
         {
@@ -93,19 +95,13 @@ public class CardScript : MonoBehaviour
                 continue;
             }
 
-            else if (highestCooldown == -11 && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
+            highestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
+           
+            if (BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown > highestCooldown && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
             {
                 highestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
             }
 
-            else if (BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown > highestCooldown && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
-            {
-                highestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
-            }
-            else
-            {
-                return 0;
-            }
         }
         return highestCooldown;
     }
