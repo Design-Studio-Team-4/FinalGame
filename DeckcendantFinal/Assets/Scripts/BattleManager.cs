@@ -57,7 +57,7 @@ public class BattleManager : MonoBehaviour
     public GameObject waveTransition;
     public int wave;
     public TMP_Text waveText;
-    public GameObject WavePointer;
+    public GameObject wavePointer;
 
     public GameObject shop;
 
@@ -130,7 +130,14 @@ public class BattleManager : MonoBehaviour
             if (enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown > 0)
             {
                 enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown -= cardCost;
-            } 
+
+                if(enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown <= 0)
+                {
+                    enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown = 0;
+                }
+            }
+            
+            
         }
 
         for (int i = 0; i < 3; i++)
@@ -228,26 +235,33 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator EnemyAnimateCo(int enemy, int iteration)
     {
-            enemyTurn = true;
+        enemyTurn = true;
 
-            if (iteration == 1)
-            {
-                yield return new WaitForSeconds(1.00f);
-                completedAttack++;
-            }
+        if (iteration == 1)
+        {
+            yield return new WaitForSeconds(1.00f);
+            completedAttack++;
+        }
 
-            if (iteration == 2)
-            {
-                yield return new WaitForSeconds(2.00f);
-                completedAttack++;
-            }
+        if (iteration == 2)
+        {
+            yield return new WaitForSeconds(2.00f);
+            completedAttack++;
+        }
 
-            if (iteration == 3)
-            {
-                yield return new WaitForSeconds(3.00f);
-                completedAttack++;
-            }
+        if (iteration == 3)
+        {
+            yield return new WaitForSeconds(3.00f);
+            completedAttack++;
+        }
 
+        if(enemies[enemy] == null)
+        {
+            // ...
+        }
+
+        else
+        {
             Enemy current = enemies[enemy].transform.GetChild(0).GetComponent<EnemyScript>().enemy;
 
             if (current.currentMove.type == 0)
@@ -274,16 +288,16 @@ public class BattleManager : MonoBehaviour
                     playerHealth -= current.currentMove.power;
                 }
 
-            yield return new WaitForSeconds(0.50f);
+                yield return new WaitForSeconds(0.50f);
 
-            player.GetComponent<Animator>().Play("Player_OnHit");
+                player.GetComponent<Animator>().Play("Player_OnHit");
 
             }
 
             else if (current.currentMove.type == 1)
             {
-                
-                
+
+
                 enemies[enemy].transform.GetChild(0).GetChild(1).GetComponent<Animator>().Play("Block");
                 current.currentBlockVal += current.currentMove.power;
             }
@@ -299,7 +313,6 @@ public class BattleManager : MonoBehaviour
                 enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = false;
 
                 current.cooldown = -1;
-                StopCoroutine(EA1);
             }
 
             else if (enemy == 1)
@@ -307,7 +320,6 @@ public class BattleManager : MonoBehaviour
                 enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = false;
 
                 current.cooldown = -1;
-                StopCoroutine(EA2);
             }
 
             else if (enemy == 2)
@@ -315,8 +327,23 @@ public class BattleManager : MonoBehaviour
                 enemies[enemy].transform.GetChild(0).GetChild(2).GetChild(1).GetComponent<Image>().enabled = false;
 
                 current.cooldown = -1;
-                StopCoroutine(EA3);
             }
+        }
+
+        if (enemy == 0)
+        {
+            StopCoroutine(EA1);
+        }
+
+        else if (enemy == 1)
+        {
+            StopCoroutine(EA2);
+        }
+
+        else if (enemy == 2)
+        {
+            StopCoroutine(EA3);
+        }
 
         StartCoroutine(FinishEnemyTurn());
     }
@@ -330,10 +357,6 @@ public class BattleManager : MonoBehaviour
             iteration = 0;
             attackingEnemies = 0;
             completedAttack = 0;
-
-            cower = false;
-            playerCurrentBlockVal = 0;
-
             enemyTurn = false;
         }
 
@@ -359,6 +382,8 @@ public class BattleManager : MonoBehaviour
             CardManager.cManagerInstance.handObject.GetComponent<Animator>().Play("HandDown");
             FindStandbyEnemies();
             iteration = 0;
+            cower = false;
+            playerCurrentBlockVal = 0;
         }
 
         StopCoroutine(FinishEnemyTurn());
@@ -525,6 +550,8 @@ public class BattleManager : MonoBehaviour
         wave++;
         waveText.text = "Level 1: Wave " + wave.ToString();
 
+        wavePointer.transform.localPosition = new Vector3(-280f, -35f, 0f);
+
         playerHealth = 100;
 
         playerCurrentBlockVal = 0;
@@ -651,22 +678,22 @@ public class BattleManager : MonoBehaviour
             new EnemyMove(0, 15, 2, 0.55f), // Slap
             new EnemyMove(1, 10, 2, 0.15f), // Block
             new EnemyMove(2, 10, 3, 0.15f), // Heal 
-            new EnemyMove(0, 45, 5, 0.15f), // Big Punch 
+            new EnemyMove(0, 35, 5, 0.15f), // Big Punch 
     };
 
     public static EnemyMove[] tallShroomMoves = new EnemyMove[]
     {
-            new EnemyMove(0, 15, 2, 0.35f), // Ball Shake
+            new EnemyMove(0, 15, 3, 0.35f), // Ball Shake
             new EnemyMove(1, 5, 3, 0.30f), // Stalk Strengthen
-            new EnemyMove(1, 10, 4, 0.20f), // Tall Ball Wall
-            new EnemyMove(2, 20, 4, 0.15f), // Heal Spore 
+            new EnemyMove(1, 10, 5, 0.20f), // Tall Ball Wall
+            new EnemyMove(2, 20, 5, 0.15f), // Heal Spore 
     };
 
     public static EnemyMove[] blueBoiMoves = new EnemyMove[]
     {
             new EnemyMove(0, 10, 1, 0.40f), // Singe
             new EnemyMove(0, 25, 2, 0.30f), // Hex
-            new EnemyMove(0, 65, 4, 0.15f), // Fireball
+            new EnemyMove(0, 45, 4, 0.15f), // Fireball
             new EnemyMove(2, 10, 2, 0.15f), // Heal
     };
 

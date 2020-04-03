@@ -29,6 +29,18 @@ public class CardManager : MonoBehaviour
         if (cManagerInstance == null) { cManagerInstance = this; }
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Debug.Log(hand[i].name);
+                Debug.Log(hand[i].cost);
+            }
+        }
+    }
+
     void Start()
     {
         deck.Add(new Card("Strike", 0, 0, 1, 5, false, false, cardFronts[0], cardBacks[0], "Deals 5 damage"));
@@ -58,6 +70,11 @@ public class CardManager : MonoBehaviour
         Draw();
         discard.Clear();
         handObject.GetComponent<Animator>().Play("HandUp");
+
+        for (int i = 0; i < 5; i++)
+        {
+            hand[i].used = false;
+        }
     }
 
     public void PlayCard(int cardSlot, int enemySlot)
@@ -88,7 +105,7 @@ public class CardManager : MonoBehaviour
 
             if (BattleManager.bManagerInstance.cower)
             {
-
+                //...
             }
             else if (enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.currentBlockVal > 0)
             {
@@ -125,13 +142,13 @@ public class CardManager : MonoBehaviour
             enemy.transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown += hand[cardSlot].power;
         }
 
-        int slotBeforeSort = cardSlot;
+        int costBeforeSort = hand[cardSlot].cost;
 
         SortHand();
 
-        yield return new WaitForSeconds(0.10f);
+        yield return new WaitForSeconds(0.20f);
 
-        BattleManager.bManagerInstance.ReduceEnemyCooldown(hand[slotBeforeSort].cost);
+        BattleManager.bManagerInstance.ReduceEnemyCooldown(costBeforeSort);
 
         StopCoroutine(playC);
     }
@@ -186,7 +203,7 @@ public class CardManager : MonoBehaviour
             drawpile.RemoveAt(drawpile.Count - 1);
 
             handSlots[i].transform.GetChild(0).GetComponent<Image>().sprite = hand[i].front;
-        }
+        }   
     }
 
     public int CheckHand()
@@ -290,20 +307,23 @@ public class CardManager : MonoBehaviour
         discard = new List<Card>(deck);
 
         discard = Shuffle(discard);
+
         Draw();
         discard.Clear();
         handObject.GetComponent<Animator>().Play("HandUp");
+
+        for (int i = 0; i < 5; i++)
+        {
+            hand[i].used = false;
+            handSlots[i].GetComponent<CardScript>().isMoving = false;
+            handSlots[i].GetComponent<Animator>().enabled = true;
+        }
 
         BattleManager.bManagerInstance.enemyTurn = false;
         Hand.handInstance.targeting = false;
 
         BattleManager.bManagerInstance.waveTransition.SetActive(false);
         BattleManager.bManagerInstance.shop.SetActive(false);
-
-        for (int i = 0; i < drawpile.Count; i++)
-        {
-            Debug.Log(drawpile[i].name);
-        }
     }
 
     public struct Card

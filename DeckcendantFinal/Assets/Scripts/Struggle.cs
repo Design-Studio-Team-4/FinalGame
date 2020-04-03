@@ -7,6 +7,12 @@ public class Struggle : MonoBehaviour
 {
     public Coroutine attack;
 
+    public bool running;
+
+    void Awake()
+    {
+        running = false;
+    }
     void Update()
     {
         if(Hand.handInstance.targeting == true || BattleManager.bManagerInstance.enemyTurn == true)
@@ -21,13 +27,18 @@ public class Struggle : MonoBehaviour
 
     public void ButtonPress()
     {
-        BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Attack");
+        if(running == false && Hand.handInstance.targeting == false)
+        {
+            BattleManager.bManagerInstance.player.GetComponent<Animator>().Play("Player_Attack");
 
-        attack = StartCoroutine(StruggleCo());
+            attack = StartCoroutine(StruggleCo());
+        }
     }
 
     private IEnumerator StruggleCo()
     {
+        running = true;
+
         yield return new WaitForSeconds(0.50f);
 
         for (int i = 0; i < 3; i++)
@@ -54,10 +65,12 @@ public class Struggle : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(0.10f);
-
         BattleManager.bManagerInstance.ReduceEnemyCooldown(1);
 
+        running = false;
+
         StopCoroutine(attack);
+
+        
     }
 }

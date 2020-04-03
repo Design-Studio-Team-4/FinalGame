@@ -139,7 +139,7 @@ public class EnemyScript : MonoBehaviour
                 GameObject slot = CardManager.cManagerInstance.handSlots[i];
                 if (slot.GetComponent<CardScript>().selected)
                 {
-                    if(CardManager.cManagerInstance.hand[i].cardType == 3 && enemy.cooldown == -1)
+                    if((CardManager.cManagerInstance.hand[i].cardType == 3 && enemy.cooldown == -1) || CardManager.cManagerInstance.hand[i].used)
                     {
                         // ...
                     }

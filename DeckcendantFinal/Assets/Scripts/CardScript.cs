@@ -55,14 +55,12 @@ public class CardScript : MonoBehaviour
     {
         int highest = FindHighestCooldown();
 
-        if (!CardManager.cManagerInstance.hand[handIndex].used && CardManager.cManagerInstance.hand[handIndex].cost > highest)
+        if ((!CardManager.cManagerInstance.hand[handIndex].used && CardManager.cManagerInstance.hand[handIndex].cost > highest) && CardManager.cManagerInstance.hand[handIndex].cost != 1)
         {
-            Debug.Log(highest);
             disabled = true;
         }
         else if (CardManager.cManagerInstance.hand[handIndex].cost <= highest)
         {
-            
             disabled = false;
         }
 

@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Destroy : MonoBehaviour
 {
-    public GameObject music;
-
     public void Die()
     {
-        Destroy(music);
+        Destroy(GameObject.Find("Music Player"));
     }
 
     
