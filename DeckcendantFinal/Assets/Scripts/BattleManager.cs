@@ -676,7 +676,7 @@ public class BattleManager : MonoBehaviour
     public static EnemyMove[] lipsMoves = new EnemyMove[]
     {
             new EnemyMove(0, 15, 2, 0.55f), // Slap
-            new EnemyMove(1, 10, 2, 0.15f), // Block
+            new EnemyMove(1, 5, 2, 0.15f), // Block
             new EnemyMove(2, 10, 3, 0.15f), // Heal 
             new EnemyMove(0, 35, 5, 0.15f), // Big Punch 
     };
@@ -684,9 +684,9 @@ public class BattleManager : MonoBehaviour
     public static EnemyMove[] tallShroomMoves = new EnemyMove[]
     {
             new EnemyMove(0, 15, 3, 0.35f), // Ball Shake
-            new EnemyMove(1, 5, 3, 0.30f), // Stalk Strengthen
+            new EnemyMove(1, 5, 4, 0.30f), // Stalk Strengthen
             new EnemyMove(1, 10, 5, 0.20f), // Tall Ball Wall
-            new EnemyMove(2, 20, 5, 0.15f), // Heal Spore 
+            new EnemyMove(2, 10, 5, 0.15f), // Heal Spore 
     };
 
     public static EnemyMove[] blueBoiMoves = new EnemyMove[]
