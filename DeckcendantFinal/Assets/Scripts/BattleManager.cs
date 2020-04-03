@@ -317,7 +317,6 @@ public class BattleManager : MonoBehaviour
                 current.cooldown = -1;
                 StopCoroutine(EA3);
             }
-        Debug.Log("YEET");
 
         StartCoroutine(FinishEnemyTurn());
     }

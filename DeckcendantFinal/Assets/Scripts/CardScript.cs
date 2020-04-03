@@ -53,13 +53,13 @@ public class CardScript : MonoBehaviour
 
     void Update()
     {
-        int lowest = FindLowestCooldown();
+        int highest = FindHighestCooldown();
 
-        if (!CardManager.cManagerInstance.hand[handIndex].used && CardManager.cManagerInstance.hand[handIndex].cost > lowest)
+        if (!CardManager.cManagerInstance.hand[handIndex].used && CardManager.cManagerInstance.hand[handIndex].cost > highest)
         {
             disabled = true;
         }
-        else if (CardManager.cManagerInstance.hand[handIndex].cost <= lowest)
+        else if (CardManager.cManagerInstance.hand[handIndex].cost <= highest)
         {
             disabled = false;
         }
@@ -72,7 +72,7 @@ public class CardScript : MonoBehaviour
 
             GetComponent<Animator>().Play("CardReturn");
         }
-        else if (Hand.handInstance.targeting == false && BattleManager.bManagerInstance.enemyTurn == false && disabled == false)
+        else if (Hand.handInstance.targeting == false && BattleManager.bManagerInstance.enemyTurn == false || (disabled == false && Hand.handInstance.targeting == false && BattleManager.bManagerInstance.enemyTurn == false))
         {
             transform.GetChild(0).GetComponent<Image>().color = normal;
             transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().color = normal;
@@ -82,9 +82,9 @@ public class CardScript : MonoBehaviour
         
     }
 
-    public int FindLowestCooldown()
+    public int FindHighestCooldown()
     {
-        int lowestCooldown = -11;
+        int highestCooldown = -11;
 
         for (int i = 0; i < 3; i++)
         {
@@ -93,17 +93,21 @@ public class CardScript : MonoBehaviour
                 continue;
             }
 
-            else if (lowestCooldown == -11 && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
+            else if (highestCooldown == -11 && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
             {
-                lowestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
+                highestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
             }
 
-            else if (BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown < lowestCooldown && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
+            else if (BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown > highestCooldown && BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown != -1)
             {
-                lowestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
+                highestCooldown = BattleManager.bManagerInstance.enemies[i].transform.GetChild(0).GetComponent<EnemyScript>().enemy.cooldown;
+            }
+            else
+            {
+                return 0;
             }
         }
-        return lowestCooldown;
+        return highestCooldown;
     }
 
     public void OnHover()
